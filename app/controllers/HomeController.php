@@ -6,11 +6,12 @@ class HomeController extends Controller
     {
         $user = $this->model('User');
         $user->name = "Frixs";
-        echo $user->name;
+        
+        $this->view('home/index', ['name' => $user->name]);
     }
 
     public function test()
     {
-        echo 'test';
+        $this->view('home/test');
     }
 }

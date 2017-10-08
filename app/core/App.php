@@ -46,18 +46,21 @@ class App
             unset($url[0]);
         }
         
-        $controllerFullName = $this->controller . $this->controllerPostfix;
+        $controllerFullName = $this->convertToStudlyCaps($this->controller) . $this->controllerPostfix;
 
         require_once '../app/controllers/'. $controllerFullName .'.php';
         
         $this->controller = new $controllerFullName();
 
-        // check if next parameter exists
+        // check if the next parameter exists
         if (isset($url[1])) {
             // if it is method, grab it
             if (method_exists($this->controller, $url[1])) {
-                $this->method = $url[1];
-                unset($url[1]);
+                $reflection = new ReflectionMethod($this->controller, $url[1]);
+                if ($reflection->isPublic()) {
+                    $this->method = $url[1];
+                    unset($url[1]);
+                }
             }
         }
 
@@ -78,5 +81,29 @@ class App
         if (isset($_GET['url'])) {
             return explode('/', filter_var(rtrim($_GET['url'], '/')));
         }
+    }
+
+    /**
+     * Convert the string with hyphens to camelCase
+     * f.e. something-like-that => somethingLikeThat
+     *
+     * @param string $string    input string to convert
+     * @return string           formatted string
+     */
+    protected function convertToCamelCase($string)
+    {
+        return lcfirst($this->convertToStudlyCaps($string));
+    }
+
+    /**
+     * Convert the string with hyphens to StudlyCaps,
+     * f.e. something-like-that => SomethingLikeThat
+     *
+     * @param string $string    the string to convert
+     * @return string           formatted string
+     */
+    protected function convertToStudlyCaps($string)
+    {
+        return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
 }
