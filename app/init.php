@@ -1,10 +1,5 @@
 <?php
 
-require_once '../config/Config.php';
+use Config\Core\Config;
+
 new Config();
-
-require_once 'core/Db.php';
-
-require_once 'core/App.php';
-
-require_once 'core/Controller.php';

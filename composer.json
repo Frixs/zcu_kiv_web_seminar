@@ -1,0 +1,21 @@
+{
+    "name": "frixs/zcu_kiv_web_seminar",
+    "description": "Web seminar",
+    "authors": [
+        {
+            "name": "Frixs",
+            "email": "frixs@users.noreply.github.com"
+        }
+    ],
+    "require": {},
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Bootstrap\\": "bootstrap/",
+            "Config\\": "config/",
+            "Database\\": "database/",
+            "Frixs\\": "frixs/"
+        }
+    }
+}
