@@ -4,7 +4,7 @@ namespace Config\Core;
 
 class Config
 {
-    private $data = [];
+    private static $_data = [];
 
     public function __construct()
     {
@@ -15,7 +15,7 @@ class Config
         foreach (scandir('../config') as $filename) {
             $path = '../config/' . $filename;
             if (is_file($path)) {
-                $this->data += require_once $path;
+                self::$_data += require_once $path;
             }
         }
     }
@@ -29,7 +29,7 @@ class Config
     public static function get($path = null)
     {
         if ($path) {
-            $config = $this->data;
+            $config = self::$_data;
             $path = explode('.', $path);
                 
             foreach ($path as $bit) {

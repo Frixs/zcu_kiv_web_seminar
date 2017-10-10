@@ -2,10 +2,13 @@
 
 namespace Frixs\Database;
 
+use Config\Core\Config;
+
 /**
- * Connection to the database with its CRUD methods
+ * Connection to the MySQL database with its CRUD methods
+ * Singleton
  */
-class Db
+class MysqlConnection
 {
     private static $_instance = null;
     private $_pdo,
@@ -20,7 +23,7 @@ class Db
     private function __construct()
     {
         try {
-            $this->_pdo = new PDO('mysql:host='. Config::get('database.mysql.host') .';dbname='. Config::get('database.mysql.db') .';charset=utf8', Config::get('database.mysql.username'), Config::get('database.mysql.password'));
+            $this->_pdo = new \PDO('mysql:host='. Config::get('database.mysql.host') .';dbname='. Config::get('database.mysql.db_name') .';charset=utf8', Config::get('database.mysql.username'), Config::get('database.mysql.password'));
                 
             /* DEBUG attribute to show error messages */
             //$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -37,7 +40,7 @@ class Db
     public static function getInstance()
     {
         if (!isset(self::$_instance)) {
-            self::$_instance = new DB();
+            self::$_instance = new MysqlConnection();
         }
         return self::$_instance;
     }

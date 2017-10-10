@@ -2,6 +2,7 @@
 
 return [
     'database' => [
+        'connection_type' => 'mysql', // define which connection app should use
         'mysql' => [
             'host' => '127.0.0.1',
             'username' => 'root',
