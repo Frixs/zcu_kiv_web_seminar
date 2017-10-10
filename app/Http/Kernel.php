@@ -13,6 +13,8 @@ class Kernel
     ];
 
     protected static $routeMiddleware = [
+        'home' => 'Authenticate',
+        'home.index' => 'Authenticate'
     ];
 
     /**
@@ -25,6 +27,21 @@ class Kernel
      */
     public static function run($controller, $method, $parameters)
     {
+        if (isset(self::$routeMiddleware[$controller])) {
+            $validator = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller];
+            new $validator;
+            if (!$validator::validate()) {
+                return false;
+            }
+        }
+
+        if (isset(self::$routeMiddleware[$controller .'.'. $method])) {
+            $validator = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller .'.'. $method];
+            if (!$validator::validate()) {
+                return false;
+            }
+        }
+
         return true;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Frixs\Routing;
 
-use \App\Http\Kernel;
+use App\Http\Kernel;
 
 class Route
 {
@@ -19,6 +19,13 @@ class Route
      * @var string
      */
     protected $controller = 'home';
+
+    /**
+     * Controller object
+     *
+     * @var object
+     */
+    protected $controllerInstance = null;
     
     /**
      * Default controller's method
@@ -52,7 +59,7 @@ class Route
         
         $controllerFullName = '\\App\\Http\\Controllers\\Pages\\'. $this->getControllerFullName();
 
-        $this->controller = new $controllerFullName();
+        $this->controllerInstance = new $controllerFullName();
 
         $this->parseMethod();
 
@@ -60,10 +67,9 @@ class Route
         $this->bindParameters();
 
         // Run the mail validation tests (middleware)
-        if (Kernel::run($this->controller, $this->method, $this->parameters))
-        {
+        if (Kernel::run($this->controller, $this->method, $this->parameters)) {
             // call the controller's method
-            $this->callControllerMethod($this->controller, $this->method, $this->parameters);
+            $this->callControllerMethod($this->controllerInstance, $this->method, $this->parameters);
         }
     }
 
@@ -114,6 +120,16 @@ class Route
     }
 
     /**
+     * Get current requested controller instance
+     *
+     * @return string
+     */
+    public function getControllerInstance()
+    {
+        return $this->controllerInstance;
+    }
+
+    /**
      * Get current requested controller in the correct format
      *
      * @return void
@@ -139,7 +155,7 @@ class Route
     /**
      * Call the controller's method with parameters
      *
-     * @param string $controller
+     * @param object $controller
      * @param string $method
      * @param array $parameters
      * @return void
@@ -169,8 +185,8 @@ class Route
         // check if the next parameter exists
         if (isset($this->url[1])) {
             // if it is method, grab it
-            if ($this->methodExists($this->controller, $this->url[1])) {
-                if ($this->isMethodPublic($this->controller, $this->url[1])) {
+            if ($this->methodExists($this->controllerInstance, $this->url[1])) {
+                if ($this->isMethodPublic($this->controllerInstance, $this->url[1])) {
                     $this->method = $this->url[1];
                     unset($this->url[1]);
                 }
