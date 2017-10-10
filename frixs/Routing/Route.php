@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Routing;
+namespace Frixs\Routing;
+
+use \App\Http\Kernel;
 
 class Route
 {
@@ -57,8 +59,12 @@ class Route
         // rest of the url are method parameters
         $this->bindParameters();
 
-        // call the controller's method
-        $this->callControllerMethod($this->controller, $this->method, $this->parameters);
+        // Run the mail validation tests (middleware)
+        if (Kernel::run($this->controller, $this->method, $this->parameters))
+        {
+            // call the controller's method
+            $this->callControllerMethod($this->controller, $this->method, $this->parameters);
+        }
     }
 
     /**
@@ -218,6 +224,6 @@ class Route
      */
     protected function bindParameters()
     {
-        $this->parameters = $this->hasParameters ? array_values($this->url) : [];
+        $this->parameters = $this->hasParameters() ? array_values($this->url) : [];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Bootstrap;
 
-use App\Routing\Route;
+use Frixs\Routing\Route;
 
 /**
  * Initialize, loader

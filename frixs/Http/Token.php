@@ -1,7 +1,6 @@
 <?php
 
-//TODO move to Middleware
-namespace Frixs;
+namespace Frixs\Http;
 
 /**
  *  Token is for CSRF protection.
@@ -67,7 +66,7 @@ class Token
     <?php
         if(Input::exists())
         {
-            if( Token::check(Input::get('token')) )
+            if( Token::check(Input::get('token_inp')) )
             {
                 $validate = new Validate();
                 $validation = $validate->check($_POST, array(
@@ -123,7 +122,7 @@ class Token
             <input type="text" name="name" id="name" value="" />
         </div>
 
-        <input type="hidden" name="token" value="<?php echo Token::generate(); ?>" />
+        <input type="hidden" name="token_inp" value="<?php echo Token::generate(); ?>" />
         <input type="submit" value="Register" />
     </form>
 */

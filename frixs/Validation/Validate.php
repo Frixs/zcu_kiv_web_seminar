@@ -1,6 +1,5 @@
 <?php
 
-//TODO move to Middleware
 namespace Frixs\Validate;
 
 class Validate

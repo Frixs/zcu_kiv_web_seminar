@@ -4,4 +4,27 @@ namespace App\Http;
 
 class Kernel
 {
+    protected static $middleware = [
+    ];
+
+    protected static $middlewareGroups = [
+        'web' => [
+        ]
+    ];
+
+    protected static $routeMiddleware = [
+    ];
+
+    /**
+     * Run all middlewares according to input parameters
+     *
+     * @param string $controller
+     * @param string $method
+     * @param array $parameters
+     * @return bool
+     */
+    public static function run($controller, $method, $parameters)
+    {
+        return true;
+    }
 }

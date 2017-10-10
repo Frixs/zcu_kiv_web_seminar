@@ -1,22 +1,22 @@
 <?php
 
-//TODO separate recaptcha
 namespace Frixs\Captcha;
 
 class Captcha
 {
     /* Google recaptcha API url */
-    private $google_url = "https://www.google.com/recaptcha/api/siteverify";
-    private $secret = null;
+    private $googleUrl = null,
+            $secret    = null;
 
     public function __construct()
     {
-        $this->secret = Config::get('captcha.g_recaptcha.secret_key');
+        $this->secret    = Config::get('captcha.g_recaptcha.secret_key');
+        $this->googleUrl = Config::get('captcha.g_recaptcha.site_verify_url');
     }
 
-    public function VerifyCaptcha($response)
+    private function verifyCaptcha($response)
     {
-        $url = $this->google_url."?secret=".$this->secret."&response=".$response;
+        $url = $this->googleUrl."?secret=".$this->secret."&response=".$response;
             
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -47,7 +47,7 @@ class Captcha
         $captchaResult = 'false';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!empty($response)) {
-                $verified = self::VerifyCaptcha($response);
+                $verified = self::verifyCaptcha($response);
 
                 if ($verified) {
                     return true;

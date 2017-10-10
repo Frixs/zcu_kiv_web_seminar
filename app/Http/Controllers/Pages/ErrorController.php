@@ -2,26 +2,35 @@
 
 namespace App\Http\Controllers\Pages;
 
-class ErrorController extends \Controller
-{
-    public function index($errorNumber = '501')
-    {
-        $eMethodFullName = 'error'. $errorNumber;
+use App\Http\Controllers\Controller;
 
+class ErrorController extends Controller
+{
+    public function index($errorCode = '501')
+    {
+        $eMethodFullName = 'error'. $errorCode;
+
+        // validate paramater error code
         if (method_exists($this, $eMethodFullName)) {
-            $reflection = new ReflectionMethod($this, $eMethodFullName);
+            $reflection = new \ReflectionMethod($this, $eMethodFullName);
             if ($reflection->isPrivate()) {
                 $this->$eMethodFullName();
                 return;
             }
         }
         
-        $this->error501();
+        // default error
+        $this->error500();
     }
 
     private function error404()
     {
         $this->view('error/404');
+    }
+
+    private function error500()
+    {
+        $this->view('error/500');
     }
 
     private function error501()
