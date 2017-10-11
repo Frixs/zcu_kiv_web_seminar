@@ -25,7 +25,7 @@ class Lang
      * Easily call parametres from language array f.e.: Lang::get('auth.failed')
      *
      * @param string $path          path in the lang array, f.e.: Lang::get('auth.failed')
-     * @param array $parameters     parameters f.e. ['key' => 'value'] replace text marked in text like :key
+     * @param array $parameters     parameters f.e. ['key' => 'value'] replace mark in the text like :key
      * @return string               lang value if exists, returns empty string if not
      */
     public static function get($path, $parameters = [])

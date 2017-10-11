@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Frixs\Routing\Router;
+
 /**
  * The main Controller
  */
