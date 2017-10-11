@@ -1,7 +1,5 @@
 <?php
 
 return [
-    'session' => [
-        'token_name' => 'token'
-    ]
+    'token_name' => 'token'
 ];

@@ -1,7 +1,5 @@
 <?php
 
 return [
-    'app' => [
-        'name' => 'Action Calendar'
-    ]
+    'name' => 'Action Calendar'
 ];

@@ -8,14 +8,11 @@ class Config
 
     public function __construct()
     {
-        // initialize global setting array
-        $GLOBALS['config_app'] = [];
-
         // load global settings
         foreach (scandir('../config') as $filename) {
             $path = '../config/' . $filename;
             if (is_file($path)) {
-                self::$_data += require_once $path;
+                self::$_data[explode('.', $filename)[0]] = require_once $path;
             }
         }
     }
