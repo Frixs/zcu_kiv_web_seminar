@@ -22,13 +22,13 @@ class Token
             Config::get('session.token_name'), md5(uniqid())
         ); //= $_SESSION['token'] = md5(uniqid());
     }
-        
+    
     /**
-         *  Check token value
-         *
-         *  @param token    token value
-         *  @return         boolean, validation status
-         */
+     * Check token value if value exists and it is equal to form token
+     *
+     * @param token $token      $_POST token value
+     * @return bool
+     */
     public static function check($token)
     {
         $tokenName = Config::get('session.token_name');
@@ -40,15 +40,14 @@ class Token
             
         return false;
     }
-        
+    
     /**
-         *  Generate and flash token hashed name
-         *
-         *  @param name     session name
-         *  @param generate TRUE - generate a new flash session
-         *                  FALSE - get and destroy flash session
-         *  @return         boolean, validation status
-         */
+     * Create or flash token hadh name
+     *
+     * @param string $name          token name
+     * @param boolean $generate     flash = true
+     * @return string               token value
+     */
     public static function flash($name, $generate = false)
     {
         if ($generate) {
@@ -66,7 +65,7 @@ class Token
     <?php
         if(Input::exists())
         {
-            if( Token::check(Input::get('token_inp')) )
+            if( Token::check(Input::get(Token::flash('token_login'))) )
             {
                 $validate = new Validate();
                 $validation = $validate->check($_POST, array(
@@ -122,7 +121,7 @@ class Token
             <input type="text" name="name" id="name" value="" />
         </div>
 
-        <input type="hidden" name="token_inp" value="<?php echo Token::generate(); ?>" />
+        <input type="hidden" name="<?= Token::flash('token_login', true) ?>" value="<?= Token::generate() ?>" />
         <input type="submit" value="Register" />
     </form>
 */

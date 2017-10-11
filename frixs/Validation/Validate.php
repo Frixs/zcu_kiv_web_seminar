@@ -1,6 +1,8 @@
 <?php
 
-namespace Frixs\Validate;
+namespace Frixs\Validation;
+
+use Frixs\Database\Connection as DB;
 
 class Validate
 {
@@ -10,7 +12,7 @@ class Validate
         
     public function __construct()
     {
-        $this->_db = Db::getInstance();
+        $this->_db = DB::getInstance();
     }
     
     /**
@@ -135,7 +137,7 @@ class Validate
      * @param string $url   media url
      * @return string       returns video|image or null
      */
-    public static function checkMediaURL($url)
+    protected static function checkMediaURL($url)
     {
         if ($url) {
             if (preg_match('/(\.jpg|\.png|\.gif|\.bmp)$/', $url)) {
