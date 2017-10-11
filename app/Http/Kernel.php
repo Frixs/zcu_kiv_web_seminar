@@ -11,9 +11,7 @@ class Kernel
      * @var array
      */
     protected static $middleware = [
-        //'SomeMiddleware',
-        //'SomeMiddleware',
-        //'SomeMiddleware'
+        'DeveloperMode',
     ];
 
     /**
@@ -23,7 +21,7 @@ class Kernel
      */
     protected static $middlewareGroups = [
         'web' => [
-        ]
+        ],
     ];
 
     /**
@@ -38,7 +36,7 @@ class Kernel
             //'SomeMiddleware'
         ],
         'home.index' => [
-        ]
+        ],
     ];
 
     /**

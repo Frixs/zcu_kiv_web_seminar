@@ -21,7 +21,6 @@ class App
      */
     public function __construct()
     {
-        //clearstatcache();
         $this->routeInstance = new Route();
     }
 }
