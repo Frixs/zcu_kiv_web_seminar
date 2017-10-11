@@ -33,8 +33,12 @@ class Kernel
      * @var array
      */
     protected static $routeMiddleware = [
-        'home' => 'Authenticate',
-        //'home.index' => ''
+        'home' => [
+            'Authenticate',
+            //'SomeMiddleware'
+        ],
+        'home.index' => [
+        ]
     ];
 
     /**
@@ -57,17 +61,21 @@ class Kernel
 
         // Validate controller section
         if (isset(self::$routeMiddleware[$controller])) {
-            $middlewareTestClass = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller];
-            if (!self::checkMiddleware($middlewareTestClass)) {
-                return false;
+            for ($i = 0; $i < count(self::$routeMiddleware[$controller]); $i++) {
+                $middlewareTestClass = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller][$i];
+                if (!self::checkMiddleware($middlewareTestClass)) {
+                    return false;
+                }
             }
         }
 
         // Validate controller's method section
         if (isset(self::$routeMiddleware[$controller .'.'. $method])) {
-            $middlewareTestClass = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller .'.'. $method];
-            if (!self::checkMiddleware($middlewareTestClass)) {
-                return false;
+            for ($i = 0; $i < count(self::$routeMiddleware[$controller .'.'. $method]); $i++) {
+                $middlewareTestClass = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller .'.'. $method][$i];
+                if (!self::checkMiddleware($middlewareTestClass)) {
+                    return false;
+                }
             }
         }
 
