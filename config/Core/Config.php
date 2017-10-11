@@ -18,7 +18,7 @@ class Config
     }
 
     /**
-     * Easily call parametres from $GLOBALS_WEB array f.e.: Config::get('database.mysql.host')
+     * Easily call parameters from config array f.e.: Config::get('database.mysql.host')
      *
      * @param string $path      path in the setting array, f.e.: Config::get('database.mysql.host')
      * @return string           setting value if exists, returns null if not

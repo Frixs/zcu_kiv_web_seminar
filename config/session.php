@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'token_name' => 'token'
+    'token_name' => 'token',
 ];
