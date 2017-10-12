@@ -46,6 +46,16 @@ class MysqlConnection
     }
 
     /**
+     * Check if transaction is ON
+     *
+     * @return bool
+     */
+    public function inTransaction()
+    {
+        return $this->_pdo->inTransaction();
+    }
+
+    /**
      * Start transaction
      *
      * @return void
@@ -62,7 +72,9 @@ class MysqlConnection
      */
     public function rollBack()
     {
-        $this->_pdo->rollBack();
+        if ($this->inTransaction()) {
+            $this->_pdo->rollBack();
+        }
     }
         
     /**
@@ -338,7 +350,7 @@ class MysqlConnection
      *
      * @return object   query object
      */
-    public function results()
+    public function get()
     {
         return $this->_results;
     }
@@ -348,9 +360,9 @@ class MysqlConnection
      *
      * @return object   query object
      */
-    public function resultFirst()
+    public function getFirst()
     {
-        return $this->results()[0];
+        return $this->get()[0];
     }
     
     /**
@@ -404,12 +416,12 @@ class MysqlConnection
         }else{
             echo "User exists";
             //
-            foreach($query->results() as $item)
+            foreach($query->get() as $item)
             {
                 echo $item->username, '<br>';
             }
             //
-            echo $query->results()[0]->username;
+            echo $query->get()[0]->username;
             //
             echo $query->resultFirst()->username;
         }

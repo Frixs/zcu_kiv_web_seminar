@@ -33,7 +33,7 @@ class Controller
         $path = '../resources/views/'. $view .'.phtml';
 
         if (!file_exists($path)) {
-            Router::redirectToError(404);
+            Router::redirectToError(501);
         }
 
         require_once $path;
