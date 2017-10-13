@@ -1,11 +1,45 @@
 <?php
-// TODO try to you __get __set
-// TODO create assignTableName method
+
 namespace Frixs\Database\Eloquent;
 
 use Frixs\Database\Connection as DB;
 use Frixs\Routing\Router;
 
+/**
+ |  Default structure for your models
+ |  ==============================================
+ |  You dont need to declare all of the attributes
+ |  if you dont need them.
+ |  But the attributes without default value must
+ |  be declared in your models.
+ |________________________________________________
+
+namespace App\Models;
+
+use Frixs\Database\Eloquent\Model;
+
+class <CLASSNAME> extends Model
+{
+    protected static $table;
+    //protected static $primaryKey = 'id';
+    //protected static $incrementing = true;
+    //protected static $alreadyLaunched = false;
+    //... another attributes
+
+    public function __construct($attributes = [])
+    {
+        // tell that model is already launched
+        static::$alreadyLaunched = true;
+
+        // assign table name by class name with plural
+        $this->assignTableName();
+
+        // you can override some attributes from the Model class via SETs
+        //static::setTable('tablename');
+    }
+}
+
+*/
 abstract class Model
 {
     /**
@@ -30,18 +64,17 @@ abstract class Model
     protected static $incrementing = true;
 
     /**
-     * Indicates if the model is launched.
+     * Indicates if the model is launched, if the model already has set table name and another attributes.
      *
      * @var bool
      */
-    public static $alreadyLaunched = false;
+    protected static $alreadyLaunched = false;
 
-    /**
-     * Create an instance.
+    /*
+     |   *************
+     |  *** METHODS ***
+     |   *************
      */
-    public function __construct($attributes = [])
-    {
-    }
 
     /**
      * Return connection instance to execute query
@@ -100,7 +133,9 @@ abstract class Model
      */
     protected function assignTableName()
     {
-        return "tablename";
+        $classNameParts = explode('\\', get_class($this));
+        $parts = preg_split("/(?=[A-Z])/", lcfirst(end($classNameParts)));
+        static::setTable(strtolower(implode('_', $parts)) .'s');
     }
 
     /**
@@ -158,7 +193,7 @@ abstract class Model
      *
      * @return bool
      */
-    public static function isAlreadyLaunched()
+    protected static function isAlreadyLaunched()
     {
         return static::$alreadyLaunched;
     }

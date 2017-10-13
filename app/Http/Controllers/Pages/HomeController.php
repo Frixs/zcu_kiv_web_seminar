@@ -9,8 +9,10 @@ class HomeController extends Controller
     public function index($name = '')
     {
         $user = $this->model('User');
-        
-        $this->view('home/index', ['name' => $user::getTable()]);
+
+        echo \Frixs\Auth\Auth::attempt(['username_clean' => 'anonymous']);
+
+        $this->view('home/index', ['name' => 'Frixs']);
     }
 
     public function test()

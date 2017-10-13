@@ -115,7 +115,7 @@ class MysqlConnection
                     $this->_results = null;
                     $this->_count   = $this->_query->rowCount();
                 } else {
-                    $this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
+                    $this->_results = $this->_query->fetchAll(\PDO::FETCH_OBJ);
                     $this->_count   = $this->_query->rowCount();
                 }
             } else {
@@ -423,7 +423,7 @@ class MysqlConnection
             //
             echo $query->get()[0]->username;
             //
-            echo $query->resultFirst()->username;
+            echo $query->getFirst()->username;
         }
         
     *************************
