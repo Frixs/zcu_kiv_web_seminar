@@ -10,7 +10,7 @@ class HomeController extends Controller
     {
         $user = $this->model('User');
         
-        $this->view('home/index', ['name' => 'noname']);
+        $this->view('home/index', ['name' => $user::getTable()]);
     }
 
     public function test()

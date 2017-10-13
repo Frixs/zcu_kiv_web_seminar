@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Frixs\Routing\Router;
+use Frixs\Language\Lang;
 
 /**
  * The main Controller
@@ -33,7 +34,7 @@ class Controller
         $path = '../resources/views/'. $view .'.phtml';
 
         if (!file_exists($path)) {
-            Router::redirectToError(501);
+            Router::redirectToError(501, Lang::get('error.failed_to_load_view', ['view' => $view]));
         }
 
         require_once $path;
