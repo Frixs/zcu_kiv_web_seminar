@@ -4,6 +4,7 @@ namespace Frixs\Database\Eloquent;
 
 use Frixs\Database\Connection as DB;
 use Frixs\Routing\Router;
+use Frixs\Config\Config;
 
 /**
  |  Default structure for your models
@@ -135,7 +136,8 @@ abstract class Model
     {
         $classNameParts = explode('\\', get_class($this));
         $parts = preg_split("/(?=[A-Z])/", lcfirst(end($classNameParts)));
-        static::setTable(strtolower(implode('_', $parts)) .'s');
+        $tablename = Config::get('database.app_table_prefix') . strtolower(implode('_', $parts)) .'s';
+        static::setTable($tablename);
     }
 
     /**
