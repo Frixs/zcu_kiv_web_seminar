@@ -121,7 +121,7 @@ abstract class Model
         for ($i = 0; $i < count($id); $i++) {
             $query = self::db()->delete(static::getTable(), [static::getPrimaryKey(), '=', $id]);
             if ($query->error()) {
-                $query->rollBack();
+                self::db()->rollBack();
                 Router::redirectToError(500);
             }
         }

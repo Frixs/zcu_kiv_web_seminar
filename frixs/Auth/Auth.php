@@ -3,9 +3,14 @@
 namespace Frixs\Auth;
 
 use App\Models\User;
+use App\Models\Session as MSession;
 use Frixs\Routing\Router;
+use Frixs\Cookie\Cookie;
+use Frixs\Session\Session;
 
-// TODO complete this class after creating the database structure
+/**
+ * Parent is general User and his parent is general Model
+ */
 class Auth extends User
 {
     /**
@@ -15,6 +20,8 @@ class Auth extends User
      */
     public static function user()
     {
+        $query = self::db()->selectAll(self::getTable(), ['id', '=', self::id()], [], 1);
+        return $query->get();
     }
 
     /**
@@ -24,6 +31,31 @@ class Auth extends User
      */
     public static function id()
     {
+        $sessionId = '';
+        $remember;
+
+        if (Cookie::exists(Config::get('auth.session_name'))) {
+            $sessionId = Cookie::get(Config::get('auth.session_name'));
+            $remember = true;
+        } elseif (Session::exists(Config::get('auth.session_name'))) {
+            $sessionId = Session::get(Config::get('auth.session_name'));
+            $remember = false;
+        } else {
+            return 0;
+        }
+
+        $query = self::db()->select(MSession::getTable(), [
+            'id', '=', $sessionId,
+            'AND', 'ip', '=', getClientIP(),
+            'AND', 'browser', '=', getClientBrowserInfo(),
+            'AND', 'remember', '=', $remember
+        ], ['user_id'], [], 1);
+
+        if ($query->count()) {
+            return $query->getFirst()->user_id;
+        }
+
+        return 0;
     }
 
     /**
@@ -33,13 +65,22 @@ class Auth extends User
      */
     public static function check()
     {
+        if (self::id() > 0) {
+            return true;
+        }
+
+        // if user has been forced logout, delete his sessions
+        Session::delete(Config::get('auth.session_name'));
+        Cookie::delete(Config::get('auth.session_name'));
+
+        return false;
     }
 
     /**
      * Check user credentials with the database. If exists grab user's ID.
      *
      * @param array $attributes
-     * @return integer              id of the user
+     * @return integer              id of the user if exists or 0
      */
     public static function attempt($attributes = [])
     {
@@ -57,7 +98,7 @@ class Auth extends User
             Router::redirectToError(500);
         }
 
-        if($query->count()){
+        if ($query->count()) {
             return $query->getFirst()->$primaryKey;
         }
 
@@ -67,21 +108,58 @@ class Auth extends User
     /**
      * Login user by the ID
      *
-     * @param integer $id
+     * @param integer $uid
      * @param bool $remember
      * @return void
      */
-    public static function login($id, $remember = false)
+    public static function login($uid, $remember = false)
     {
+        $sessionId = md5(uniqid($uid, true)) . md5(uniqid(date('Y-m-d H:i:s'), true));
+
+        $query = self::db()->insert(self::getTable(), [
+            'id' => $sessionId,
+            'user_id' => $uid,
+            'ip' => getClientIP(),
+            'browser' => getClientBrowserInfo(),
+            'session_start' => time(),
+            'remember'=> $remember
+        ]);
+
+        if (!$query) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        if ($remember) {
+            Cookie::put(Config::get('auth.session_name'), $sessionId, time() + Config::get('auth.remember_expiration'));
+        } else {
+            Session::put(Config::get('auth.session_name'), $sessionId);
+        }
     }
 
     /**
      * Logout the current logged user.
+     * Or you can logout any other user if you will setup $uid parameter.
      *
+     * @param integer $uid
      * @return void
      */
-    public static function logout()
+    public static function logout($uid = 0)
     {
+        if ($uid > 0) {
+            self::db()->delete(MSession::getTable(), ['user_id', '=', $uid]);
+            return;
+        }
+
+        $sessionId = '';
+
+        if (Cookie::exists(Config::get('auth.session_name'))) {
+            $sessionId = Cookie::get(Config::get('auth.session_name'));
+        } elseif (Session::exists(Config::get('auth.session_name'))) {
+            $sessionId = Session::get(Config::get('auth.session_name'));
+        }
+
+        self::db()->delete(MSession::getTable(), ['id', '=', $sessionId]);
     }
 
     /**
@@ -92,6 +170,7 @@ class Auth extends User
      */
     public static function guard($role)
     {
+        //TODO
     }
 
     /**

@@ -26,7 +26,9 @@ class MysqlConnection
             $this->_pdo = new \PDO('mysql:host='. Config::get('database.mysql.host') .';dbname='. Config::get('database.mysql.db_name') .';charset=utf8', Config::get('database.mysql.username'), Config::get('database.mysql.password'));
                 
             /* DEBUG attribute to show error messages */
-            //$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if (Config::get('app.developer_mode')) {
+                $this->_pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            }
         } catch (PDOException $e) {
             die($e->getMessage());
         }
@@ -62,6 +64,10 @@ class MysqlConnection
      */
     public function beginTransaction()
     {
+        if ($this->inTransaction()) {
+            return;
+        }
+        
         $this->_pdo->beginTransaction();
     }
         

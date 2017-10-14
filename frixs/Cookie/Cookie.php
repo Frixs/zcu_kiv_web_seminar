@@ -44,7 +44,7 @@ class Cookie
      */
     public static function put($name, $value, $expiry)
     {
-        if (setcookie($name, $value, time() + $expiry, '/')) {
+        if (setcookie($name, $value, $expiry, '/')) {
             return true;
         }
         return false;
@@ -58,6 +58,8 @@ class Cookie
      */
     public static function delete($name)
     {
-        self::put($name, '', time() - 1);
+        if (self::exists($name)) {
+            self::put($name, '', time() - 1);
+        }
     }
 }
