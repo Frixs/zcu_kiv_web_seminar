@@ -1,6 +1,6 @@
 <?php
 
-namespace Config\Core;
+namespace Frixs\Config;
 
 class Config
 {

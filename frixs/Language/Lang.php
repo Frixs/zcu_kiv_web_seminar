@@ -2,7 +2,7 @@
 
 namespace Frixs\Language;
 
-use Config\Core\Config;
+use Frixs\Config\Config;
 
 class Lang
 {

@@ -2,7 +2,7 @@
 
 namespace Frixs\Database;
 
-use Config\Core\Config;
+use Frixs\Config\Config;
 
 /**
  * Singleton

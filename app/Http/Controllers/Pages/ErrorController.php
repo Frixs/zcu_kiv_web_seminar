@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
-use Config\Core\Config;
+use Frixs\Config\Config;
 use Frixs\Routing\Router;
 use Frixs\Session\Session;
 

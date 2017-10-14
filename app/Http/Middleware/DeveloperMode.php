@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Frixs\Routing\Router;
-use Config\Core\Config;
+use Frixs\Config\Config;
 
 class DeveloperMode
 {

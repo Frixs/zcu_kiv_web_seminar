@@ -2,7 +2,7 @@
 
 namespace Frixs\Routing;
 
-use Config\Core\Config;
+use Frixs\Config\Config;
 use Frixs\Session\Session;
 
 class Router
