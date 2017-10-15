@@ -25,4 +25,15 @@ class User extends Model
         // you can override some attributes from the Model class via SETs
         //static::setTable('tablename');
     }
+
+    /**
+     * Get user data by ID
+     *
+     * @param integer $uid
+     * @return object
+     */
+    public static function user($uid)
+    {
+        //TODO
+    }
 }

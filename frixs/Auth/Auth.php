@@ -20,8 +20,8 @@ class Auth extends User
      */
     public static function user()
     {
-        $query = self::db()->selectAll(self::getTable(), ['id', '=', self::id()], [], 1);
-        return $query->get();
+        $query = self::db()->selectAll(self::getTable(), [User::getPrimaryKey(), '=', self::id()], [], 1);
+        return $query->getFirst();
     }
 
     /**
@@ -45,7 +45,7 @@ class Auth extends User
         }
 
         $query = self::db()->select(MSession::getTable(), [
-            'id', '=', $sessionId,
+            Msession::getPrimaryKey(), '=', $sessionId,
             'AND', 'ip', '=', getClientIP(),
             'AND', 'browser', '=', getClientBrowserInfo(),
             'AND', 'remember', '=', $remember
@@ -78,47 +78,25 @@ class Auth extends User
     }
 
     /**
-     * Check user credentials with the database. If exists grab user's ID.
+     * Verify and login the user
      *
-     * @param array $attributes
-     * @return integer              id of the user if exists or null
-     */
-    public static function attempt($attributes = [])
-    {
-        $whereCond = [];
-        $primaryKey = self::getPrimaryKey();
-
-        foreach ($attributes as $key => $value) {
-            $whereCond[] = $key;
-            $whereCond[] = '=';
-            $whereCond[] = $value;
-        }
-
-        $query = self::db()->select(self::getTable(), $whereCond, [$primaryKey], [], 1);
-        if ($query->error()) {
-            Router::redirectToError(500);
-        }
-
-        if ($query->count()) {
-            return $query->getFirst()->$primaryKey;
-        }
-
-        return null;
-    }
-
-    /**
-     * Login user by the ID
-     *
-     * @param integer $uid
+     * @param [type] $email
+     * @param [type] $password
      * @param bool $remember
-     * @return void
+     * @return bool         success of login
      */
-    public static function login($uid, $remember = false)
+    public static function login($email, $password, $remember = false)
     {
+        $uid = self::verify($email, $password);
+
+        if (!$uid) {
+            return false;
+        }
+
         $sessionId = md5(uniqid($uid, true)) . md5(uniqid(date('Y-m-d H:i:s'), true));
 
         $query = self::db()->insert(self::getTable(), [
-            'id' => $sessionId,
+            Msession::getPrimaryKey() => $sessionId,
             'user_id' => $uid,
             'ip' => getClientIP(),
             'browser' => getClientBrowserInfo(),
@@ -136,6 +114,45 @@ class Auth extends User
         } else {
             Session::put(Config::get('auth.session_name'), $sessionId);
         }
+
+        return true;
+    }
+
+    /**
+     * Check user credentials with the database. If exists grab user's ID.
+     *
+     * @param string $password
+     * @param array $attributes
+     * @return void
+     */
+    public static function verify($password, $attributes = [])
+    {
+        $whereCond = [];
+        $primaryKey = User::getPrimaryKey();
+
+        $i = 0;
+        foreach ($attributes as $key => $value) {
+            if ($i > 0) {
+                $whereCond[] = 'AND';
+            }
+
+            $whereCond[] = $key;
+            $whereCond[] = '=';
+            $whereCond[] = $value;
+
+            $i++;
+        }
+
+        $query = self::db()->select(self::getTable(), $whereCond, [$primaryKey, 'password', 'form_salt'], [], 1);
+        if ($query->error()) {
+            Router::redirectToError(500);
+        }
+
+        if (self::verifyPassword($password, $query->getFirst()->password)) {
+            return $query->getFirst()->$primaryKey;
+        }
+
+        return null;
     }
 
     /**
@@ -160,7 +177,7 @@ class Auth extends User
             $sessionId = Session::get(Config::get('auth.session_name'));
         }
 
-        self::db()->delete(MSession::getTable(), ['id', '=', $sessionId]);
+        self::db()->delete(MSession::getTable(), [Msession::getPrimaryKey(), '=', $sessionId]);
     }
 
     /**
@@ -177,12 +194,27 @@ class Auth extends User
     /**
      * Hash a password to the correct form.
      *
-     * @param integer $uid
      * @param string $password
      * @return string               Hashed password
      */
-    protected static function hashPassword($uid, $password)
+    public static function hashPassword($password)
     {
-        //TODO
+        $options = [
+            'cost' => 12,
+        ];
+
+        return password_hash($password . self::user()->form_salt, PASSWORD_BCRYPT, $options);
+    }
+
+    /**
+     * Verify password
+     *
+     * @param string $password
+     * @param string $hash
+     * @return bool
+     */
+    public static function verifyPassword($password, $hash)
+    {
+        return password_verify($password, $hash);
     }
 }
