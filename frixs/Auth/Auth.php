@@ -27,7 +27,7 @@ class Auth extends User
     /**
      * Get ID of the current logged user
      *
-     * @return integer
+     * @return integer or null
      */
     public static function id()
     {
@@ -41,7 +41,7 @@ class Auth extends User
             $sessionId = Session::get(Config::get('auth.session_name'));
             $remember = false;
         } else {
-            return 0;
+            return null;
         }
 
         $query = self::db()->select(MSession::getTable(), [
@@ -55,32 +55,33 @@ class Auth extends User
             return $query->getFirst()->user_id;
         }
 
-        return 0;
+        return null;
     }
 
     /**
      * Check if the current user is logged in.
+     * If not, user's sessions will be deleted if exists
      *
      * @return bool
      */
     public static function check()
     {
-        if (self::id() > 0) {
-            return true;
+        if (self::id() === null) {
+            // if user has been forced logout, delete his sessions
+            Session::delete(Config::get('auth.session_name'));
+            Cookie::delete(Config::get('auth.session_name'));
+
+            return false;
         }
 
-        // if user has been forced logout, delete his sessions
-        Session::delete(Config::get('auth.session_name'));
-        Cookie::delete(Config::get('auth.session_name'));
-
-        return false;
+        return true;
     }
 
     /**
      * Check user credentials with the database. If exists grab user's ID.
      *
      * @param array $attributes
-     * @return integer              id of the user if exists or 0
+     * @return integer              id of the user if exists or null
      */
     public static function attempt($attributes = [])
     {
@@ -102,7 +103,7 @@ class Auth extends User
             return $query->getFirst()->$primaryKey;
         }
 
-        return 0;
+        return null;
     }
 
     /**
@@ -182,5 +183,6 @@ class Auth extends User
      */
     protected static function hashPassword($uid, $password)
     {
+        //TODO
     }
 }
