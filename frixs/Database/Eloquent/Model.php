@@ -195,6 +195,31 @@ abstract class Model
      *
      * @return bool
      */
+    protected static function getIncrementing()
+    {
+        if (!static::isAlreadyLaunched()) {
+            new static();
+        }
+
+        return static::$incrementing;
+    }
+
+    /**
+     * Set attribute
+     *
+     * @param bool $incrementing
+     * @return void
+     */
+    protected static function setIncrementing($incrementing)
+    {
+        static::$incrementing = $incrementing;
+    }
+
+    /**
+     * Get attribute
+     *
+     * @return bool
+     */
     protected static function isAlreadyLaunched()
     {
         return static::$alreadyLaunched;

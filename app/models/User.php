@@ -32,8 +32,9 @@ class User extends Model
      * @param integer $uid
      * @return object
      */
-    public static function user($uid)
+    public static function getUser($uid)
     {
-        //TODO
+        $query = self::db()->selectAll(self::getTable(), [self::getPrimaryKey(), '=', $uid], [], 1);
+        return $query->getFirst();
     }
 }

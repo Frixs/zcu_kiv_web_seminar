@@ -20,7 +20,7 @@ class Auth extends User
      */
     public static function user()
     {
-        $query = self::db()->selectAll(self::getTable(), [User::getPrimaryKey(), '=', self::id()], [], 1);
+        $query = self::db()->selectAll(User::getTable(), [User::getPrimaryKey(), '=', self::id()], [], 1);
         return $query->getFirst();
     }
 
@@ -95,7 +95,7 @@ class Auth extends User
 
         $sessionId = md5(uniqid($uid, true)) . md5(uniqid(date('Y-m-d H:i:s'), true));
 
-        $query = self::db()->insert(self::getTable(), [
+        $query = self::db()->insert(User::getTable(), [
             Msession::getPrimaryKey() => $sessionId,
             'user_id' => $uid,
             'ip' => getClientIP(),
@@ -143,12 +143,12 @@ class Auth extends User
             $i++;
         }
 
-        $query = self::db()->select(self::getTable(), $whereCond, [$primaryKey, 'password', 'form_salt'], [], 1);
+        $query = self::db()->select(User::getTable(), $whereCond, [$primaryKey, 'password', 'form_salt'], [], 1);
         if ($query->error()) {
             Router::redirectToError(500);
         }
 
-        if (self::verifyPassword($password, $query->getFirst()->password)) {
+        if (self::verifyPassword($password . $query->getFirst()->form_salt, $query->getFirst()->password)) {
             return $query->getFirst()->$primaryKey;
         }
 
