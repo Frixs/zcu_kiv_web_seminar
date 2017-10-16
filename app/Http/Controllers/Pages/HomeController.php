@@ -15,9 +15,4 @@ class HomeController extends Controller
 
         $this->view('home/index', ['name' => 'Frixs']);
     }
-
-    public function test()
-    {
-        $this->view('home/test');
-    }
 }
