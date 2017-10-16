@@ -12,6 +12,7 @@ class Kernel
      */
     protected static $middleware = [
         'DeveloperMode',
+        'InputValidation',
     ];
 
     /**
@@ -32,7 +33,7 @@ class Kernel
      */
     protected static $routeMiddleware = [
         'home' => [
-            'Authenticate',
+            'Authentication',
             //'SomeMiddleware'
         ],
         'home.index' => [

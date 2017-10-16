@@ -33,6 +33,24 @@ class Input
     }
 
     /**
+     * Returns input array like $_POST or $_GET
+     *
+     * @param string $type
+     * @return array or null
+     */
+    public static function getAll($type)
+    {
+        switch ($type) {
+            case 'post':
+                return $_POST;
+            case 'get':
+                return $_GET;
+        }
+
+        return null;
+    }
+
+    /**
      * Get input value
      *
      * @param [type] $item  input name

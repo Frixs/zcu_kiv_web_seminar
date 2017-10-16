@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Requests;
 
-use Frixs\Http;
+use Frixs\Http\Request;
 
 class LoginFormRequest extends Request
 {

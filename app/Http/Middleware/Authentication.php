@@ -4,10 +4,11 @@ namespace App\Http\Middleware;
 
 use Frixs\Routing\Router;
 
-class Authenticate
+class Authentication
 {
     public static function validate()
     {
+        //TODO
         //Router::redirectToError(404);
         return true;
     }
