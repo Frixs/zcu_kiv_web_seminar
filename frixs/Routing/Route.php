@@ -3,6 +3,7 @@
 namespace Frixs\Routing;
 
 use App\Http\Kernel;
+use \Frixs\Routing\RouteRequest;
 
 class Route
 {
@@ -46,24 +47,34 @@ class Route
      *
      * @var string
      */
-    private $controllerPostfix = 'Controller';
+    protected $controllerPostfix = 'Controller';
 
     /**
      * Create a new Route instance
      */
     public function __construct()
     {
+        // check if URL contains request execution.
+        if ((new RouteRequest())->requestExists()) {
+            return;
+        }
+
+        // Parse the URL address to an array.
         $this->url = $this->parseUrl();
 
+        // Parse the next parameter of the URL and check if Controller exists.
         $this->parseController();
         
+        // Put name of the controller into a full name.
         $controllerFullName = '\\App\\Http\\Controllers\\Pages\\'. $this->getControllerFullName();
 
+        // Create the controller's instance
         $this->controllerInstance = new $controllerFullName();
 
+        // Parse the next parameter of the URL and check if method exists in your controller.
         $this->parseMethod();
 
-        // rest of the url are method parameters
+        // Rest of the url are method parameters.
         $this->bindParameters();
 
         // Run the mail validation tests (middleware)
@@ -132,11 +143,17 @@ class Route
     /**
      * Get current requested controller in the correct format
      *
+     * @param string $name
      * @return void
      */
-    protected function getControllerFullName()
+    protected function getControllerFullName($name = null)
     {
-        return $this->convertToStudlyCaps($this->controller) . $this->controllerPostfix;
+        $controllerName = $this->controller;
+        if (isset($name)) {
+            $controllerName = $name;
+        }
+
+        return $this->convertToStudlyCaps($controllerName) . $this->controllerPostfix;
     }
 
     /**
@@ -146,7 +163,9 @@ class Route
      */
     protected function parseController()
     {
-        if (file_exists('../app/Http/Controllers/Pages/'. $this->url[0] . $this->controllerPostfix .'.php')) {
+        $controllerFullname = $this->getControllerFullName((isset($this->url[0]) ? $this->url[0] : ''));
+
+        if (file_exists('../app/Http/Controllers/Pages/'. $controllerFullname .'.php')) {
             $this->controller = $this->url[0];
             unset($this->url[0]);
         }

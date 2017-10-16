@@ -9,5 +9,6 @@ class LoginFormRequest extends Request
     public function process()
     {
         //TODO
+        echo "Request executed!";exit();
     }
 }
