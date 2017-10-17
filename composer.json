@@ -7,7 +7,9 @@
             "email": "frixs@users.noreply.github.com"
         }
     ],
-    "require": {},
+    "require": {
+        "philo/laravel-blade": "^3.1"
+    },
 
     "autoload": {
         "psr-4": {

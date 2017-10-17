@@ -13,6 +13,6 @@ class HomeController extends Controller
         echo \Frixs\Auth\Auth::verify('pwd', ['username_clean' => 'anonymous']);
         //\Frixs\Auth\Auth::login(1, false);
 
-        $this->view('home/index', ['name' => 'Frixs']);
+        $this->view('home.index', ['name' => 'Frixs']);
     }
 }

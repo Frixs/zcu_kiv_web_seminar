@@ -1,4 +1,4 @@
-Hello <?= $data['name'] ?>
+Hello {{ $name }}
 
 <br>
 <a href="http://www/School/zcu_kiv_web_seminar/public/">public</a>

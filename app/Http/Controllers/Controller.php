@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Frixs\Routing\Router;
 use Frixs\Language\Lang;
+use Philo\Blade\Blade;
 
 /**
  * The main Controller
@@ -31,12 +32,25 @@ class Controller
      */
     public function view($view, $data = [])
     {
-        $path = '../resources/views/'. $view .'.phtml';
+        $views = '../resources/views';
+        $cache = '../storage/framework/cache';
+        $path  = $views . '/'. str_replace('.', '/', $view) .'.blade.php';
+
+        if (!file_exists($path)) {
+            Router::redirectToError(501, Lang::get('error.failed_to_load_view', ['view' => $view]));
+        }
+
+        $blade = new Blade($views, $cache);
+        echo $blade->view()->make($view, $data)->render();
+
+        /* Just with vanilla
+        $path = '../resources/views/'. str_replace('.', '/', $view) .'.phtml';
 
         if (!file_exists($path)) {
             Router::redirectToError(501, Lang::get('error.failed_to_load_view', ['view' => $view]));
         }
 
         require_once $path;
+        */
     }
 }

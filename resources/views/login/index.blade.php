@@ -1,5 +1,5 @@
 <div class="container">
-	<h2>Horizontal form</h2>
+	<h2>{{ $variable_name }}</h2>
 	<form class="form-horizontal" action="_request/login-form" method="post">
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="email">Email:</label>
@@ -13,7 +13,7 @@
 				<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
 			</div>
 		</div>
-		<div class="form-group">        
+		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<div class="checkbox">
 					<label><input type="checkbox" name="remember"> Remember me</label>
