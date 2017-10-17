@@ -3,13 +3,16 @@
 namespace App\Http\Middleware;
 
 use Frixs\Routing\Router;
+use Frixs\Auth\Auth;
 
 class Authentication
 {
     public static function validate()
     {
-        //TODO
-        //Router::redirectToError(404);
-        return true;
+        if (Auth::check()) {
+            return true;
+        }
+        
+        Router::redirectTo('login');
     }
 }

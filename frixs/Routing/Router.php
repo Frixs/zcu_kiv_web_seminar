@@ -15,10 +15,11 @@ class Router
      * Redirect to a page
      *
      * @param string $path
+     * @param bool $includeAppRoot      Redirect without App root path prefix to be able to enter whole URL, f.e. directed to foreign websize.
      * @param integer $status
      * @return void
      */
-    public static function redirectTo($path, $status = 301)
+    public static function redirectTo($path, $includeAppRoot = true, $status = 301)
     {
         if (!is_string($path)) {
             self::redirectToError(500);
@@ -26,6 +27,10 @@ class Router
 
         if ($status == 301) {
             header('HTTP/1.1 301 Moved Permanently');
+        }
+
+        if ($includeAppRoot) {
+            $path = Config::get('app.root') .'/'. $path;
         }
 
         header('Location: '. $path, true, $status);
