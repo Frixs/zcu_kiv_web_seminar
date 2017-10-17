@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Frixs\Database\Eloquent\Model;
 
-class Session extends Model
+class UserGroup extends Model
 {
     protected static $table;
     protected static $alreadyLaunched = false;
-    //protected static $primaryKey = 'id';
+    protected static $primaryKey = null;
     protected static $incrementing = false;
     //... another attributes
 

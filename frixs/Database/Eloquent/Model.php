@@ -22,9 +22,9 @@ use Frixs\Database\Eloquent\Model;
 class <CLASSNAME> extends Model
 {
     protected static $table;
+    protected static $alreadyLaunched = false;
     //protected static $primaryKey = 'id';
     //protected static $incrementing = true;
-    //protected static $alreadyLaunched = false;
     //... another attributes
 
     public function __construct($attributes = [])
@@ -51,6 +51,13 @@ abstract class Model
     protected static $table;
 
     /**
+     * Indicates if the model is launched, if the model already has set table name and another attributes.
+     *
+     * @var bool
+     */
+    protected static $alreadyLaunched = false;
+
+    /**
      * The primary key for the model.
      *
      * @var string
@@ -63,13 +70,6 @@ abstract class Model
      * @var bool
      */
     protected static $incrementing = true;
-
-    /**
-     * Indicates if the model is launched, if the model already has set table name and another attributes.
-     *
-     * @var bool
-     */
-    protected static $alreadyLaunched = false;
 
     /*
      |   *************
@@ -145,9 +145,10 @@ abstract class Model
      *
      * @return string
      */
-    protected static function getTable()
+    public static function getTable()
     {
         if (!static::isAlreadyLaunched()) {
+            echo "XXX";
             new static();
         }
 
@@ -168,7 +169,7 @@ abstract class Model
     /**
      * Get attribute
      *
-     * @return string
+     * @return string or null if table is M:N
      */
     protected static function getPrimaryKey()
     {

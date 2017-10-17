@@ -4,6 +4,7 @@ namespace Frixs\Auth;
 
 use App\Models\User;
 use App\Models\Session as MSession;
+use Frixs\Config\Config;
 use Frixs\Routing\Router;
 use Frixs\Cookie\Cookie;
 use Frixs\Session\Session;
