@@ -4,6 +4,7 @@ namespace Frixs\Routing;
 
 use Frixs\Routing\Router;
 use Frixs\Language\Lang;
+use Frixs\Http\Input;
 
 class RouteRequest extends Route
 {
@@ -47,6 +48,11 @@ class RouteRequest extends Route
      */
     public function __construct()
     {
+        // First of all, check legitimity of access to the request.
+        if (!$this->isAccessLegit()) {
+            return;
+        }
+
         // Parse the URL address to an array.
         $this->url = $this->parseUrl();
 
@@ -111,5 +117,20 @@ class RouteRequest extends Route
     public function requestExists()
     {
         return $this->requestExists;
+    }
+
+    /**
+     * Check legitimity of access to the request.
+     *
+     * @return boolean
+     */
+    protected function isAccessLegit()
+    {
+        // You can access to the request with POST.
+        if (!Input::exists('post')) {
+            return false;
+        }
+
+        return true;
     }
 }
