@@ -9,11 +9,9 @@ use Frixs\Config\Config;
 /**
  |  Default structure for your models
  |  ==============================================
- |  You dont need to declare all of the attributes
- |  if you dont need them.
- |  But the attributes without default value must
- |  be declared in your models.
  |________________________________________________
+
+<?php
 
 namespace App\Models;
 
@@ -21,56 +19,22 @@ use Frixs\Database\Eloquent\Model;
 
 class <CLASSNAME> extends Model
 {
-    protected static $table;
-    protected static $alreadyLaunched = false;
-    //protected static $primaryKey = 'id';
-    //protected static $incrementing = true;
-    //... another attributes
+    // Use Model parameters.
+    use \Frixs\Database\Eloquent\ModelParameters;
 
     public function __construct($attributes = [])
     {
-        // tell that model is already launched
-        static::$alreadyLaunched = true;
+        $this->initModel();
 
-        // assign table name by class name with plural
-        $this->assignTableName();
-
-        // you can override some attributes from the Model class via SETs
-        //static::setTable('tablename');
+        // You can override attributes from the Model class via SETs.
+        //static::setTable('TABLE_NAME');
     }
 }
 
+__________________________________________________
 */
 abstract class Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected static $table;
-
-    /**
-     * Indicates if the model is launched, if the model already has set table name and another attributes.
-     *
-     * @var bool
-     */
-    protected static $alreadyLaunched = false;
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected static $primaryKey = 'id';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    protected static $incrementing = true;
-
     /*
      |   *************
      |  *** METHODS ***
@@ -125,104 +89,5 @@ abstract class Model
                 Router::redirectToError(500);
             }
         }
-    }
-
-    /**
-     * Returns table name according to class name with plural
-     *
-     * @return void
-     */
-    protected function assignTableName()
-    {
-        $classNameParts = explode('\\', get_class($this));
-        $parts = preg_split("/(?=[A-Z])/", lcfirst(end($classNameParts)));
-        $tablename = Config::get('database.app_table_prefix') . strtolower(implode('_', $parts)) .'s';
-        static::setTable($tablename);
-    }
-
-    /**
-     * Get attribute
-     *
-     * @return string
-     */
-    public static function getTable()
-    {
-        if (!static::isAlreadyLaunched()) {
-            echo "XXX";
-            new static();
-        }
-
-        return static::$table;
-    }
-
-    /**
-     * Set attribute
-     *
-     * @param string $table
-     * @return void
-     */
-    protected static function setTable($table)
-    {
-        static::$table = $table;
-    }
-
-    /**
-     * Get attribute
-     *
-     * @return string or null if table is M:N
-     */
-    protected static function getPrimaryKey()
-    {
-        if (!static::isAlreadyLaunched()) {
-            new static();
-        }
-
-        return static::$primaryKey;
-    }
-
-    /**
-     * Set attribute
-     *
-     * @param string $primaryKey
-     * @return void
-     */
-    protected static function setPrimaryKey($primaryKey)
-    {
-        static::$primaryKey = $primaryKey;
-    }
-
-    /**
-     * Get attribute
-     *
-     * @return bool
-     */
-    protected static function getIncrementing()
-    {
-        if (!static::isAlreadyLaunched()) {
-            new static();
-        }
-
-        return static::$incrementing;
-    }
-
-    /**
-     * Set attribute
-     *
-     * @param bool $incrementing
-     * @return void
-     */
-    protected static function setIncrementing($incrementing)
-    {
-        static::$incrementing = $incrementing;
-    }
-
-    /**
-     * Get attribute
-     *
-     * @return bool
-     */
-    protected static function isAlreadyLaunched()
-    {
-        return static::$alreadyLaunched;
     }
 }

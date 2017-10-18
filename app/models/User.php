@@ -6,25 +6,18 @@ use Frixs\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected static $table;
-    protected static $alreadyLaunched = false;
-    //protected static $primaryKey = 'id';
-    //protected static $incrementing = true;
-    //... another attributes
+    // Use Model parameters.
+    use \Frixs\Database\Eloquent\ModelParameters;
 
     /**
-     * Create an instance.
+     * Create an instance of the model.
      */
     public function __construct($attributes = [])
     {
-        // tell model already launched
-        static::$alreadyLaunched = true;
+        $this->initModel();
 
-        // assign table name by class name with plural
-        $this->assignTableName();
-
-        // you can override some attributes from the Model class via SETs
-        //static::setTable('tablename');
+        // You can override attributes from the Model class via SETs.
+        //static::setTable('TABLE_NAME');
     }
 
     /**

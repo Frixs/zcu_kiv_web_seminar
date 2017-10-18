@@ -3,7 +3,7 @@
 namespace Frixs\Auth;
 
 use App\Models\User;
-use App\Models\Session as MSession;
+use App\Models\Session as SessionModel;
 use Frixs\Config\Config;
 use Frixs\Routing\Router;
 use Frixs\Cookie\Cookie;
@@ -45,8 +45,8 @@ class Auth extends User
             return null;
         }
 
-        $query = self::db()->select(MSession::getTable(), [
-            Msession::getPrimaryKey(), '=', $sessionId,
+        $query = self::db()->select(SessionModel::getTable(), [
+            SessionModel::getPrimaryKey(), '=', $sessionId,
             'AND', 'ip', '=', getClientIP(),
             'AND', 'browser', '=', getClientBrowserInfo(),
             'AND', 'remember', '=', $remember
@@ -97,7 +97,7 @@ class Auth extends User
         $sessionId = md5(uniqid($uid, true)) . md5(uniqid(date('Y-m-d H:i:s'), true));
 
         $query = self::db()->insert(User::getTable(), [
-            Msession::getPrimaryKey() => $sessionId,
+            SessionModel::getPrimaryKey() => $sessionId,
             'user_id' => $uid,
             'ip' => getClientIP(),
             'browser' => getClientBrowserInfo(),
@@ -166,7 +166,7 @@ class Auth extends User
     public static function logout($uid = 0)
     {
         if ($uid > 0) {
-            self::db()->delete(MSession::getTable(), ['user_id', '=', $uid]);
+            self::db()->delete(SessionModel::getTable(), ['user_id', '=', $uid]);
             return;
         }
 
@@ -178,7 +178,7 @@ class Auth extends User
             $sessionId = Session::get(Config::get('auth.session_name'));
         }
 
-        self::db()->delete(MSession::getTable(), [Msession::getPrimaryKey(), '=', $sessionId]);
+        self::db()->delete(SessionModel::getTable(), [SessionModel::getPrimaryKey(), '=', $sessionId]);
     }
 
     /**
