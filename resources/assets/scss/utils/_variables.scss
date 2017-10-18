@@ -1,0 +1,38 @@
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Suez+One|Rock+Salt|Didact+Gothic&amp;subset=cyrillic|Coming+Soon');
+
+// Font variables
+//$font_title_01:     'Rock Salt', cursive;
+//$font_title_03:     'Suez One', serif;
+//$font_message:      'Coming Soon', cursive;
+//$font_common:       'Didact Gothic', sans-serif;
+
+/* --- */
+
+$purple_01: #0b090b;
+$purple_02: #1c1519;
+$purple_03: #322d34;
+$purple_04: #ac88bc;
+$purple_05: #9b919f;
+$orange_01: #e9b173;
+$orange_02: #ffa71a;
+$orange_03: #52370b;
+$orange_04: #f4e5cd;
+$orange_05: #34312a;
+$brown_01:  #553a22;
+$red_01:    #E66161;
+$green_01:  #2aba07;
+$context-color: #fff;
+
+/* --- */
+
+/* default font size */
+$font_size_def: 12px;
+/* footer height */
+$footer_height: 200px;
+/* body side margin from edge */
+$body_margin: 50px;
+/* body side margin from edge - mobile size */
+$body_margin_mobile: 15px;
+/* maximal content width */
+$body_content_width: 1060px;

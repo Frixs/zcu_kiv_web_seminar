@@ -1,0 +1,73 @@
+@mixin gradient-top-bottom($colorTop, $colorBot)
+{
+    background: $colorBot;                                      /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient($colorTop,  $colorBot); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient($colorTop,  $colorBot);      /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient($colorTop,  $colorBot);    /* For Firefox 3.6 to 15 */
+    background: linear-gradient($colorTop,  $colorBot);         /* Standard syntax */
+}
+
+@mixin gradient($defColor, $gradient)
+{
+    background: $defColor;
+    background: -webkit-linear-gradient($gradient);
+    background: -o-linear-gradient($gradient);
+    background: -moz-linear-gradient($gradient);
+    background: linear-gradient($gradient);
+}
+
+@mixin text-gradient-top-bottom($colorTop, $colorBot)
+{
+    background: -webkit-linear-gradient($colorTop, $colorBot);
+    background: -o-linear-gradient($colorTop, $colorBot);
+    background: -moz-linear-gradient($colorTop, $colorBot);
+    background: linear-gradient($colorTop, $colorBot);
+    -webkit-background-clip: text;
+    -o-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -o-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    text-fill-color: transparent;
+}
+
+@mixin animation($animate)
+{
+    -webkit-animation: $animate;
+    -moz-animation:    $animate;
+    -o-animation:      $animate;
+    animation:         $animate;
+}
+/*
+        @include animation('page-home-footer-edge-highlight-anim 2.5s infinite alternate');
+*/
+
+@mixin keyframes($animationName)
+{
+    @-webkit-keyframes #{$animationName}
+    {
+        @content;
+    }
+    @-moz-keyframes #{$animationName}
+    {
+        @content;
+    }
+    @-o-keyframes #{$animationName}
+    {
+        @content;
+    }
+    @keyframes #{$animationName}
+    {
+        @content;
+    }
+}
+/*
+        @include keyframes(page-home-footer-edge-highlight-anim)
+        {
+            0%    { opacity: 1; }
+            50%   { opacity: .9; }
+            80%   { opacity: 1; }
+            100%  { opacity: .95; }
+        }
+*/

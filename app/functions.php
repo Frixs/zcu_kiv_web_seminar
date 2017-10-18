@@ -6,6 +6,7 @@
  */
 
 use Frixs\Config\Config;
+use Frixs\Language\Lang;
 use Frixs\Routing\Router;
 
 function instance($classname, $parameters = [])

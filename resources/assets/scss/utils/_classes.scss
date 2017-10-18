@@ -1,0 +1,25 @@
+.gc-hidden
+{
+    display: none;
+}
+
+.gc-hidden-i
+{
+    display: none !important;
+}
+
+.gc-hidden-overflow
+{
+    overflow: hidden;
+}
+
+.gc-hidden-scrollbar::-webkit-scrollbar
+{
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.gc-cleaner
+{
+    clear: both;
+}
