@@ -7,10 +7,6 @@ use Frixs\Session\Session;
 
 class Router
 {
-    public function __construct()
-    {
-    }
-
     /**
      * Redirect to a page
      *

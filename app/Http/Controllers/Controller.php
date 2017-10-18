@@ -33,7 +33,7 @@ class Controller
     public function view($view, $data = [])
     {
         $views = '../resources/views';
-        $cache = '../storage/framework/cache';
+        $cache = '../app/storage/cache';
         $path  = $views . '/'. str_replace('.', '/', $view) .'.blade.php';
 
         if (!file_exists($path)) {

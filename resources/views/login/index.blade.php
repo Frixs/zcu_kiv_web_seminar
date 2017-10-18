@@ -1,4 +1,14 @@
-<div class="container">
+@extends('layouts.plain')
+
+@section('title', 'Login')
+
+@section('sidebar')
+    @parent
+
+    <p>This is appended to the master sidebar.</p>
+@endsection
+
+@section('content')
 	<h2>{{ $variable_name }}</h2>
 	<form class="form-horizontal" action="_request/login-form" method="post">
 		<div class="form-group">
@@ -20,10 +30,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">        
+		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-default">Submit</button>
 			</div>
 		</div>
 	</form>
-</div>
+@endsection

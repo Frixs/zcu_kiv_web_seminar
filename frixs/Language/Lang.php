@@ -8,7 +8,12 @@ class Lang
 {
     private static $_data = [];
 
-    public function __construct()
+    /**
+     * Initialize the Lang. Load all data.
+     *
+     * @return void
+     */
+    public static function init()
     {
         $langpath = '../resources/lang/'. Config::get('app.locale');
         

@@ -5,18 +5,18 @@
  * It is very useful f.e. if you need to call some Lang or Confing in your views. You dont need to define 'use' path.
  */
 
-use Frixs\Language\Lang;
+use Frixs\Config\Config;
+use Frixs\Routing\Router;
 
-/**
- * Get language string
- *
- * @param string $path
- * @param array $parameters
- * @return string
- */
-function getLang($path, $parameters = [])
+function instance($classname, $parameters = [])
 {
-    return Lang::get($path, $parameters);
+    if (!array_key_exists($classname, Config::get('app.aliases'))) {
+        Router::redirectToError(501, Lang::get('error.failed_to_recognize_alias', ['alias' => $classname]));
+    }
+
+    $class = Config::get('app.aliases')[$classname];
+
+    return new $class(implode(', ', $parameters));
 }
 
 /**

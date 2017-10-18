@@ -8,6 +8,13 @@ use \Frixs\Routing\RouteRequest;
 class Route
 {
     /**
+     * Singleton
+     *
+     * @var object
+     */
+    private static $_instance = null;
+
+    /**
      * The URL pattern the route responds to
      *
      * @var array
@@ -52,10 +59,10 @@ class Route
     /**
      * Create a new Route instance
      */
-    public function __construct()
+    private function __construct()
     {
         // check if URL contains request execution.
-        if ((new RouteRequest())->requestExists()) {
+        if (RouteRequest::getInstance()->requestExists()) {
             return;
         }
 
@@ -82,6 +89,19 @@ class Route
             // call the controller's method
             $this->callControllerMethod($this->controllerInstance, $this->method, $this->parameters);
         }
+    }
+
+    /**
+     * Singleton model object, get instance of it.
+     *
+     * @return object
+     */
+    public static function getInstance()
+    {
+        if (!isset(self::$_instance)) {
+            self::$_instance = new Route();
+        }
+        return self::$_instance;
     }
 
     /**
