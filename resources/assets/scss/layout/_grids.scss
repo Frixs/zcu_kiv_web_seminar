@@ -11,30 +11,30 @@ html
 
 body
 {
-    background-color: $purple-02;
-    font-size: $font_size_def;
-    color: $context-color;
+    background-color: $body-bg;
+    font-size: $font-size-base;
+    color: $font-color-base;
 }
 
 ::selection
 {
-    background: $orange_02;
+    background: $color-orange-light-10;
 }
 ::-moz-selection
 {
-    background: $orange_02;
+    background: $color-orange-light-10;
 }
 ::-o-selection
 {
-    background: $orange_02;        
+    background: $color-orange-light-10;        
 }
 ::-ms-selection
 {
-    background: $orange_02;        
+    background: $color-orange-light-10;        
 }
 ::-webkit-selection
 {
-    background: $orange_02;        
+    background: $color-orange-light-10;        
 }
 
 /* Let's get this party started */
@@ -46,17 +46,17 @@ body
 ::-webkit-scrollbar-track
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color: $purple_01;
+    background-color: $color-gray-dark-30;
 }
 /* Handle */
 ::-webkit-scrollbar-thumb
 {
-    background: $purple_03; 
+    background: $color-gray-dark-10; 
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive
 {
-	background: $purple_03; 
+	background: $color-gray-dark-10; 
 }
 
 /* Page Pre Loader */
@@ -67,7 +67,7 @@ body
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    background-color: $purple_01;
+    background-color: $color-gray-dark-30;
     
     img
     {

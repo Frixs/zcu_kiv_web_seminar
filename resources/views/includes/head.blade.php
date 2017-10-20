@@ -13,4 +13,11 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- <link rel="stylesheet" href="../css/styles.css?v=1.0"> -->
+<!-- Flat-UI styles -->
+<!-- http://designmodo.github.io/Flat-UI/docs/components.html -->
+<link rel="stylesheet" href="css/vendor/Flat-UI-2.3.0/dist/css/flat-ui.css">
+<!-- Flat-UI JavaScript -->
+<script src="css/vendor/Flat-UI-2.3.0/dist/js/flat-ui.js"></script>
+
+<!-- App CSS -->
+<link rel="stylesheet" href="css/app.css">

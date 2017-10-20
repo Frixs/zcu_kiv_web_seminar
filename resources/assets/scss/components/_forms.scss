@@ -1,1 +1,15 @@
 /* Global Forms */
+
+input[type=email],
+input[type=text],
+input[type=number],
+input[type=password] {
+    background-color: $color-gray-light-20;
+    color: $font-color-base;
+
+    &:focus {
+        border-color: $color-gray-light-30;
+        background-color: $color-gray-light-30;
+        color: $font-color-focus;
+    }
+}
