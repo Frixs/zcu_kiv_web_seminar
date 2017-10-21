@@ -23,3 +23,36 @@
 {
     clear: both;
 }
+
+.gc-text-center {
+    text-align: center;
+}
+
+.gc-text-right {
+    text-align: right;
+}
+
+.gc-text-left {
+    text-align: left;
+}
+
+.gc-block-center {
+    display: block;
+    margin: auto;
+}
+
+.gc-float-left {
+    float: left;
+}
+
+.gc-float-right {
+    float: right;
+}
+
+.gc-col-nosp-left {
+    padding-left: 0;
+}
+
+.gc-col-nosp-right {
+    padding-right: 0;
+}

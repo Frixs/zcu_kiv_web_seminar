@@ -1,9 +1,32 @@
 /* Global Forms */
 
+form.form-horizontal {
+    margin-bottom: 15px;
+}
+
+div.form-group {
+    margin-bottom: 15px;
+
+    &.has-error {
+        input::placeholder, textarea, label {
+            color: $color-red-normal;
+            border-color: $color-red-normal;
+        }
+    }
+
+    &.has-success {
+        input::placeholder, textarea, label {
+            color: $color-green-normal;
+            border-color: $color-green-normal;
+        }
+    }
+}
+
 input[type=email],
 input[type=text],
 input[type=number],
 input[type=password] {
+    border-color: $color-gray-light-20;
     background-color: $color-gray-light-20;
     color: $font-color-base;
 
@@ -12,4 +35,22 @@ input[type=password] {
         background-color: $color-gray-light-30;
         color: $font-color-focus;
     }
+
+    &.__input-dark {
+        border-color: $color-gray-light-10;
+        background-color: $color-gray-light-10;
+        color: $font-color-base;
+
+        &:focus {
+            border-color: $color-gray-light-20;
+            background-color: $color-gray-light-20;
+            color: $font-color-focus;
+        }
+    }
+}
+
+label.control-label {
+    line-height: 36px;
+    height: 42px;
+    padding-right: 0px;
 }

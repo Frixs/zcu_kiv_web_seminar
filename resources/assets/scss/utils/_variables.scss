@@ -7,22 +7,27 @@
 //
 //##
 
-$color-gray-light-30:       #666666;
-$color-gray-light-20:       #535353;
-$color-gray-light-10:       #444444;
+$color-gray-light-40:       #7a7476;
+$color-gray-light-30:       #4d4548;
+$color-gray-light-20:       #3b3437;
+$color-gray-light-10:       #2b2427;
 
-$color-gray-normal:         #363636;
+$color-gray-normal:         #221c1f;
 
-$color-gray-dark-10:        #363636;
-$color-gray-dark-20:        #2e2e2e;
-$color-gray-dark-30:        #272727;
+$color-gray-dark-10:        #1b1518;
+$color-gray-dark-20:        #110f10;
+$color-gray-dark-30:        #0c090a;
 
 $color-clouds:              #ecf0f1;
 $color-white:               #fff;
 
-$color-orange-light-10:     #f5aa59;
-$color-orange-normal:       #f79a30;
-$color-orange-dark-10:      #eb791d;
+$color-orange-light-10:     #f5c151;
+$color-orange-normal:       #e6ab2c;
+$color-orange-dark-10:      #d6991f;
+
+$color-red-normal:          #d42e2e;
+
+$color-green-normal:        #59bb2b;
 
 //== Scaffolding
 //
@@ -32,8 +37,11 @@ $body-bg:                   $color-gray-normal;
 $text-color:                $color-clouds;
 
 $footer-height:             200px;
-$body-padding-mobile:       10px;
+$body-margin:               15px;
+$body-margin-mobile:        15px;
 $body-max-width:            960px;
+$content-padding:           15px;
+$border-radius:             1px;
 
 //== Typography
 //
@@ -43,6 +51,7 @@ $body-max-width:            960px;
 //$font-family-demo:              "Helvetica Neue", Helvetica, Arial, sans-serif;
 //$font-family-monospace:          Monaco, Menlo, Consolas, "Courier New", monospace;
 $font-size-base:                 18px;
+$font-size-small:                14px;
 $font-color-base:                $color-clouds;
 $font-color-focus:               $color-white;
 

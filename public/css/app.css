@@ -27,6 +27,31 @@
 .gc-cleaner {
   clear: both; }
 
+.gc-text-center {
+  text-align: center; }
+
+.gc-text-right, .login-wrapper .login-form-wrapper .login-supplement-wrapper {
+  text-align: right; }
+
+.gc-text-left {
+  text-align: left; }
+
+.gc-block-center {
+  display: block;
+  margin: auto; }
+
+.gc-float-left {
+  float: left; }
+
+.gc-float-right, .login-wrapper .login-form-wrapper .login-supplement-wrapper, .login-wrapper .fast-login-wrapper {
+  float: right; }
+
+.gc-col-nosp-left {
+  padding-left: 0; }
+
+.gc-col-nosp-right {
+  padding-right: 0; }
+
 html, body {
   padding: 0;
   margin: 0; }
@@ -226,20 +251,67 @@ html, body {
     transform: rotate(0deg); } }
 
 /* Global buttons */
+.btn-primary {
+  text-transform: uppercase; }
+
 /* Global Forms */
+form.form-horizontal {
+  margin-bottom: 15px; }
+
+div.form-group {
+  margin-bottom: 15px; }
+  div.form-group.has-error input::-webkit-input-placeholder, div.form-group.has-error textarea, div.form-group.has-error label {
+    color: #d42e2e;
+    border-color: #d42e2e; }
+  div.form-group.has-error input:-ms-input-placeholder, div.form-group.has-error textarea, div.form-group.has-error label {
+    color: #d42e2e;
+    border-color: #d42e2e; }
+  div.form-group.has-error input::placeholder, div.form-group.has-error textarea, div.form-group.has-error label {
+    color: #d42e2e;
+    border-color: #d42e2e; }
+  div.form-group.has-success input::-webkit-input-placeholder, div.form-group.has-success textarea, div.form-group.has-success label {
+    color: #59bb2b;
+    border-color: #59bb2b; }
+  div.form-group.has-success input:-ms-input-placeholder, div.form-group.has-success textarea, div.form-group.has-success label {
+    color: #59bb2b;
+    border-color: #59bb2b; }
+  div.form-group.has-success input::placeholder, div.form-group.has-success textarea, div.form-group.has-success label {
+    color: #59bb2b;
+    border-color: #59bb2b; }
+
 input[type=email],
 input[type=text],
 input[type=number],
 input[type=password] {
-  background-color: #535353;
+  border-color: #3b3437;
+  background-color: #3b3437;
   color: #ecf0f1; }
   input[type=email]:focus,
   input[type=text]:focus,
   input[type=number]:focus,
   input[type=password]:focus {
-    border-color: #666666;
-    background-color: #666666;
+    border-color: #4d4548;
+    background-color: #4d4548;
     color: #fff; }
+  input[type=email].__input-dark,
+  input[type=text].__input-dark,
+  input[type=number].__input-dark,
+  input[type=password].__input-dark {
+    border-color: #2b2427;
+    background-color: #2b2427;
+    color: #ecf0f1; }
+    input[type=email].__input-dark:focus,
+    input[type=text].__input-dark:focus,
+    input[type=number].__input-dark:focus,
+    input[type=password].__input-dark:focus {
+      border-color: #3b3437;
+      background-color: #3b3437;
+      color: #fff; }
+
+label.control-label {
+  line-height: 36px;
+  height: 42px;
+  padding-right: 0px; }
 
 /* Icons/Avatars */
 /* Global dialog windows or wrappers */
@@ -247,33 +319,34 @@ input[type=password] {
 /* Pagination */
 /* Notifications */
 html, body {
+  position: relative;
   height: 100%; }
 
 html {
   overflow-y: scroll; }
 
 body {
-  background-color: #363636;
+  background-color: #221c1f;
   font-size: 18px;
   color: #ecf0f1; }
 
 ::-moz-selection {
-  background: #f5aa59; }
+  background: #f5c151; }
 
 ::selection {
-  background: #f5aa59; }
+  background: #f5c151; }
 
 ::-moz-selection {
-  background: #f5aa59; }
+  background: #f5c151; }
 
 ::-o-selection {
-  background: #f5aa59; }
+  background: #f5c151; }
 
 ::-ms-selection {
-  background: #f5aa59; }
+  background: #f5c151; }
 
 ::-webkit-selection {
-  background: #f5aa59; }
+  background: #f5c151; }
 
 /* Let's get this party started */
 ::-webkit-scrollbar {
@@ -282,15 +355,15 @@ body {
 /* Track */
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #272727; }
+  background-color: #0c090a; }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #363636;
+  background: #1b1518;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); }
 
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: #363636; }
+  background: #1b1518; }
 
 /* Page Pre Loader */
 #pageloader-wrapper {
@@ -300,7 +373,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #272727; }
+  background-color: #0c090a; }
   #pageloader-wrapper img {
     position: absolute;
     top: 0;
@@ -315,8 +388,45 @@ body {
 
 /* Header */
 /* Global layout setting */
+.container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: auto; }
+
+.jumbotron,
+.container .jumbotron {
+  background-color: #1b1518;
+  border-radius: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden; }
+
+.position-middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 15px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  overflow: auto; }
+
 /* Navigation */
 /* Footer */
+.login-wrapper {
+  position: relative; }
+  @media (min-width: 1200px) {
+    .login-wrapper.col-lg-login.col-lg-5 {
+      width: 700px !important; } }
+  .login-wrapper .login-form-wrapper {
+    background-color: #110f10; }
+    .login-wrapper .login-form-wrapper .login-supplement-wrapper {
+      font-size: 14px; }
+  .login-wrapper .fast-login-wrapper {
+    position: relative;
+    border-radius: 1px; }
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)

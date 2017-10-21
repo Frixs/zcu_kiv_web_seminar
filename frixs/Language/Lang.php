@@ -13,15 +13,45 @@ class Lang
      *
      * @return void
      */
-    public static function init()
+    public static function init($dirPath = '')
     {
-        $langpath = '../resources/lang/'. Config::get('app.locale');
+        $langPath = '../resources/lang/'. Config::get('app.locale') . $dirPath;
         
-        // load language
-        foreach (scandir($langpath) as $filename) {
-            $path = $langpath .'/'. $filename;
+        // require all language files
+        foreach (scandir($langPath) as $filename) {
+            // filter link to parent subfolders
+            if ($filename[0] === '.') {
+                continue;
+            }
+
+            $path = $langPath .'/'. $filename;
             if (is_file($path)) {
-                self::$_data[explode('.', $filename)[0]] = require_once $path;
+                // if there is no subfolder, you can require the file easily
+                if ($dirPath == null) {
+                    self::$_data[explode('.', $filename)[0]] = require_once $path;
+                    continue;
+                }
+
+                // if there is a subfolder...
+                $keys      = explode('/', substr($dirPath, 1));
+                $reference = &self::$_data; // reference with address to the data array
+
+                // go through the array to specific path where the file has to be saved
+                foreach ($keys as $key) {
+                    if (!array_key_exists($key, $reference)) {
+                        $reference[$key] = [];
+                    }
+
+                    $reference = &$reference[$key];
+                }
+                // require data file into the correct array with its key
+                $reference[explode('.', $filename)[0]] = require_once $path;
+            } elseif (is_dir($path)) {
+                // if it is dir, go to recursive function to require data from subfolders.
+                $subdir = explode('/', $path);
+                $subdir = end($subdir); // get the last item of the path
+                $subdir = ($dirPath == null) ? $subdir : $dirPath .'/'. $subdir; // join the last item of the path with previous subfolders if exists
+                self::init('/'. $subdir);
             }
         }
     }

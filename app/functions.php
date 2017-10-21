@@ -9,6 +9,13 @@ use Frixs\Config\Config;
 use Frixs\Language\Lang;
 use Frixs\Routing\Router;
 
+/**
+ * Get instance with parameters. Good use into templates.
+ *
+ * @param string $classname
+ * @param array $parameters
+ * @return void
+ */
 function instance($classname, $parameters = [])
 {
     if (!array_key_exists($classname, Config::get('app.aliases'))) {
@@ -18,6 +25,17 @@ function instance($classname, $parameters = [])
     $class = Config::get('app.aliases')[$classname];
 
     return new $class(implode(', ', $parameters));
+}
+
+/**
+ * Get language string
+ *
+ * @param string $langPath
+ * @return void
+ */
+function lang($langPath)
+{
+    return Lang::get($langPath);
 }
 
 /**
