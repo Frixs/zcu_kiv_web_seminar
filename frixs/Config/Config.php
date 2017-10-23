@@ -6,7 +6,12 @@ class Config
 {
     private static $_data = [];
 
-    public function __construct()
+    /**
+     * Initialize the Lang. Load all data.
+     *
+     * @return void
+     */
+    public static function init()
     {
         // load global settings
         foreach (scandir('../config') as $filename) {

@@ -21,6 +21,6 @@ class App
      */
     public function __construct()
     {
-        $this->routeInstance = new Route();
+        $this->routeInstance = Route::getInstance();
     }
 }

@@ -9,5 +9,5 @@ use Frixs\Language\Lang;
 
 session_start();
 
-new Config();
-new Lang();
+Config::init();
+Lang::init();

@@ -9,6 +9,13 @@ use Frixs\Http\Input;
 class RouteRequest extends Route
 {
     /**
+     * Singleton
+     *
+     * @var object
+     */
+    private static $_instance = null;
+
+    /**
      * Default request name
      *
      * @var string
@@ -46,7 +53,7 @@ class RouteRequest extends Route
     /**
      * Create a new RouteRequest instance
      */
-    public function __construct()
+    private function __construct()
     {
         // First of all, check legitimity of access to the request.
         if (!$this->isAccessLegit()) {
@@ -75,6 +82,19 @@ class RouteRequest extends Route
 
         // call the controller's method
         $this->callControllerMethod($this->controllerInstance, $this->method, $this->parameters);
+    }
+
+    /**
+     * Singleton model object, get instance of it.
+     *
+     * @return object
+     */
+    public static function getInstance()
+    {
+        if (!isset(self::$_instance)) {
+            self::$_instance = new RouteRequest();
+        }
+        return self::$_instance;
     }
 
     /**

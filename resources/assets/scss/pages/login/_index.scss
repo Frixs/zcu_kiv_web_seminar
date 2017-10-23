@@ -1,0 +1,29 @@
+.login-wrapper {
+    position: relative;
+
+    &.col-lg-login {
+        @media (min-width: 1200px) {
+            &.col-lg-5 {
+                width: 700px !important;
+            }
+        }
+    }
+
+    .login-form-wrapper {
+        background-color: $color-gray-dark-20;
+
+        .login-supplement-wrapper {
+            @extend .gc-float-right;
+
+            @extend .gc-text-right;
+
+            font-size: $font-size-small;
+        }
+    }
+
+    .fast-login-wrapper {
+        @extend .gc-float-right;
+        position: relative;
+        border-radius: $border-radius;
+    }
+}

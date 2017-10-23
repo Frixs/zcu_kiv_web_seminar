@@ -1,0 +1,26 @@
+/* Global layout setting */
+
+.container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: auto;
+}
+
+.jumbotron,
+.container .jumbotron {
+    background-color: $color-gray-dark-10;
+    border-radius: 1px;
+    padding-left: $content-padding;
+    padding-right: $content-padding;
+    overflow: hidden;
+}
+
+.position-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: $content-padding;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}

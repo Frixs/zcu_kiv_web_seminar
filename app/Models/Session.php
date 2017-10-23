@@ -6,21 +6,17 @@ use Frixs\Database\Eloquent\Model;
 
 class Session extends Model
 {
-    protected static $table;
-    protected static $alreadyLaunched = false;
-    //protected static $primaryKey = 'id';
-    protected static $incrementing = false;
-    //... another attributes
+    // Use Model parameters.
+    use \Frixs\Database\Eloquent\ModelParameters;
 
+    /**
+     * Create an instance of the model.
+     */
     public function __construct($attributes = [])
     {
-        // tell that model is already launched
-        static::$alreadyLaunched = true;
-
-        // assign table name by class name with plural
-        $this->assignTableName();
-
-        // you can override some attributes from the Model class via SETs
-        //static::setTable('tablename');
+        $this->initModel();
+        
+        // You can override attributes from the Model class via SETs.
+        static::setIncrementing(false);
     }
 }

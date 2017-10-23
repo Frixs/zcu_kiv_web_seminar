@@ -1,0 +1,30 @@
+@include keyframes(shrink-bounce)
+{
+    0%    { transform: scale(1); }
+    33%   { transform: scale(.85); }
+    100%  { transform: scale(1); }
+}
+
+@include keyframes(levitation-small)
+{
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-7px); }
+    55%  { transform: translateY(-7px); }
+    100% { transform: translateY(0); }
+}
+
+@include keyframes(spin)
+{
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@include keyframes(woggle-box)
+{
+    0%   { transform: rotate(0deg); }
+    10%   { transform: rotate(-2deg); }
+    20%   { transform: rotate(2deg); }
+    20%   { transform: rotate(-2deg); }
+    20%   { transform: rotate(2deg); }
+    50% { transform: rotate(0deg); }
+}
