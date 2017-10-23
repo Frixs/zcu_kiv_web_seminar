@@ -6,7 +6,7 @@ use Frixs\Http\Input;
 
 class InputValidation
 {
-    public static function validate()
+    public static function validate($parameters = [])
     {
         self::checkValues('get');
         self::checkValues('post');

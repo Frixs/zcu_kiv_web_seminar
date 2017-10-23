@@ -28,7 +28,7 @@ class Auth extends User
     /**
      * Get ID of the current logged user
      *
-     * @return integer or null
+     * @return integer
      */
     public static function id()
     {
@@ -42,7 +42,7 @@ class Auth extends User
             $sessionId = Session::get(Config::get('auth.session_name'));
             $remember = false;
         } else {
-            return null;
+            return 1;
         }
 
         $query = self::db()->select(SessionModel::getTable(), [
@@ -56,7 +56,7 @@ class Auth extends User
             return $query->getFirst()->user_id;
         }
 
-        return null;
+        return 1;
     }
 
     /**
@@ -67,7 +67,7 @@ class Auth extends User
      */
     public static function check()
     {
-        if (self::id() === null) {
+        if (self::id() === 1) {
             // if user has been forced logout, delete his sessions
             Session::delete(Config::get('auth.session_name'));
             Cookie::delete(Config::get('auth.session_name'));

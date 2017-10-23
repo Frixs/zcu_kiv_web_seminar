@@ -42,6 +42,11 @@ class ErrorController extends Controller
         $this->view('error.001', ['error_message' => $this->recentErrorMessage]);
     }
 
+    private function error401()
+    {
+        $this->view('error.401', ['error_message' => $this->recentErrorMessage]);
+    }
+
     private function error404()
     {
         $this->view('error.404', ['error_message' => $this->recentErrorMessage]);

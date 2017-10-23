@@ -3,7 +3,9 @@
 namespace Frixs\Routing;
 
 use App\Http\Kernel;
-use \Frixs\Routing\RouteRequest;
+use Frixs\Routing\RouteRequest;
+use Frixs\Routing\Router;
+use Frixs\Language\Lang;
 
 class Route
 {
@@ -279,6 +281,39 @@ class Route
      */
     protected function bindParameters()
     {
-        $this->parameters = $this->hasParameters() ? array_values($this->url) : [];
+        $this->parameters = $this->hasParameters() ? $this->parseParameters() : [];
+    }
+
+    /**
+     * Parse parameters, assign key to them if have one.
+     *
+     * @return array
+     */
+    private function parseParameters()
+    {
+        $params = [];
+
+        foreach (array_values($this->url) as $item) {
+            if (strpos($item, ':') === false) {
+                $params[] = $item;
+                continue;
+            }
+        
+            $item = explode(':', $item);
+            // Check acceptable form of the array key.
+            if (!preg_match('/^[a-zA-Z0-9\_]+$/', $item[0])) {
+                Router::redirectToError(500, Lang::get('error.inappropriate_parameter_key', ['key' => $item[0]]));
+            }
+            // --- Addon to recognize server room.
+            // TOOD new project
+            if ($item[0] === 'server' && is_numeric($item[1])) {
+                \App\Models\Server::setServer($item[1]);
+                continue;
+            }
+            // ---
+            $params[$item[0]] = $item[1];
+        }
+        
+        return $params;
     }
 }

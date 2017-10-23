@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1:3306
--- Vytvořeno: Úte 17. říj 2017, 09:08
+-- Vytvořeno: Pon 23. říj 2017, 23:14
 -- Verze serveru: 5.7.19
--- Verze PHP: 5.6.31
+-- Verze PHP: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,9 +32,21 @@ DROP TABLE IF EXISTS `web_groups`;
 CREATE TABLE IF NOT EXISTS `web_groups` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(30) COLLATE utf8_czech_ci NOT NULL,
+  `server_group` tinyint(1) UNSIGNED NOT NULL,
   `color` varchar(6) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `web_groups`
+--
+
+INSERT INTO `web_groups` (`id`, `name`, `server_group`, `color`) VALUES
+(1, 'Administrator', 0, 'FF0000'),
+(2, 'Moderator', 0, '00FF00'),
+(3, 'Master', 1, '0000FF'),
+(4, 'Member', 1, '00C12B'),
+(5, 'Recruit', 1, 'D8005F');
 
 -- --------------------------------------------------------
 

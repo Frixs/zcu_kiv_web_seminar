@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Models\Group;
+
 class Kernel
 {
     /**
@@ -10,20 +12,7 @@ class Kernel
      *
      * @var array
      */
-    protected static $middleware = [
-        'DeveloperMode',
-        'InputValidation',
-    ];
-
-    /**
-     * Undocumented variable
-     *
-     * @var array
-     */
-    protected static $middlewareGroups = [
-        'web' => [
-        ],
-    ];
+    protected static $middleware = [];
 
     /**
      * The application's route middleware
@@ -31,14 +20,52 @@ class Kernel
      *
      * @var array
      */
-    protected static $routeMiddleware = [
-        'home' => [
-            'Authentication',
-            //'SomeMiddleware'
-        ],
-        'home.index' => [
-        ],
-    ];
+    protected static $routeMiddleware = [];
+
+    /**
+     * Initialize middleware.
+     */
+    protected function __construct()
+    {
+        self::setMiddleware();
+        self::setRouteMiddleware();
+    }
+
+    /**
+     * Set the application's global middleware stack.
+     *
+     * @return void
+     */
+    protected function setMiddleware()
+    {
+        self::$middleware = [
+            'DeveloperMode',
+            'InputValidation',
+        ];
+    }
+
+    /**
+     * Set The application's route middleware.
+     *
+     * @return void
+     */
+    protected function setRouteMiddleware()
+    {
+        self::$routeMiddleware = [
+            'home' => [
+                'Authenticate',
+                //'SomeMiddleware'
+            ],
+            'home.index' => [
+                'Guard' => [
+                    Group::Admin(),
+                ]
+            ],
+            'login' => [
+                'NotAuthenticate',
+            ],
+        ];
+    }
 
     /**
      * Run all middleware according to input parameters
@@ -50,19 +77,38 @@ class Kernel
      */
     public static function run($controller, $method, $parameters)
     {
+        // Initialize middleware.
+        new self;
+
         // Validate global middleware
-        for ($i = 0; $i < count(self::$middleware); $i++) {
-            $middlewareTestClass = '\\App\Http\Middleware\\'. self::$middleware[$i];
-            if (!self::checkMiddleware($middlewareTestClass)) {
+        foreach(self::$middleware as $key => $value) {
+            if (is_array($value)) {
+                $middlewareTest = $key;
+                $args           = $value;
+            } else {
+                $middlewareTest = $value;
+                $args           = [];
+            }
+
+            $middlewareTestClass = '\\App\Http\Middleware\\'. $middlewareTest;
+            if (!self::checkMiddleware($middlewareTestClass, $args)) {
                 return false;
             }
         }
 
         // Validate controller section
         if (isset(self::$routeMiddleware[$controller])) {
-            for ($i = 0; $i < count(self::$routeMiddleware[$controller]); $i++) {
-                $middlewareTestClass = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller][$i];
-                if (!self::checkMiddleware($middlewareTestClass)) {
+            foreach(self::$routeMiddleware[$controller] as $key => $value) {
+                if (is_array($value)) {
+                    $middlewareTest = $key;
+                    $args           = $value;
+                } else {
+                    $middlewareTest = $value;
+                    $args           = [];
+                }
+
+                $middlewareTestClass = '\\App\Http\Middleware\\'. $middlewareTest;
+                if (!self::checkMiddleware($middlewareTestClass, $args)) {
                     return false;
                 }
             }
@@ -70,9 +116,17 @@ class Kernel
 
         // Validate controller's method section
         if (isset(self::$routeMiddleware[$controller .'.'. $method])) {
-            for ($i = 0; $i < count(self::$routeMiddleware[$controller .'.'. $method]); $i++) {
-                $middlewareTestClass = '\\App\Http\Middleware\\'. self::$routeMiddleware[$controller .'.'. $method][$i];
-                if (!self::checkMiddleware($middlewareTestClass)) {
+            foreach(self::$routeMiddleware[$controller .'.'. $method] as $key => $value) {
+                if (is_array($value)) {
+                    $middlewareTest = $key;
+                    $args           = $value;
+                } else {
+                    $middlewareTest = $value;
+                    $args           = [];
+                }
+
+                $middlewareTestClass = '\\App\Http\Middleware\\'. $middlewareTest;
+                if (!self::checkMiddleware($middlewareTestClass, $args)) {
                     return false;
                 }
             }
@@ -82,15 +136,16 @@ class Kernel
     }
 
     /**
-     * Validate middleware
+     * Validate middleware.
      *
-     * @param string $middlewareTestClass   middleware class name including namespace
+     * @param string $middlewareTestClass       middleware class name including namespace
+     * @param array $parameters
      * @return bool
      */
-    private static function checkMiddleware($middlewareTestClass)
+    private static function checkMiddleware($middlewareTestClass, $parameters = [])
     {
         new $middlewareTestClass;
-        if ($middlewareTestClass::validate()) {
+        if ($middlewareTestClass::validate($parameters)) {
             return true;
         }
 

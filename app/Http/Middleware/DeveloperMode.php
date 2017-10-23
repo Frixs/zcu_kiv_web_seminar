@@ -7,7 +7,7 @@ use Frixs\Config\Config;
 
 class DeveloperMode
 {
-    public static function validate()
+    public static function validate($parameters = [])
     {
         if (Config::get('app.developer_mode')) {
             // turn off cache
