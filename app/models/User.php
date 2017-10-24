@@ -22,11 +22,15 @@ class User extends Model
 
     /**
      * Get user data by ID
+     * 
+     * ---
+     * Use: User::get(<ID>)->username;
+     * ---
      *
      * @param integer $uid
      * @return object
      */
-    public static function getUser($uid)
+    public static function get($uid)
     {
         $query = self::db()->selectAll(self::getTable(), [self::getPrimaryKey(), '=', $uid], [], 1);
         return $query->getFirst();
