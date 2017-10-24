@@ -184,12 +184,34 @@ class Auth extends User
     /**
      * Check user's role/permissions
      *
-     * @param string $role
+     * @param string $roleID
      * @return bool
      */
-    public static function guard($role)
+    public static function guard($roleID)
     {
-        //TODO
+        $query = self::db()->query("
+                SELECT g.server_group
+                FROM ". UserGroup::getTable() ." AS ug
+                INNER JOIN ". Group::getTable() ." AS g
+                    ON ug.group_id = ". Group::getPrimaryKey() ."
+                WHERE ug.user_id = ? AND ug.group_id = ? AND (g.server_group = ? OR (g.server_group = ? AND ug.server_id = ?))
+            ", [
+                Auth::id(),
+                $roleID,
+                0,
+                1,
+                \App\Models\Server::getServerID()
+            ]);
+
+        if ($query->error()) {
+            Router::redirectToError(500);
+        }
+    
+        if (!$query->count()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

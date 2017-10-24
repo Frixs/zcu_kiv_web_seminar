@@ -307,7 +307,7 @@ class Route
             // --- Addon to recognize server room.
             // TOOD new project
             if ($item[0] === 'server' && is_numeric($item[1])) {
-                \App\Models\Server::setServer($item[1]);
+                \App\Models\Server::setServerID($item[1]);
                 continue;
             }
             // ---

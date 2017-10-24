@@ -24,7 +24,7 @@ class Server extends Model
      *
      * @return integer or null
      */
-    public static function getServer()
+    public static function getServerID()
     {
         return self::$server;
     }
@@ -35,7 +35,7 @@ class Server extends Model
      * @param integer $id
      * @return void
      */
-    public static function setServer($id)
+    public static function setServerID($id)
     {
         self::$server = $id;
     }
