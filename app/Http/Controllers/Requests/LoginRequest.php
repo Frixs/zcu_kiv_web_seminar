@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Requests;
 
 use Frixs\Http\Request;
 
-class LoginFormRequest extends Request
+class LoginRequest extends Request
 {
     public function process()
     {
         //TODO
-        echo "Request executed!";exit();
+        echo "Request executed!";
+        
+        //$this->goBack();
     }
 }

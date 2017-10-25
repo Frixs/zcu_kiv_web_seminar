@@ -66,7 +66,7 @@ trait ModelParameters
      *
      * @return string
      */
-    protected static function getTable()
+    public static function getTable()
     {
         if (!static::isAlreadyLaunched()) {
             new static();
@@ -81,7 +81,7 @@ trait ModelParameters
      * @param string $table
      * @return void
      */
-    protected static function setTable($table)
+    public static function setTable($table)
     {
         static::$table = $table;
     }
@@ -91,7 +91,7 @@ trait ModelParameters
      *
      * @return string or null if table is M:N
      */
-    protected static function getPrimaryKey()
+    public static function getPrimaryKey()
     {
         if (!static::isAlreadyLaunched()) {
             new static();
@@ -106,7 +106,7 @@ trait ModelParameters
      * @param string $primaryKey
      * @return void
      */
-    protected static function setPrimaryKey($primaryKey)
+    public static function setPrimaryKey($primaryKey)
     {
         static::$primaryKey = $primaryKey;
     }
@@ -116,7 +116,7 @@ trait ModelParameters
      *
      * @return bool
      */
-    protected static function getIncrementing()
+    public static function getIncrementing()
     {
         if (!static::isAlreadyLaunched()) {
             new static();
@@ -131,7 +131,7 @@ trait ModelParameters
      * @param bool $incrementing
      * @return void
      */
-    protected static function setIncrementing($incrementing)
+    public static function setIncrementing($incrementing)
     {
         static::$incrementing = $incrementing;
     }
@@ -141,7 +141,7 @@ trait ModelParameters
      *
      * @return bool
      */
-    protected static function isAlreadyLaunched()
+    public static function isAlreadyLaunched()
     {
         return static::$alreadyLaunched;
     }

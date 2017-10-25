@@ -9,8 +9,7 @@
 	<div class="login-wrapper jumbotron position-middle col-xs-11 col-sm-8 col-lg-5 col-lg-login">
 		<div class="login-form-wrapper col-xs-12 col-sm-6">
 			<h2 class="gc-text-center">{{ lang('login.index.title_normal') }}</h2>
-			<p class="gc-text-center">{{ $variable_name }}</p>
-			<form class="form-horizontal" action="_request/login-form" method="post">
+			<form class="form-horizontal" action="_request/login" method="post">
 				<div class="form-group">
 					<label class="control-label col-md-3" for="email">{{ lang('login.index.norm_inp_01') }}:</label>
 					<div class="col-md-9">

@@ -14,7 +14,7 @@ class ErrorController extends Controller
     public function index($errorCode = '501')
     {
         if (!Session::exists('error_message')) {
-            Router::redirectTo(Config::get('app.root'), false);
+            Router::redirectTo(Config::get('app.root'), true);
         }
 
         $this->recentErrorMessage = Session::flash('error_message');
