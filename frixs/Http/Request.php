@@ -5,6 +5,7 @@ namespace Frixs\Http;
 use Frixs\Routing\Router;
 use Frixs\Config\Config;
 use Frixs\Session\Session;
+use Frixs\Http\Input;
 
 class Request
 {
@@ -14,6 +15,13 @@ class Request
      * @var array
      */
     protected $_data = [];
+
+    /**
+     * Return array key reserved for inputs.
+     *
+     * @var string
+     */
+    protected $inputDataArrayKey = 'input_data';
 
     /**
      * Redirect back to previous page. If it doest exist go bach to root
@@ -48,7 +56,7 @@ class Request
      *
      * @return void
      */
-    protected function unsetDataSession()
+    public function unsetDataSession()
     {
         Session::delete(Config::get('session.request_data_name'));
     }
@@ -61,6 +69,37 @@ class Request
      */
     public function get($key)
     {
-        return Session::get(Config::get('session.request_data_name'))[$key];
+        if (Session::exists(Config::get('session.request_data_name'))) {
+            $requestData = Session::get(Config::get('session.request_data_name'));
+            return isset($requestData[$key]) ? $requestData[$key] : null;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get input data value.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getInput($key)
+    {
+        $inputData = $this->get($this->inputDataArrayKey);
+        if ($inputData) {
+            return isset($inputData[$key]) ? $inputData[$key] : null;
+        }
+
+        return null;
+    }
+
+    /**
+     * Add input data ($_POST) value.
+     *
+     * @return void
+     */
+    public function addInputs()
+    {
+        $this->addReturnValue($this->inputDataArrayKey, Input::getAll('post'));
     }
 }

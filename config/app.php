@@ -19,5 +19,7 @@ return [
     */
     'aliases' => [
         'Config' => Frixs\Config\Config::class,
+        'Input' => Frixs\Http\Input::class,
+        'Request' => Frixs\Http\Request::class,
     ],
 ];

@@ -77,6 +77,9 @@ class RouteRequest extends Route
         // Create the controller's instance
         $this->controllerInstance = new $controllerFullName();
 
+        // Add inputs to return request values.
+        $this->controllerInstance->addInputs();
+
         // Rest of the url are method parameters.
         $this->bindParameters();
 

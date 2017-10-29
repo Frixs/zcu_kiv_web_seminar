@@ -3,6 +3,7 @@
 namespace Frixs\Validation;
 
 use Frixs\Database\Connection as DB;
+use Frixs\Validation\Escape;
 
 class Validate
 {
@@ -22,12 +23,11 @@ class Validate
      * @param array $items      conditions
      * @return object           validated object
      */
-    public function check($source, $items = array())
+    public function check($source, $items = [])
     {
         foreach ($items as $item => $rules) {
             foreach ($rules as $rule => $rule_value) {
-                $value = trim($source[$item]);
-                $item = escape($item);
+                $value = Escape::input($source[$item]);
 
                 if (($rule === 'required' && empty($value)) && $rule_value) {
                     $this->addError("{$rule}|{$item}|");
@@ -186,36 +186,32 @@ class Validate
     <?php
         if(Input::exists())
         {
-            $validate = new Validate();
-            $validation = $validate->check($_POST, array(
-                'username'       => array(
+            $validation = (new Validate())->check(Input::getAll('post'), [
+                'username'       => [
                     'required' => true,
                     'min'      => 3,
                     'max'      => 20,
                     'unique'   => 'phpbb_users'
-                ),
-                'password'       => array(
+                ],
+                'password'       => [
                     'required' => true,
                     'min'      => 6,
                     'max'      => 30
-                ),
-                'password_again' => array(
+                ],
+                'password_again' => [
                     'required' => true,
                     'matches'  => 'password'
-                ),
-                'name'           => array(
+                ],
+                'name'           => [
                     'required' => true,
                     'min'      => 3,
                     'max'      => 50
-                )
-            ));
+                ]
+            ]);
 
-            if( $validation->passed() )
-            {
+            if ($validation->passed()) {
                 echo "passed";
-            }
-            else
-            {
+            } else {
                 print_r($validation->errors());
             }
         }

@@ -13,19 +13,19 @@
 				<div class="form-group">
 					<label class="control-label col-md-3" for="email">{{ lang('login.index.norm_inp_01') }}:</label>
 					<div class="col-md-9">
-						<input type="email" class="form-control __input-dark" id="email" placeholder="{{ lang('login.index.norm_inp_01_ph') }}" name="email" tabindex="1" autofocus>
+						<input type="email" name="email" value="{{ instance('Request')->getInput('email') }}" class="form-control __input-dark" id="email" placeholder="{{ lang('login.index.norm_inp_01_ph') }}" tabindex="1" maxlength="150" autofocus>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-3" for="pwd">{{ lang('login.index.norm_inp_02') }}:</label>
 					<div class="col-md-9">          
-						<input type="password" class="form-control __input-dark" id="pwd" placeholder="{{ lang('login.index.norm_inp_02_ph') }}" name="pwd" tabindex="2">
+						<input type="password" name="password" value="" class="form-control __input-dark" id="pwd" placeholder="{{ lang('login.index.norm_inp_02_ph') }}" maxlength="64" tabindex="2">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-offset-3 col-md-9">
 						<label class="checkbox" for="checkbox1">
-							<input type="checkbox" name="remember" value="" id="checkbox1" data-toggle="checkbox" tabindex="3">
+							<input type="checkbox" name="remember" value="remember" id="checkbox1" data-toggle="checkbox" tabindex="3" @if (instance('Request')->getInput('remember')) checked @endif>
 							{{ lang('login.index.norm_inp_03') }}
 						</label>
 						<div class="login-supplement-wrapper">
@@ -51,7 +51,7 @@
 				<div class="form-group">
 					<label class="col-lg-12" for="nickname">{{ lang('login.index.quick_inp_01') }}:</label>
 					<div class="col-lg-12">
-						<input type="text" class="form-control" id="nickname" placeholder="{{ lang('login.index.quick_inp_01_ph') }}" name="nickname">
+						<input type="text" name="nickname" value="{{ instance('Request')->getInput('nickname') }}" class="form-control" id="nickname" placeholder="{{ lang('login.index.quick_inp_01_ph') }}" maxlength="20">
 					</div>
 				</div>
 				<div class="form-group">
