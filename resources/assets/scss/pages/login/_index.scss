@@ -25,5 +25,6 @@
         @extend .gc-float-right;
         position: relative;
         border-radius: $border-radius;
+        padding-right: 0;
     }
 }
