@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1:3306
--- Vytvořeno: Pon 23. říj 2017, 23:14
+-- Vytvořeno: Ned 29. říj 2017, 22:15
 -- Verze serveru: 5.7.19
 -- Verze PHP: 7.1.9
 
@@ -25,6 +25,67 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabulky `web_calendar_events`
+--
+
+DROP TABLE IF EXISTS `web_calendar_events`;
+CREATE TABLE IF NOT EXISTS `web_calendar_events` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `server_id` bigint(20) UNSIGNED NOT NULL,
+  `type` tinyint(1) UNSIGNED NOT NULL,
+  `title` varchar(50) COLLATE utf8_czech_ci NOT NULL,
+  `description` text COLLATE utf8_czech_ci NOT NULL,
+  `time_from` int(11) UNSIGNED NOT NULL,
+  `time_to` int(11) UNSIGNED NOT NULL,
+  `time_estimated_hours` int(11) UNSIGNED NOT NULL,
+  `rating` text COLLATE utf8_czech_ci NOT NULL,
+  `recorded` tinyint(1) UNSIGNED NOT NULL,
+  `edited` tinyint(1) UNSIGNED NOT NULL,
+  `edited_time` int(11) UNSIGNED NOT NULL,
+  `founder_user_id` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `server_id` (`server_id`),
+  KEY `founder_user_id` (`founder_user_id`),
+  KEY `recorded` (`recorded`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `web_calendar_event_sections`
+--
+
+DROP TABLE IF EXISTS `web_calendar_event_sections`;
+CREATE TABLE IF NOT EXISTS `web_calendar_event_sections` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `calendar_event_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(15) COLLATE utf8_czech_ci NOT NULL,
+  `is_limited` tinyint(1) UNSIGNED NOT NULL,
+  `limit_max` tinyint(4) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `calendar_event_id` (`calendar_event_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `web_calendar_event_users`
+--
+
+DROP TABLE IF EXISTS `web_calendar_event_users`;
+CREATE TABLE IF NOT EXISTS `web_calendar_event_users` (
+  `calendar_event_section_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `notice` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `participation` tinyint(1) UNSIGNED NOT NULL,
+  `joined_time` int(11) UNSIGNED NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `calendar_event_section_id` (`calendar_event_section_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabulky `web_groups`
 --
 
@@ -34,7 +95,8 @@ CREATE TABLE IF NOT EXISTS `web_groups` (
   `name` varchar(30) COLLATE utf8_czech_ci NOT NULL,
   `server_group` tinyint(1) UNSIGNED NOT NULL,
   `color` varchar(6) COLLATE utf8_czech_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `server_group` (`server_group`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
@@ -59,9 +121,10 @@ CREATE TABLE IF NOT EXISTS `web_servers` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   `tag` varchar(5) COLLATE utf8_czech_ci NOT NULL,
-  `edited_at` int(10) UNSIGNED NOT NULL,
-  `created_at` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
+  `edited_at` int(11) UNSIGNED NOT NULL,
+  `created_at` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tag` (`tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -79,7 +142,10 @@ CREATE TABLE IF NOT EXISTS `web_sessions` (
   `session_start` int(11) UNSIGNED NOT NULL,
   `remember` tinyint(1) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `users_id` (`user_id`)
+  KEY `users_id` (`user_id`),
+  KEY `ip` (`ip`),
+  KEY `remember` (`remember`),
+  KEY `browser` (`browser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -91,25 +157,27 @@ CREATE TABLE IF NOT EXISTS `web_sessions` (
 DROP TABLE IF EXISTS `web_users`;
 CREATE TABLE IF NOT EXISTS `web_users` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8_czech_ci NOT NULL,
-  `username_clean` varchar(50) COLLATE utf8_czech_ci NOT NULL,
+  `username` varchar(20) COLLATE utf8_czech_ci NOT NULL,
+  `username_clean` varchar(20) COLLATE utf8_czech_ci NOT NULL,
   `email` varchar(150) COLLATE utf8_czech_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `lastvisit` int(11) UNSIGNED NOT NULL,
-  `verified` tinyint(1) UNSIGNED NOT NULL,
-  `regdate` int(11) UNSIGNED NOT NULL,
   `registered` tinyint(1) UNSIGNED NOT NULL,
+  `register_time` int(11) UNSIGNED NOT NULL,
+  `verified` tinyint(1) UNSIGNED NOT NULL,
   `actkey` varchar(23) COLLATE utf8_czech_ci NOT NULL,
   `form_salt` varchar(32) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  KEY `username_clean` (`username_clean`),
+  KEY `verified` (`verified`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `web_users`
 --
 
-INSERT INTO `web_users` (`id`, `username`, `username_clean`, `email`, `password`, `lastvisit`, `verified`, `regdate`, `registered`, `actkey`, `form_salt`) VALUES
+INSERT INTO `web_users` (`id`, `username`, `username_clean`, `email`, `password`, `lastvisit`, `registered`, `register_time`, `verified`, `actkey`, `form_salt`) VALUES
 (1, 'Anonymous', 'anonymous', '', '', 0, 0, 0, 0, '', '');
 
 -- --------------------------------------------------------
@@ -131,6 +199,25 @@ CREATE TABLE IF NOT EXISTS `web_user_groups` (
 --
 -- Omezení pro exportované tabulky
 --
+
+--
+-- Omezení pro tabulku `web_calendar_events`
+--
+ALTER TABLE `web_calendar_events`
+  ADD CONSTRAINT `web_calendar_events_ibfk_1` FOREIGN KEY (`server_id`) REFERENCES `web_servers` (`id`) ON DELETE CASCADE;
+
+--
+-- Omezení pro tabulku `web_calendar_event_sections`
+--
+ALTER TABLE `web_calendar_event_sections`
+  ADD CONSTRAINT `web_calendar_event_sections_ibfk_1` FOREIGN KEY (`calendar_event_id`) REFERENCES `web_calendar_events` (`id`) ON DELETE CASCADE;
+
+--
+-- Omezení pro tabulku `web_calendar_event_users`
+--
+ALTER TABLE `web_calendar_event_users`
+  ADD CONSTRAINT `web_calendar_event_users_ibfk_1` FOREIGN KEY (`calendar_event_section_id`) REFERENCES `web_calendar_event_sections` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `web_calendar_event_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `web_users` (`id`) ON DELETE SET NULL;
 
 --
 -- Omezení pro tabulku `web_sessions`
