@@ -10,9 +10,13 @@ use Frixs\Validation\Escape;
 
 class LoginRequest extends Request
 {
-    public function process()
+    /**
+     * Validate inputs.
+     *
+     * @return object
+     */
+    protected function inputValidation()
     {
-        print_r(Input::getAll('post'));
         $validation = (new Validate())->check(Input::getAll('post'), [
             'email'       => [
                 'required' => true,
@@ -25,12 +29,22 @@ class LoginRequest extends Request
             ]
         ]);
 
-        if ($validation->passed()) {
-            echo "passed";
-        } else {
-            print_r($validation->errors());
-        }
+        return $validation;
+    }
 
+    /**
+     * Main process method.
+     *
+     * @return void
+     */
+    public function process()
+    {
+        if (!$this->inputValidation()->passed()) {
+            print_r($this->inputValidation()->errors());
+            $this->goBack();
+        }
+        
+        echo "passed";
         $this->goBack();
     }
 }

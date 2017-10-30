@@ -10,10 +10,12 @@
 		<div class="login-form-wrapper col-xs-12 col-sm-6">
 			<h2 class="gc-text-center">{{ lang('login.index.title_normal') }}</h2>
 			<form class="form-horizontal" action="_request/login" method="post">
-				<div class="form-group">
+				<div class="form-feedback">SUCCESS MESSAGE HERE!</div>
+				<div class="form-group has-error">
 					<label class="control-label col-md-3" for="email">{{ lang('login.index.norm_inp_01') }}:</label>
 					<div class="col-md-9">
 						<input type="email" name="email" value="{{ instance('Request')->getInput('email') }}" class="form-control __input-dark" id="email" placeholder="{{ lang('login.index.norm_inp_01_ph') }}" tabindex="1" maxlength="150" autofocus>
+						<div class="form-feedback">ERROR MESSAGE HERE!</div>
 					</div>
 				</div>
 				<div class="form-group">

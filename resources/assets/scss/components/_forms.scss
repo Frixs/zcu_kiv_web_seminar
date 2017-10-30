@@ -1,5 +1,15 @@
 /* Global Forms */
 
+form > div.form-feedback {
+    color: $color-green-normal;
+    font-size: $font-size-small;
+    margin-bottom: $content-padding;
+
+    &:empty {
+        margin-bottom: 0;
+    }
+}
+
 form.form-horizontal {
     margin-bottom: 15px;
 }
@@ -12,6 +22,10 @@ div.form-group {
             color: $color-red-normal;
             border-color: $color-red-normal;
         }
+        
+        & div.form-feedback {
+            color: $color-red-normal;
+        }
     }
 
     &.has-success {
@@ -19,6 +33,11 @@ div.form-group {
             color: $color-green-normal;
             border-color: $color-green-normal;
         }
+    }
+
+    & div.form-feedback {
+        clear: both;
+        font-size: $font-size-small;
     }
 }
 
