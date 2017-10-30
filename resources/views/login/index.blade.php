@@ -11,17 +11,18 @@
 			<h2 class="gc-text-center">{{ lang('login.index.title_normal') }}</h2>
 			<form class="form-horizontal" action="_request/login" method="post">
 				<div class="form-feedback">SUCCESS MESSAGE HERE!</div>
-				<div class="form-group has-error">
+				<div class="form-group @if (instance('Request')->getInputError('email')) has-error @endif">
 					<label class="control-label col-md-3" for="email">{{ lang('login.index.norm_inp_01') }}:</label>
 					<div class="col-md-9">
 						<input type="email" name="email" value="{{ instance('Request')->getInput('email') }}" class="form-control __input-dark" id="email" placeholder="{{ lang('login.index.norm_inp_01_ph') }}" tabindex="1" maxlength="150" autofocus>
-						<div class="form-feedback">ERROR MESSAGE HERE!</div>
+						<div class="form-feedback">@if (instance('Request')->getInputError('email')) {{ instance('Request')->getInputError('email') }} @endif</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group @if (instance('Request')->getInputError('password')) has-error @endif">
 					<label class="control-label col-md-3" for="pwd">{{ lang('login.index.norm_inp_02') }}:</label>
-					<div class="col-md-9">          
+					<div class="col-md-9">
 						<input type="password" name="password" value="" class="form-control __input-dark" id="pwd" placeholder="{{ lang('login.index.norm_inp_02_ph') }}" maxlength="64" tabindex="2">
+						<div class="form-feedback">@if (instance('Request')->getInputError('password')) {{ instance('Request')->getInputError('password') }} @endif</div>
 					</div>
 				</div>
 				<div class="form-group">

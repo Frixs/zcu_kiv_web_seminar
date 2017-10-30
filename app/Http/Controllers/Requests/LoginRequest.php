@@ -15,8 +15,12 @@ class LoginRequest extends Request
      *
      * @return object
      */
-    protected function inputValidation()
+    public function inputValidation()
     {
+        if ($this->_validation) {
+            return $this->_validation;
+        }
+
         $validation = (new Validate())->check(Input::getAll('post'), [
             'email'       => [
                 'required' => true,
@@ -25,11 +29,12 @@ class LoginRequest extends Request
             'password'       => [
                 'required' => true,
                 'min'      => Config::get('auth.password_min_len'),
+                'color'      => true,
                 'max'      => Config::get('auth.password_max_len')
             ]
         ]);
 
-        return $validation;
+        return $this->_validation = $validation;
     }
 
     /**
@@ -40,7 +45,6 @@ class LoginRequest extends Request
     public function process()
     {
         if (!$this->inputValidation()->passed()) {
-            print_r($this->inputValidation()->errors());
             $this->goBack();
         }
         

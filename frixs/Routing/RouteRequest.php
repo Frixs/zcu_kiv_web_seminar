@@ -80,6 +80,9 @@ class RouteRequest extends Route
         // Add inputs to return request values.
         $this->controllerInstance->addInputs();
 
+        // Add input error messages to return request values.
+        $this->controllerInstance->addInputErrors($this->controllerInstance->inputValidation());
+
         // Rest of the url are method parameters.
         $this->bindParameters();
 
