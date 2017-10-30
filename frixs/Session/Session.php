@@ -31,11 +31,11 @@ class Session
      * Get session
      *
      * @param string $name      session name
-     * @return string           session value
+     * @return mixed            session value or null
      */
     public static function get($name)
     {
-        return $_SESSION[$name];
+        return $_SESSION[$name] ? $_SESSION[$name] : null;
     }
 
     /**

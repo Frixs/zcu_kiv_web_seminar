@@ -29,7 +29,6 @@ class LoginRequest extends Request
             'password'       => [
                 'required' => true,
                 'min'      => Config::get('auth.password_min_len'),
-                'color'      => true,
                 'max'      => Config::get('auth.password_max_len')
             ]
         ]);

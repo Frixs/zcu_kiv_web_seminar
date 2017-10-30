@@ -2,6 +2,10 @@
 
 namespace Frixs\Http;
 
+use Frixs\Config\Config;
+use Frixs\Session\Session;
+use Frixs\Http\Input;
+
 /**
  *  Token is for CSRF protection.
  *
@@ -12,27 +16,53 @@ namespace Frixs\Http;
 class Token
 {
     /**
-     * Generate a token stored in a session
+     * Generated token for the current stream.
      *
-     * @return string       session value
+     * @var string
      */
-    public static function generate()
+    protected static $_token = null;
+
+    /**
+     * Get or generate if does not exist a token stored in a session.
+     *
+     * @return string       session/token value
+     */
+    public static function get()
     {
-        return Session::put(
-            Config::get('session.token_name'), md5(uniqid())
-        ); //= $_SESSION['token'] = md5(uniqid());
+        if (self::$_token) {
+            return self::$_token;
+        }
+        
+        return self::$_token = Session::put(Config::get('session.token_name'), self::generate());
+    }
+
+    /**
+     * Generate a token.
+     *
+     * @return string       token value
+     */
+    protected static function generate()
+    {
+        return md5(uniqid());
     }
     
     /**
-     * Check token value if value exists and it is equal to form token
+     * Check if token value exists.
+     * Check if token input from correct form exists.
+     * Delete used token on success.
      *
-     * @param token $token      $_POST token value
+     * If $name is null then will be used default input token name.
+     *
+     * @param string $tokenName      token name
      * @return bool
      */
-    public static function check($token)
+    public static function validation($name = null)
     {
-        $tokenName = Config::get('session.token_name');
-            
+        $tokenName      = Config::get('session.token_name');
+        $flashedInput   = $name ? self::flashTokenInput($name) : Config::get('session.token_name');
+
+        $token     = Input::get($flashedInput); // = null, if input does not exist.
+        
         if (Session::exists($tokenName) && $token === Session::get($tokenName)) {
             Session::delete($tokenName);
             return true;
@@ -42,86 +72,55 @@ class Token
     }
     
     /**
-     * Create or flash token hadh name
+     * Flash token input name.
      *
-     * @param string $name          token name
-     * @param boolean $generate     flash = true
-     * @return string               token value
+     * @param string $name
+     * @return string
      */
-    public static function flash($name, $generate = false)
+    public static function flashTokenInput($name)
     {
-        if ($generate) {
-            $hash = md5($name.'_'.rand());
-            return Session::put($name, $hash);
-        } else {
-            $session = Session::get($name);
-            Session::delete($name);
-            return $session;
+        $session = Session::get(Config::get('session.token_name') .'_'. $name);
+        Session::delete(Config::get('session.token_name') .'_'. $name);
+        return $session;
+    }
+
+    /**
+     * Create token input name.
+     *
+     * If $name is null then will be used default input token name.
+     *
+     * @param string $name
+     * @return string
+     */
+    public static function createTokenInput($name = null)
+    {
+        if (!$name) {
+            return Config::get('session.token_name');
         }
+
+        $hash = md5($name . rand());
+        return Session::put(Config::get('session.token_name') .'_'. $name, $hash);
     }
 }
 
 /* Examples ***
     <?php
-        if(Input::exists())
-        {
-            if( Token::check(Input::get(Token::flash('token_login'))) )
-            {
-                $validate = new Validate();
-                $validation = $validate->check($_POST, array(
-                    'username'       => array(
-                        'required' => true,
-                        'min'      => 3,
-                        'max'      => 20,
-                        'unique'   => 'phpbb_users'
-                    ),
-                    'password'       => array(
-                        'required' => true,
-                        'min'      => 6,
-                        'max'      => 30
-                    ),
-                    'password_again' => array(
-                        'required' => true,
-                        'matches'  => 'password'
-                    ),
-                    'name'           => array(
-                        'required' => true,
-                        'min'      => 3,
-                        'max'      => 50
-                    )
-                ));
-
-                if( $validation->passed() )
-                {
-                    echo "passed";
-                }
-                else
-                {
-                    print_r($validation->errors());
-                }
+        if(Input::exists()) {
+            if(Token::validation('request_name')) {
+                ...
             }
         }
     ?>
 
     <form action="#" method="post">
-        <div class="field">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" value="" autocomplete="off" />
-        </div>
-        <div class="field">
-            <label for="password">Choose your password</label>
-            <input type="password" name="password" id="password" value="" />
-        </div>
-        <div class="field">
-            <label for="password_again">Enter your password again</label>
-            <input type="password" name="password_again" id="password_again" value="" />
-        </div>
-        <div class="field">
-            <label for="name">Your name</label>
-            <input type="text" name="name" id="name" value="" />
-        </div>
-
-        <input type="hidden" name="<?= Token::flash('token_login', true) ?>" value="<?= Token::generate() ?>" />
-        <input type="submit" value="Register" />
+        <!-- TOKEN -->
+        <input type="hidden" name="<?= Token::createTokenInput('request_name') ?>" value="<?= Token::get() ?>" />
+        {{-- TOKEN --}}
+		<input type="hidden" name="{{ instance('Token')::createTokenInput('request_name') }}" value="{{ instance('Token')::get() }}" />
+        
+        <!-- TOKEN with default input name -->
+        <input type="hidden" name="<?= Token::createTokenInput() ?>" value="<?= Token::get() ?>" />
+        {{-- TOKEN with default input name --}}
+		<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
     </form>
 */

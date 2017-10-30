@@ -21,5 +21,6 @@ return [
         'Config' => Frixs\Config\Config::class,
         'Input' => Frixs\Http\Input::class,
         'Request' => Frixs\Http\Request::class,
+        'Token' => Frixs\Http\Token::class,
     ],
 ];

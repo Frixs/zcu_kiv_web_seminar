@@ -5,6 +5,7 @@ namespace Frixs\Routing;
 use Frixs\Routing\Router;
 use Frixs\Language\Lang;
 use Frixs\Http\Input;
+use Frixs\Http\Token;
 
 class RouteRequest extends Route
 {
@@ -70,6 +71,12 @@ class RouteRequest extends Route
 
         // Parse the next parameter of the URL and check if request exists.
         $this->parseController();
+
+        // Validate form TOKEN.
+        // Token input from correct form must have the same name as request name. - This is true if there is custom input token name not default.
+        if (!Token::validation()) {
+            Router::redirectToError(500, Lang::get('error.unauthorized_token'));
+        }
 
         // Put name of the request into a full name.
         $controllerFullName = '\\App\\Http\\Controllers\\Requests\\'. $this->getControllerFullName();
