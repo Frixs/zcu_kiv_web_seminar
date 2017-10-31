@@ -2,6 +2,9 @@
 
 namespace Frixs\Http;
 
+use Frixs\Routing\Router;
+use Frixs\Language\Lang;
+
 /**
  *  Access to inputs. You dont need to call $_POST['something'] or $_GET['something'],
  *  you can use:
@@ -33,12 +36,12 @@ class Input
     }
 
     /**
-     * Returns input array like $_POST or $_GET
+     * Returns input array - $_POST, $_GET
      *
      * @param string $type
-     * @return array or null
+     * @return array
      */
-    public static function getAll($type)
+    private static function &getDirectInputArray($type)
     {
         switch ($type) {
             case 'post':
@@ -47,7 +50,31 @@ class Input
                 return $_GET;
         }
 
-        return null;
+        Router::redirectToError(501, Lang::get('error.undefined_input_type'));
+    }
+
+    /**
+     * Returns input array like $_POST or $_GET
+     *
+     * @param string $type
+     * @return array or null
+     */
+    public static function all($type)
+    {
+        return self::getDirectInputArray($type);
+    }
+
+    /**
+     * Set value in direct input array.
+     *
+     * @param string $type
+     * @param mixed $key
+     * @param mixed $value
+     * @return void
+     */
+    public static function set($type, $key, $value)
+    {
+        self::getDirectInputArray($type)[$key] = $value;
     }
 
     /**

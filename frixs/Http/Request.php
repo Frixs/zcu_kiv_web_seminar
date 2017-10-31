@@ -39,6 +39,20 @@ class Request
     protected $inputErrorArrayKey = 'input_errors';
 
     /**
+     * Return array key reserved for output success message.
+     *
+     * @var string
+     */
+    protected $outputMessageSuccessArrayKey = 'output_message_success';
+
+    /**
+     * Return array key reserved for output error message.
+     *
+     * @var string
+     */
+    protected $outputMessageErrorArrayKey = 'output_message_error';
+
+    /**
      * Redirect back to previous page. If it doest exist go bach to root
      *
      * @return void
@@ -77,7 +91,7 @@ class Request
     }
 
     /**
-     * Get data value.
+     * Get return data value.
      *
      * @param string $key
      * @return mixed
@@ -93,7 +107,7 @@ class Request
     }
 
     /**
-     * Get input data value.
+     * Get return INPUT's data value.
      *
      * @param string $key
      * @return mixed
@@ -115,7 +129,7 @@ class Request
      */
     public function addInputs()
     {
-        $this->addReturnValue($this->inputDataArrayKey, Input::getAll('post'));
+        $this->addReturnValue($this->inputDataArrayKey, Input::all('post'));
     }
 
     /**
@@ -157,10 +171,51 @@ class Request
             $inputName = (isset($inputNamePieces[1]) && is_numeric($inputNamePieces[1])) ? $inputNamePieces[0] : $input;
             $inputName = strtoupper(str_replace('-', ' ', $inputName));
 
-            $sentese = Lang::get('validation.'. $type, ['input' => $inputName, 'rule' => $rule]);
-            $errorMessages[$input][] = $sentese;
+            $errorMessages[$input][] = Lang::get('validation.'. $type, ['input' => $inputName, 'rule' => $rule]);
         }
 
         $this->addReturnValue($this->inputErrorArrayKey, $errorMessages);
+    }
+
+    /**
+     * Get output error message.
+     *
+     * @return string
+     */
+    public function messageError()
+    {
+        return $this->get($this->outputMessageErrorArrayKey);
+    }
+
+    /**
+     * Bind/set error output message.
+     *
+     * @param string $message
+     * @return void
+     */
+    protected function bindMessageError($message)
+    {
+        $this->addReturnValue($this->outputMessageErrorArrayKey, $message);
+    }
+
+    /**
+     * Get output success message.
+     *
+     * @return string
+     */
+    public function messageSuccess()
+    {
+        return $this->get($this->outputMessageSuccessArrayKey);
+    }
+
+    /**
+     * Bind/set success output message.
+     *
+     * @param string $message
+     * @return void
+     */
+    protected function bindMessageSuccess($message)
+    {
+        $this->addReturnValue($this->outputMessageSuccessArrayKey, $message);
     }
 }

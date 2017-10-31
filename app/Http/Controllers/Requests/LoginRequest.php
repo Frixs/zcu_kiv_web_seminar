@@ -6,7 +6,8 @@ use Frixs\Http\Request;
 use Frixs\Http\Input;
 use Frixs\Config\Config;
 use Frixs\Validation\Validate;
-use Frixs\Validation\Escape;
+use Frixs\Language\Lang;
+use Frixs\Auth\Auth;
 
 class LoginRequest extends Request
 {
@@ -21,7 +22,7 @@ class LoginRequest extends Request
             return $this->_validation;
         }
 
-        $validation = (new Validate())->check(Input::getAll('post'), [
+        $validation = (new Validate())->check(Input::all('post'), [
             'email'       => [
                 'required' => true,
                 'max'      => 150
@@ -47,7 +48,10 @@ class LoginRequest extends Request
             $this->goBack();
         }
         
-        echo "passed";
+        if (!Auth::login(Input::get('email'), Input::get('password'), Input::get('remember') ? true : false)) {
+            $this->bindMessageError(Lang::get('auth.failed'));
+        }
+
         $this->goBack();
     }
 }

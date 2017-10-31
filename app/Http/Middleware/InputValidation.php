@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Frixs\Http\Input;
+use Frixs\Validation\Escape;
 
 class InputValidation
 {
@@ -23,9 +24,9 @@ class InputValidation
     protected static function checkValues($type)
     {
         if (Input::exists($type)) {
-            foreach (Input::getAll($type) as $key => $value) {
+            foreach (Input::all($type) as $key => $value) {
                 // Input value validation
-                trim($value);
+                Input::set($type, $key, Escape::input($value));
             }
         }
     }

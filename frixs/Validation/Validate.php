@@ -3,7 +3,6 @@
 namespace Frixs\Validation;
 
 use Frixs\Database\Connection as DB;
-use Frixs\Validation\Escape;
 
 class Validate
 {
@@ -27,7 +26,7 @@ class Validate
     {
         foreach ($items as $item => $rules) {
             foreach ($rules as $rule => $rule_value) {
-                $value = Escape::input($source[$item]);
+                $value = $source[$item];
 
                 if (($rule === 'required' && empty($value)) && $rule_value) {
                     $this->addError("{$rule}|{$item}|");
@@ -186,7 +185,7 @@ class Validate
     <?php
         if(Input::exists())
         {
-            $validation = (new Validate())->check(Input::getAll('post'), [
+            $validation = (new Validate())->check(Input::all('post'), [
                 'username'       => [
                     'required' => true,
                     'min'      => 3,

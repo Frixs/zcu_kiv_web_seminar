@@ -91,7 +91,7 @@ class Auth extends User
      */
     public static function login($email, $password, $remember = false)
     {
-        $uid = self::verify($email, $password);
+        $uid = self::verify($password, ['email' => $email]);
 
         if (!$uid) {
             return false;
@@ -127,7 +127,7 @@ class Auth extends User
      *
      * @param string $password
      * @param array $attributes
-     * @return void
+     * @return integer or null      user ID
      */
     public static function verify($password, $attributes = [])
     {
@@ -152,7 +152,7 @@ class Auth extends User
             Router::redirectToError(500);
         }
 
-        if (self::verifyPassword($password . $query->getFirst()->form_salt, $query->getFirst()->password)) {
+        if ($query->count() && self::verifyPassword($password . $query->getFirst()->form_salt, $query->getFirst()->password)) {
             return $query->getFirst()->$primaryKey;
         }
 

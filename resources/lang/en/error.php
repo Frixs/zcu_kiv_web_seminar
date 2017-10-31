@@ -6,4 +6,5 @@ return [
     'failed_to_recognize_alias' => 'Cannot recognize \':alias\' alias!',
     'inappropriate_parameter_key' => 'Inappropriate parameter key \':key\'.',
     'unauthorized_token' => 'Unauthorized token.',
+    'undefined_input_type' => 'Undefined input type.',
 ];

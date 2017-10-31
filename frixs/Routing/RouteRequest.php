@@ -2,6 +2,7 @@
 
 namespace Frixs\Routing;
 
+use App\Http\Kernel;
 use Frixs\Routing\Router;
 use Frixs\Language\Lang;
 use Frixs\Http\Input;
@@ -93,8 +94,11 @@ class RouteRequest extends Route
         // Rest of the url are method parameters.
         $this->bindParameters();
 
-        // call the controller's method
-        $this->callControllerMethod($this->controllerInstance, $this->method, $this->parameters);
+        // Run the mail validation tests (middleware)
+        if (Kernel::run($this->controller, $this->method, $this->parameters)) {
+            // call the controller's method
+            $this->callControllerMethod($this->controllerInstance, $this->method, $this->parameters);
+        }
     }
 
     /**

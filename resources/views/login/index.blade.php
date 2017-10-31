@@ -10,7 +10,8 @@
 		<div class="login-form-wrapper col-xs-12 col-sm-6">
 			<h2 class="gc-text-center">{{ lang('login.index.title_normal') }}</h2>
 			<form class="form-horizontal" action="_request/login" method="post">
-				<div class="form-feedback">SUCCESS MESSAGE HERE!</div>
+				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
+				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
 				<div class="form-group @if (instance('Request')->getInputError('email')) has-error @endif">
 					<label class="control-label col-md-3" for="email">{{ lang('login.index.norm_inp_01') }}:</label>
 					<div class="col-md-9">

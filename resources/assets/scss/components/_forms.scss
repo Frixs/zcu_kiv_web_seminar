@@ -8,6 +8,14 @@ form > div.form-feedback {
     &:empty {
         margin-bottom: 0;
     }
+
+    &.__success {
+        color: $color-green-normal;
+    }
+
+    &.__error {
+        color: $color-red-normal;
+    }
 }
 
 form.form-horizontal {
