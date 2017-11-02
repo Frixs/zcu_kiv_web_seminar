@@ -36,7 +36,7 @@
 						</label>
 						<div class="login-supplement-wrapper">
 							<a href="#" tabindex="5">{{ lang('login.index.norm_link_01') }}</a><br>
-							{{ lang('login.index.norm_link_02_desc_01') }} <a href="#" tabindex="6">{{ lang('login.index.norm_link_02') }}</a>{{ lang('login.index.norm_link_02_desc_02') }}
+							{{ lang('login.index.norm_link_02_desc_01') }} <a href="register" tabindex="6">{{ lang('login.index.norm_link_02') }}</a>{{ lang('login.index.norm_link_02_desc_02') }}
 						</div>
 						<script>
 							$(':checkbox').radiocheck();
