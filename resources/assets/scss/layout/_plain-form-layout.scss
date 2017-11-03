@@ -1,0 +1,75 @@
+.form-middle-wrapper {
+    position: relative;
+    overflow: visible !important;
+
+    @media (max-width: 767px) {
+        & {
+            width: 100%;
+            margin-top: $body-margin * 2;
+            margin-bottom: $body-margin;
+            position: relative;
+            top: inherit;
+            left: inherit;
+            transform: none;
+        }
+    }
+
+    &.col-lg-form-middle-max {
+        @media (min-width: 1200px) {
+            &.col-lg-5 {
+                width: 700px !important;
+            }
+        }
+    }
+
+    .form-wrapper {
+        background-color: $color-gray-dark-20;
+
+        .supplement-wrapper {
+            @extend .gc-float-right;
+
+            @extend .gc-text-right;
+
+            font-size: $font-size-small;
+        }
+    }
+
+    .form-second-wrapper {
+        @extend .gc-float-right;
+        position: relative;
+        border-radius: $border-radius;
+        padding-right: 0;
+    }
+
+    .logo {
+        z-index: 10;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform-origin: center;
+        transform: translateY(-40%);
+        max-width: 125px;
+        transition: transform .6s;
+        
+        @media (max-width: 991px) {
+            & {
+                max-width: 75px;
+                transform: translateY(-35%);
+            }
+
+            &:hover {
+                transform: translateY(-35%) rotate(5deg);
+            }
+        }
+
+        &:hover {
+            transform: translateY(-40%) rotate(5deg);
+        }
+    }
+
+    .head-spacer {
+        margin-top: 60px;
+    }
+}

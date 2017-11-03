@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title_normal' => 'LOGIN',
-    'title_quick' => 'QUICK',
+    'title' => 'Login',
+    'title_quick' => 'Quick',
 
     'norm_inp_01' => 'Email',
     'norm_inp_01_ph' => 'Enter email',
