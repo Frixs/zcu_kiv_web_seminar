@@ -13,6 +13,9 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!-- Google ReCAPTCHA API -->
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <!-- Flat-UI styles -->
 <!-- http://designmodo.github.io/Flat-UI/docs/components.html -->
 <link rel="stylesheet" href="{{ instance('Config')::get('app.root') }}/css/vendor/Flat-UI-2.3.0/dist/css/flat-ui.css">

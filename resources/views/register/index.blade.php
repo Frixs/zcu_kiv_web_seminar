@@ -46,15 +46,22 @@
 					</div>
 				</div>
 				{{-- TERMS --}}
-				<div class="form-group">
+				<div class="form-group @if (instance('Request')->getInputError('terms')) has-error @endif">
 					<div class="col-xs-12">
 						<label class="checkbox" for="checkbox1">
 							<input type="checkbox" name="terms" value="terms" id="checkbox1" data-toggle="checkbox" tabindex="5">
 							{{ lang('register.index.inp_05') }} <a href="#">{{ lang('register.index.inp_05b') }}</a>.
 						</label>
+						<div class="form-feedback">@if (instance('Request')->getInputError('terms')) {{ instance('Request')->getInputError('terms') }} @endif</div>
 						<script>
 							$(':checkbox').radiocheck();
 						</script>
+					</div>
+				</div>
+				{{-- CAPTCHA --}}
+				<div class="form-group @if (instance('Request')->getInputError('terms')) has-error @endif">
+					<div class="col-xs-12" style="height: 62px;">
+						<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" style="margin: 0 0 0 auto;"></div>
 					</div>
 				</div>
 				{{-- TOKEN --}}

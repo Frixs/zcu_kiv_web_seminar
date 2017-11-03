@@ -64,6 +64,9 @@ class Kernel
             'login' => [
                 'NotAuthenticate',
             ],
+            'register' => [
+                'NotAuthenticate',
+            ],
         ];
     }
 

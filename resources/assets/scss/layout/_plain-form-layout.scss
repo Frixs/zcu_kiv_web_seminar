@@ -2,7 +2,7 @@
     position: relative;
     overflow: visible !important;
 
-    @media (max-width: 767px) {
+    @media (max-width: 991px) {
         & {
             width: 100%;
             margin-top: $body-margin * 2;
@@ -56,11 +56,11 @@
         @media (max-width: 991px) {
             & {
                 max-width: 75px;
-                transform: translateY(-35%);
+                transform: translateY(-34%);
             }
 
             &:hover {
-                transform: translateY(-35%) rotate(5deg);
+                transform: translateY(-34%) rotate(5deg);
             }
         }
 
