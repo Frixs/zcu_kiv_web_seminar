@@ -3,6 +3,8 @@
     @include('includes.head')
 </head>
 <body>
+    @include('includes.initials')
+    
     <header class="row">
         @include('includes.header')
     </header>

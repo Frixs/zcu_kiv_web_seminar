@@ -7,7 +7,7 @@
 
 @section('content')
 	<div class="register-page">
-		<div class="form-wrapper col-xs-12 col-sm-6">
+		<div class="form-wrapper col-xs-12">
 			<div class="head-spacer"></div>
 			<h2 class="gc-text-center">{{ lang('register.index.title') }}</h2>
 			<form class="form-horizontal" action="_request/register" method="post">
@@ -39,7 +39,6 @@
 				</div>
 				{{-- PASSWORD REPEAT --}}
 				<div class="form-group @if (instance('Request')->getInputError('password-check')) has-error @endif">
-					<label class="col-xs-12" for="pwd">{{ lang('register.index.inp_04') }}:</label>
 					<div class="col-xs-12">
 						<input type="password" name="password-check" value="" class="form-control __input-dark" id="pwd" placeholder="{{ lang('register.index.inp_04_ph') }}" maxlength="64" tabindex="4">
 						<div class="form-feedback">@if (instance('Request')->getInputError('password-check')) {{ instance('Request')->getInputError('password-check') }} @endif</div>
@@ -73,9 +72,6 @@
 					</div>
 				</div>
 			</form>
-		</div>
-		<div class="col-xs-12 col-sm-6 form-second-wrapper">
-			<div class="head-spacer"></div>
 		</div>
 		<div class="gc-cleaner"></div>
 	</div>

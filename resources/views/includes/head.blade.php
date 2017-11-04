@@ -24,3 +24,5 @@
 
 <!-- App CSS -->
 <link rel="stylesheet" href="{{ instance('Config')::get('app.root') }}/css/app.css">
+<!-- App JS -->
+<script src="{{ instance('Config')::get('app.root') }}/js/app.js"></script>

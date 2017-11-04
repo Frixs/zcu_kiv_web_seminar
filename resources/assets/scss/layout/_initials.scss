@@ -1,0 +1,15 @@
+#preloader {
+    z-index: 999;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color-gray-dark-20;
+
+    & > img {
+        max-width: 100px;
+        @include animation(infinite breathe 4s);
+    }
+}
