@@ -13,12 +13,12 @@
 			<form class="form-horizontal" action="_request/register" method="post">
 				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
-				{{-- NICKNAME --}}
-				<div class="form-group @if (instance('Request')->getInputError('nickname')) has-error @endif">
-					<label class="col-xs-12" for="nickname">{{ lang('register.index.inp_01') }}:</label>
+				{{-- USERNAME --}}
+				<div class="form-group @if (instance('Request')->getInputError('username')) has-error @endif">
+					<label class="col-xs-12" for="username">{{ lang('register.index.inp_01') }}:</label>
 					<div class="col-xs-12">
-						<input type="text" name="nickname" value="{{ instance('Request')->getInput('nickname') }}" class="form-control" id="nickname" placeholder="{{ lang('register.index.inp_01_ph') }}" maxlength="20" tabindex="2" autofocus>
-						<div class="form-feedback">@if (instance('Request')->getInputError('nickname')) {{ instance('Request')->getInputError('nickname') }} @endif</div>
+						<input type="text" name="username" value="{{ instance('Request')->getInput('username') }}" class="form-control __input-dark" id="username" placeholder="{{ lang('register.index.inp_01_ph') }}" maxlength="20" tabindex="2" autofocus>
+						<div class="form-feedback">@if (instance('Request')->getInputError('username')) {{ instance('Request')->getInputError('username') }} @endif</div>
 					</div>
 				</div>
 				{{-- EMAIL --}}
@@ -60,7 +60,7 @@
 				{{-- CAPTCHA --}}
 				<div class="form-group @if (instance('Request')->getInputError('terms')) has-error @endif">
 					<div class="col-xs-12" style="height: 62px;">
-						<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" style="margin: 0 0 0 auto;"></div>
+						<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" tabindex="6" style="margin: 0 0 0 auto;"></div>
 					</div>
 				</div>
 				{{-- TOKEN --}}
@@ -68,7 +68,7 @@
 				{{-- SUBMIT --}}
 				<div class="form-group">
 					<div class="col-md-offset-3 col-md-9">
-						<button type="submit" class="btn btn-primary gc-float-right" tabindex="6">{{ lang('register.index.inp_sub') }}</button>
+						<button type="submit" class="btn btn-primary gc-float-right" tabindex="7">{{ lang('register.index.inp_sub') }}</button>
 					</div>
 				</div>
 			</form>

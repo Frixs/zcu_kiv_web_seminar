@@ -10,6 +10,6 @@
 
     & > img {
         max-width: 100px;
-        @include animation(infinite breathe 4s);
+        @include animation(infinite breathe 2s);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'register_email_verify' => false,
     'remember_expiration' => ((365 / 2) * 86400),
     'session_name' => 'auth',
     'password_min_len' => 6,
