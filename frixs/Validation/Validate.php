@@ -3,6 +3,7 @@
 namespace Frixs\Validation;
 
 use Frixs\Database\Connection as DB;
+use Frixs\Captcha\Captcha;
 
 class Validate
 {

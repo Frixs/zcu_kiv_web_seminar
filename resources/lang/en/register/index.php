@@ -14,4 +14,7 @@ return [
     'inp_05' => 'Agreed with the ',
     'inp_05b' => 'TERMS',
     'inp_sub' => 'REGISTER',
+    'success_text_pre' => 'You can just',
+    'success_text_link' => 'LOG IN',
+    'success_text_post' => '!',
 ];

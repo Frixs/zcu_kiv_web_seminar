@@ -2,6 +2,8 @@
 
 namespace Frixs\Captcha;
 
+use Frixs\Config\Config;
+
 class Captcha
 {
     /* Google recaptcha API url */

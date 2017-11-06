@@ -7,4 +7,5 @@ return [
     'inappropriate_parameter_key' => 'Inappropriate parameter key \':key\'.',
     'unauthorized_token' => 'Unauthorized token.',
     'undefined_input_type' => 'Undefined input type.',
+    'undefined_registration_method' => 'Undefined registration method.',
 ];

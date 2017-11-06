@@ -40,10 +40,10 @@ class Auth extends User
 
         if (Cookie::exists(Config::get('auth.session_name'))) {
             $sessionId = Cookie::get(Config::get('auth.session_name'));
-            $remember = true;
+            $remember = 1;
         } elseif (Session::exists(Config::get('auth.session_name'))) {
             $sessionId = Session::get(Config::get('auth.session_name'));
-            $remember = false;
+            $remember = 0;
         } else {
             return 1;
         }
@@ -99,13 +99,13 @@ class Auth extends User
 
         $sessionId = md5(uniqid($uid, true)) . md5(uniqid(date('Y-m-d H:i:s'), true));
 
-        $query = self::db()->insert(User::getTable(), [
+        $query = self::db()->insert(SessionModel::getTable(), [
             SessionModel::getPrimaryKey() => $sessionId,
             'user_id' => $uid,
             'ip' => getClientIP(),
             'browser' => getClientBrowserInfo(),
             'session_start' => time(),
-            'remember'=> $remember
+            'remember'=> $remember ? 1 : 0
         ]);
 
         if (!$query) {
@@ -221,15 +221,16 @@ class Auth extends User
      * Hash a password to the correct form.
      *
      * @param string $password
+     * @param string $salt
      * @return string               Hashed password
      */
-    public static function hashPassword($password)
+    public static function hashPassword($password, $salt)
     {
         $options = [
             'cost' => 12,
         ];
-
-        return password_hash($password . self::user()->form_salt, PASSWORD_BCRYPT, $options);
+        
+        return password_hash($password . $salt, PASSWORD_BCRYPT, $options);
     }
 
     /**
@@ -242,5 +243,14 @@ class Auth extends User
     public static function verifyPassword($password, $hash)
     {
         return password_verify($password, $hash);
+    }
+
+    /**
+     * Generate salt.
+     *
+     * @return string
+     */
+    public static function generateSalt() {
+        return md5(uniqid(mt_rand(), true));
     }
 }

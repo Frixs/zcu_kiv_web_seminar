@@ -9,6 +9,8 @@ use Frixs\Validation\Validate;
 use Frixs\Language\Lang;
 use Frixs\Auth\Auth;
 
+use App\Models\User;
+
 class RegisterRequest extends Request
 {
     /**
@@ -42,7 +44,14 @@ class RegisterRequest extends Request
             ],
             'password-check' => [
                 'required' => true
-            ]
+            ],
+            'terms' => [
+                'required' => true
+            ],
+            'g-recaptcha-response' => array(
+                'required' => true,
+                'captcha' => Input::get('g-recaptcha-response')
+            )
         ]);
 
         return $this->_validation = $validation;
@@ -61,12 +70,16 @@ class RegisterRequest extends Request
         
         if (!Config::get('auth.register_email_verify')) {
             // Register without verification.
-            $this->bindMessageSuccess(Lang::get('auth.register_success_verify'));
+            User::register(Input::get('username'), Input::get('email'), Input::get('password'), 'NOVERIFY');
+            
+            $this->bindMessageSuccess(Lang::get('auth.register_success'));
             $this->goBack();
         }
-
-        // TODO: Register with the email verification.
-        $this->bindMessageSuccess(Lang::get('auth.register_success'));
+        
+        // Register with the email verification.
+        User::register(Input::get('username'), Input::get('email'), Input::get('password'), 'VERIFY');
+        
+        $this->bindMessageSuccess(Lang::get('auth.register_success_verify'));
         $this->goBack();
     }
 }
