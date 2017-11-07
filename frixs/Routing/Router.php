@@ -4,6 +4,7 @@ namespace Frixs\Routing;
 
 use Frixs\Config\Config;
 use Frixs\Session\Session;
+use Frixs\Language\Lang;
 
 class Router
 {
@@ -51,6 +52,10 @@ class Router
                 header('Location: '. Config::get('app.root') .'/error/001', true, 301);
                 exit();
                 break;
+            case 401:
+                header('Location: '. Config::get('app.root') .'/error/401', true, 301);
+                exit();
+                break;
             case 404:
                 header('HTTP/1.1 404 Not Found');
                 header('Location: '. Config::get('app.root') .'/error/404', true, 301);
@@ -69,9 +74,7 @@ class Router
                 exit();
                 break;
             default:
-                if (Session::exists('error_message')) {
-                    Session::flash('error_message');
-                }
+                self::redirectToError(501, Lang::get('error.undefined_error_redirection'));
         }
     }
 

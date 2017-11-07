@@ -54,18 +54,18 @@ class Kernel
         self::$routeMiddleware = [
             'home' => [
                 'Authenticate',
-                //'SomeMiddleware'
-            ],
-            'home.index' => [
-                'Guard' => [
-                    Group::Admin(),
-                ]
+                //'SomeMiddlewareName'
             ],
             'login' => [
                 'NotAuthenticate',
             ],
             'register' => [
                 'NotAuthenticate',
+            ],
+            'dashboard' => [
+                'Guard' => [
+                    Group::Admin(),
+                ]
             ],
         ];
     }

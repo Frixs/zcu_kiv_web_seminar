@@ -187,10 +187,10 @@ class Auth extends User
     /**
      * Check user's role/permissions
      *
-     * @param string $roleID
+     * @param string $groupId
      * @return bool
      */
-    public static function guard($roleID)
+    public static function guard($groupId)
     {
         $query = self::db()->query("
                 SELECT g.server_group
@@ -200,7 +200,7 @@ class Auth extends User
                 WHERE ug.user_id = ? AND ug.group_id = ? AND (g.server_group = ? OR (g.server_group = ? AND ug.server_id = ?))
             ", [
                 Auth::id(),
-                $roleID,
+                $groupId,
                 0,
                 1,
                 \App\Models\Server::getServerID()
@@ -209,8 +209,8 @@ class Auth extends User
         if ($query->error()) {
             Router::redirectToError(500);
         }
-    
-        if (!$query->count()) {
+
+        if ($query->count()) {
             return true;
         }
 

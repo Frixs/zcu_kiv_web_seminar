@@ -8,4 +8,5 @@ return [
     'unauthorized_token' => 'Unauthorized token.',
     'undefined_input_type' => 'Undefined input type.',
     'undefined_registration_method' => 'Undefined registration method.',
+    'undefined_error_redirection' => 'Undefined error redirection.',
 ];

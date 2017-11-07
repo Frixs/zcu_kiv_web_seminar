@@ -67,17 +67,17 @@ class Session
      * @return string           if doesnts exist session will be created
      *                          else returns session value and immediately will be deleted
      */
-    public static function flash($name, $string = '')
+    public static function flash($name, $string = null)
     {
-        if (self::exists($name)) {
+        if ($string) {
+            self::put($name, $string);
+        } else {
             $session = self::get($name);
             self::delete($name);
             return $session;
-        } else {
-            self::put($name, $string);
         }
 
-        return '';
+        return null;
     }
 }
 

@@ -19,7 +19,7 @@ class ErrorController extends Controller
 
         $this->recentErrorMessage = Session::flash('error_message');
         if ($this->recentErrorMessage == 'null') {
-            $this->recentErrorMessage == "";
+            $this->recentErrorMessage = "";
         }
 
         $eMethodFullName = 'error'. $errorCode;
