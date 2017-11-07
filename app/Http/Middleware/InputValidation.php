@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Frixs\Http\Input;
 use Frixs\Validation\Escape;
 
-class InputValidation
+class InputValidation extends \Frixs\Http\Middleware
 {
     public static function validate($parameters = [])
     {

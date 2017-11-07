@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Frixs\Routing\Router;
 use Frixs\Auth\Auth;
 
-class Guard
+class Guard extends \Frixs\Http\Middleware
 {
     public static function validate($parameters = [])
     {

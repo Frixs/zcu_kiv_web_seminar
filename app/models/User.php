@@ -12,6 +12,8 @@ class User extends Model
 {
     // Use Model parameters.
     use \Frixs\Database\Eloquent\ModelParameters;
+    // Use User's traits.
+    use \Frixs\Auth\UserTrait;
 
     /**
      * Create an instance of the model.
@@ -22,22 +24,6 @@ class User extends Model
 
         // You can override attributes from the Model class via SETs.
         //static::setTable('TABLE_NAME');
-    }
-
-    /**
-     * Get user data by ID
-     *
-     * ---
-     * Use: User::get(<ID>)->username;
-     * ---
-     *
-     * @param integer $uid
-     * @return object
-     */
-    public static function get($uid)
-    {
-        $query = self::db()->selectAll(self::getTable(), [self::getPrimaryKey(), '=', $uid], [], 1);
-        return $query->getFirst();
     }
 
     /**

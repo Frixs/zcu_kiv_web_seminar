@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Frixs\Routing\Router;
 use Frixs\Config\Config;
 
-class DeveloperMode
+class DeveloperMode extends \Frixs\Http\Middleware
 {
     public static function validate($parameters = [])
     {
