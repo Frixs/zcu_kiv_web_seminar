@@ -63,9 +63,13 @@ class Kernel
                 'NotAuthenticate',
             ],
             'dashboard' => [
+                'Authenticate',
+            ],
+            'server' => [
                 'Guard' => [
-                    Group::Admin(),
-                ]
+                    Group::SMember(),
+                    Group::SRecruit(),
+                ],
             ],
         ];
     }

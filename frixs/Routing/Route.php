@@ -286,6 +286,7 @@ class Route
 
     /**
      * Parse parameters, assign key to them if have one.
+     * example: /par1/par2/par3key:par3/par4/par5key:par5
      *
      * @return array
      */
@@ -305,8 +306,9 @@ class Route
                 Router::redirectToError(500, Lang::get('error.inappropriate_parameter_key', ['key' => $item[0]]));
             }
             // --- Addon to recognize server room.
-            // TOOD new project
-            if ($item[0] === 'server' && is_numeric($item[1])) {
+            // TOOD: for setup new project
+            $serverKeyName = 'server';
+            if ($item[0] === $serverKeyName && is_numeric($item[1])) {
                 \App\Models\Server::setServerID($item[1]);
                 continue;
             }
