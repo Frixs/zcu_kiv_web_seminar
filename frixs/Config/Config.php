@@ -16,6 +16,10 @@ class Config
         // load global settings
         foreach (scandir('../config') as $filename) {
             $path = '../config/' . $filename;
+            
+            if ($filename === '.htaccess')
+                continue;
+
             if (is_file($path)) {
                 self::$_data[explode('.', $filename)[0]] = require_once $path;
             }
