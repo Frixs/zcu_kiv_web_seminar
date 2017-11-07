@@ -2,10 +2,6 @@
 
 @section('title', lang('login.index.title'))
 
-@section('logo')
-    @parent
-@stop
-
 @section('content')
 	<div class="login-page">
 		<div class="form-wrapper col-xs-12 col-sm-6">
