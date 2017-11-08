@@ -78,3 +78,11 @@ body
         @include animation(spin 500ms linear infinite);
     }
 }
+
+body {
+    background-image: url('../images/structure/bg_master_01.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+}

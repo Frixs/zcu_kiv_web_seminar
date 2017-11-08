@@ -1,1 +1,10 @@
 /* Footer */
+footer {
+    &.plain-form {
+        background-color: transparent;
+        text-align: center;
+        color: $color-gray-light-50;
+        padding: $content-padding;
+        padding-bottom: 0;
+    }
+}
