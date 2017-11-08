@@ -10,7 +10,7 @@
 .jumbotron,
 .container .jumbotron {
     @extend %no-spacing;
-    background-color: rgba($color-gray-dark-10, .95);
+    background-color: rgba($color-gray-dark-10, $bg-opacity-01);
     border-radius: 1px;
     padding-left: $content-padding;
     padding-right: $content-padding;
