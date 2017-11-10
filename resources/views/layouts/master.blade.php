@@ -29,7 +29,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<span class="glyphicon glyphicon-user"></span>
-							<strong>USERNAME</strong>
+							<strong>{{ instance('Auth')::user()->username }}</strong>
 							<span class="glyphicon glyphicon-chevron-down"></span>
 						</a>
 						<ul class="dropdown-menu user-wrapper">
@@ -40,26 +40,20 @@
 											<span class="glyphicon glyphicon-user icon-size"></span>
 										</p>
 									</div>
-									<div class="col-lg-8">
+									<div class="col-lg-8 gc-col-nosp user-info">
 										<p class="text-left">
-											<strong>TEXT</strong>
+											<strong>{{ instance('Auth')::user()->username }}</strong>
 										</p>
-										<p class="text-left small">email@email.com</p>
-										<p class="text-left">
-											<a href="#" class="btn btn-primary btn-block btn-sm">XXX</a>
-										</p>
+										<p class="text-left small">{{ instance('Auth')::user()->email }}</p>
 									</div>
+									<div class="gc-cleaner"></div>
 								</div>
 							</li>
 							<li class="divider"></li>
 							<li>
-								<div class="navbar-login navbar-user-session">
-									<div class="col-lg-12">
-										<p>
-											<a href="#" class="btn btn-danger btn-block">LOGOUT TEXT</a>
-										</p>
-									</div>
-								</div>
+								<p class="navbar-user-session">
+									<a href="logout" class="btn btn-danger btn-block">{{ lang('auth.logout') }}</a>
+								</p>
 							</li>
 						</ul>
 					</li>

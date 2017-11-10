@@ -23,6 +23,10 @@
     clear: both;
 }
 
+.gc-position-relative {
+    position: relative;
+}
+
 .gc-block-center {
     display: block;
     margin: auto;
@@ -42,6 +46,15 @@
 
 .gc-col-nosp-right {
     padding-right: 0;
+}
+
+.gc-col-nosp {
+    @extend .gc-col-nosp-left;
+    @extend .gc-col-nosp-right;
+}
+
+.gc-width-100 {
+    width: 100%;
 }
 
 .g-recaptcha {

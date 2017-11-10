@@ -55,25 +55,34 @@
 
         .user-wrapper {
             margin: 0;
-            padding: 0;
+            padding: 0 !important;
 
             .navbar-user
             {
-                width: 305px;
-                padding: 10px;
+                min-width: 305px;
+                padding: $content-padding;
                 padding-bottom: 0px;
-
-                &.navbar-user-session
-                {
-                    padding: 10px;
-                    padding-bottom: 0px;
-                    padding-top: 0px;
-                }
 
                 .icon-size
                 {
-                    font-size: 87px;
+                    font-size: 48px;
                 }
+
+                .user-info {
+                    height: 100%;
+
+                    p {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .navbar-user-session
+            {
+                padding: 15px;
+                padding-top: 0;
+                margin-bottom: 0;
+                text-transform: uppercase;
             }
         }
     }

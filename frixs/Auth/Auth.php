@@ -2,6 +2,7 @@
 
 namespace Frixs\Auth;
 
+use Frixs\Database\Connection as DB;
 use App\Models\User;
 use App\Models\Session as SessionModel;
 use Frixs\Config\Config;
@@ -15,8 +16,15 @@ use App\Models\Group;
 /**
  * Parent is general User and his parent is general Model
  */
-class Auth extends User
+class Auth
 {
+    /**
+     * Object of User table with current authenticated user.
+     *
+     * @var object
+     */
+    protected static $authUser = null;
+
     /**
      * Get all data of the current logged user
      *
@@ -24,8 +32,12 @@ class Auth extends User
      */
     public static function user()
     {
-        $query = self::db()->selectAll(User::getTable(), [User::getPrimaryKey(), '=', self::id()], [], 1);
-        return $query->getFirst();
+        if (!self::$authUser) {
+            $query = DB::getInstance()->selectAll(User::getTable(), [User::getPrimaryKey(), '=', self::id()], [], 1);
+            return self::$authUser = $query->getFirst();
+        }
+
+        return self::$authUser;
     }
 
     /**
@@ -48,7 +60,7 @@ class Auth extends User
             return 1;
         }
 
-        $query = self::db()->select(SessionModel::getTable(), [
+        $query = DB::getInstance()->select(SessionModel::getTable(), [
             SessionModel::getPrimaryKey(), '=', $sessionId,
             'AND', 'ip', '=', getClientIP(),
             'AND', 'browser', '=', getClientBrowserInfo(),
@@ -99,7 +111,7 @@ class Auth extends User
 
         $sessionId = md5(uniqid($uid, true)) . md5(uniqid(date('Y-m-d H:i:s'), true));
 
-        $query = self::db()->insert(SessionModel::getTable(), [
+        $query = DB::getInstance()->insert(SessionModel::getTable(), [
             SessionModel::getPrimaryKey() => $sessionId,
             'user_id' => $uid,
             'ip' => getClientIP(),
@@ -109,7 +121,7 @@ class Auth extends User
         ]);
 
         if (!$query) {
-            self::db()->rollBack();
+            DB::getInstance()->rollBack();
             Router::redirectToError(500);
         }
 
@@ -147,7 +159,7 @@ class Auth extends User
             $i++;
         }
 
-        $query = self::db()->select(User::getTable(), $whereCond, [$primaryKey, 'password', 'form_salt'], [], 1);
+        $query = DB::getInstance()->select(User::getTable(), $whereCond, [$primaryKey, 'password', 'form_salt'], [], 1);
         if ($query->error()) {
             Router::redirectToError(500);
         }
@@ -169,7 +181,7 @@ class Auth extends User
     public static function logout($uid = 0)
     {
         if ($uid > 0) {
-            self::db()->delete(SessionModel::getTable(), ['user_id', '=', $uid]);
+            DB::getInstance()->delete(SessionModel::getTable(), ['user_id', '=', $uid]);
             return;
         }
 
@@ -181,7 +193,7 @@ class Auth extends User
             $sessionId = Session::get(Config::get('auth.session_name'));
         }
 
-        self::db()->delete(SessionModel::getTable(), [SessionModel::getPrimaryKey(), '=', $sessionId]);
+        DB::getInstance()->delete(SessionModel::getTable(), [SessionModel::getPrimaryKey(), '=', $sessionId]);
     }
 
     /**
@@ -192,7 +204,7 @@ class Auth extends User
      */
     public static function guard($groupId)
     {
-        $query = self::db()->query("
+        $query = DB::getInstance()->query("
                 SELECT g.server_group
                 FROM ". UserGroup::getTable() ." AS ug
                 INNER JOIN ". Group::getTable() ." AS g

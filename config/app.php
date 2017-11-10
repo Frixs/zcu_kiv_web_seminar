@@ -23,5 +23,6 @@ return [
         'Input' => \Frixs\Http\Input::class,
         'Request' => \Frixs\Http\Request::class,
         'Token' => \Frixs\Http\Token::class,
+        'Auth' => \Frixs\Auth\Auth::class,
     ],
 ];
