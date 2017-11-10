@@ -6,7 +6,7 @@
 	<div class="login-page">
 		<div class="form-wrapper col-xs-12 col-sm-6">
 			<div class="head-spacer"></div>
-			<h2 class="gc-text-center">{{ lang('login.index.title') }}</h2>
+			<h2 class="text-center">{{ lang('login.index.title') }}</h2>
 			<form class="form-horizontal" action="_request/login" method="post">
 				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
@@ -51,8 +51,8 @@
 		</div>
 		<div class="col-xs-12 col-sm-6 form-second-wrapper">
 			<div class="head-spacer"></div>
-			<h2 class="gc-text-center">{{ lang('login.index.title_quick') }}</h2>
-			<p class="gc-text-center">Available soon!</p>
+			<h2 class="text-center">{{ lang('login.index.title_quick') }}</h2>
+			<p class="text-center">Available soon!</p>
 			<form class="form-horizontal" action="#" method="post">
 				<div class="form-group @if (instance('Request')->getInputError('nickname')) has-error @endif">
 					<label class="col-lg-12" for="nickname">{{ lang('login.index.quick_inp_01') }}:</label>

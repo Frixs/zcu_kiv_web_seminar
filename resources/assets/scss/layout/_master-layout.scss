@@ -1,26 +1,93 @@
-.master-wrapper-left {
-    background-color: rgba($color-gray-dark-10, $bg-opacity-02);
-    //
-    height: 100%;
+.master-header {
+    .navbar {
+        z-index:            2;
+        position:           relative;
+        background-color:   $color-gray-dark-20;
+        min-height:         60px;
+        margin-bottom:      0;
 
-    .logo-wrapper {
-        width: 100%;
-        text-align: center;
+        .navbar-collapse {
+            @extend %no-spacing;
+            border: none;
+        }
 
-        .logo {
-            max-width: 150px;
+        .navbar-brand,
+        .navbar-toggle,
+        .navbar-nav li a {
+            line-height:    60px;
+            height:         60px;
+            padding:        0 $content-padding 0 $content-padding;
+        }
+        
+        .navbar-btn {
+            height:         50px;
+            line-height:    20px;
+            margin-top:     5px;
+            margin-bottom:  5px;
+        }
+
+        .navbar-right {
+            &:navbar-right {
+                @extend %no-spacing;
+            }
+        }
+
+        .navbar-logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            max-width:          110px;
+
+            a {
+                display: block;
+
+                &:hover {
+                    transform: scale(0.9);
+                }
+
+                img {
+                    max-width:  110px;
+                }
+            }
+        }
+
+        .user-wrapper {
+            margin: 0;
+            padding: 0;
+
+            .navbar-user
+            {
+                width: 305px;
+                padding: 10px;
+                padding-bottom: 0px;
+
+                &.navbar-user-session
+                {
+                    padding: 10px;
+                    padding-bottom: 0px;
+                    padding-top: 0px;
+                }
+
+                .icon-size
+                {
+                    font-size: 87px;
+                }
+            }
         }
     }
 }
 
-.master-wrapper-right {
-    background-color: rgba($color-gray-dark-10, $bg-opacity-02);
-    //
-    height: 60px;
+.master-section-container {
+    position: relative;
+    overflow: auto;
+    background-color: rgba($color-gray-dark-20, .25);
 
-    .header-wrapper {
-    }
-
-    .content-wrapper {
+    h1 {
+        text-transform: uppercase;
+        margin-bottom: $content-padding;
+        margin-top: 50px;
+        font-size: 32px;
     }
 }

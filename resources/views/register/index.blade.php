@@ -9,7 +9,7 @@
 	<div class="register-page">
 		<div class="form-wrapper col-xs-12">
 			<div class="head-spacer"></div>
-			<h2 class="gc-text-center">{{ lang('register.index.title') }}</h2>
+			<h2 class="text-center">{{ lang('register.index.title') }}</h2>
 			<form class="form-horizontal" action="_request/register" method="post">
 				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }} @if (instance('Request')->messageSuccess()) {{ lang('register.index.success_text_pre') }} <a href="login">{{ lang('register.index.success_text_link') }}</a>{{ lang('register.index.success_text_post') }} @endif</div>
 				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
@@ -63,7 +63,7 @@
 						<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" tabindex="6" style="margin: 0 0 0 auto;"></div>
 					</div>
 					<div class="col-xs-12">
-						<div class="form-feedback gc-text-right">@if (instance('Request')->getInputError('g-recaptcha-response')) {{ instance('Request')->getInputError('g-recaptcha-response') }} @endif</div>
+						<div class="form-feedback text-right">@if (instance('Request')->getInputError('g-recaptcha-response')) {{ instance('Request')->getInputError('g-recaptcha-response') }} @endif</div>
 					</div>
 				</div>
 				{{-- TOKEN --}}

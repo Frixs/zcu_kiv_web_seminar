@@ -1,11 +1,13 @@
 .form-middle-wrapper {
     @extend %no-spacing;
+
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     margin: auto;
     margin-top: $body-margin;
+
     // LOGO padding
     padding: $content-padding;
     padding-top: 50px;
@@ -17,6 +19,7 @@
             top: inherit;
             left: inherit;
             transform: none;
+
             // LOGO padding
             padding-top: 25px;
         }
@@ -40,7 +43,7 @@
         transform-origin: center;
         max-width: 125px;
         transition: transform .6s;
-        
+
         @media (max-width: 991px) {
             & {
                 max-width: 75px;
@@ -65,14 +68,14 @@
             .supplement-wrapper {
                 @extend .gc-float-right;
 
-                @extend .gc-text-right;
-
+                text-align: right;
                 font-size: $font-size-small;
             }
         }
 
         .form-second-wrapper {
             @extend .gc-float-right;
+
             position: relative;
             border-radius: $border-radius;
             padding-right: 0;
