@@ -1,0 +1,13 @@
+.dashboard-wrapper {
+    @extend %no-spacing;
+    
+    div.column-wrapper {
+        border: 1px solid red;
+        background-color: rgba(blue, .1);
+
+        & > h2 {
+            text-align: center;
+            margin: $content-padding 0 $content-padding 0 !important;
+        }
+    }
+}

@@ -1,19 +1,19 @@
 /* Global layout setting */
 
 .container {
-    @extend %no-spacing;
+    padding: 0 !important;
     height: 100%;
     width: 100%;
     position: relative;
 }
 
-.jumbotron,
-.container .jumbotron {
+.jumbotron {
     @extend %no-spacing;
     background-color: rgba($color-gray-dark-10, $bg-opacity-01);
     border-radius: 1px;
     padding-left: $content-padding;
     padding-right: $content-padding;
+    margin: 0;
     overflow: hidden;
 }
 

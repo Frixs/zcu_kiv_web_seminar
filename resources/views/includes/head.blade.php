@@ -13,16 +13,19 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!-- Font Awesome -->
+<link rel="stylesheet" href="../resources/assets/fonts/font-awesome/css/font-awesome.min.css">
+
 <!-- Google ReCAPTCHA API -->
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 <!-- Flat-UI styles -->
 <!-- http://designmodo.github.io/Flat-UI/docs/components.html -->
-<link rel="stylesheet" href="{{ instance('Config')::get('app.root') }}/css/vendor/Flat-UI-2.3.0/dist/css/flat-ui.css">
+<link rel="stylesheet" href="css/vendor/Flat-UI-2.3.0/dist/css/flat-ui.css">
 <!-- Flat-UI JavaScript -->
-<script src="{{ instance('Config')::get('app.root') }}/css/vendor/Flat-UI-2.3.0/dist/js/flat-ui.js"></script>
+<script src="css/vendor/Flat-UI-2.3.0/dist/js/flat-ui.js"></script>
 
 <!-- App CSS -->
-<link rel="stylesheet" href="{{ instance('Config')::get('app.root') }}/css/app.css">
+<link rel="stylesheet" href="css/app.css">
 <!-- App JS -->
-<script src="{{ instance('Config')::get('app.root') }}/js/app.js"></script>
+<script src="js/app.js"></script>

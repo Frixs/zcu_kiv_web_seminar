@@ -85,6 +85,13 @@
                 text-transform: uppercase;
             }
         }
+
+        .user-wrapper-toggle {
+            span {
+                padding-top: $content-padding;
+                font-size: 30px;
+            }
+        }
     }
 }
 
