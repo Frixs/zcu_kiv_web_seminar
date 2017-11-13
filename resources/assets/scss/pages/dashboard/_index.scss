@@ -4,6 +4,7 @@
     div.column-wrapper {
         border: 1px solid red;
         background-color: rgba(blue, .1);
+        padding-bottom: $content-padding;
 
         & > h2 {
             text-align: center;
