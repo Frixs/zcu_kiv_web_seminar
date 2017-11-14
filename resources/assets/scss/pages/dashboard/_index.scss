@@ -1,14 +1,24 @@
 .dashboard-wrapper {
     @extend %no-spacing;
+    padding: $content-padding / 2;
     
-    div.column-wrapper {
-        border: 1px solid red;
-        background-color: rgba(blue, .1);
-        padding-bottom: $content-padding;
+    div.column-master-wrapper {
+        padding: 0;
 
-        & > h2 {
-            text-align: center;
-            margin: $content-padding 0 $content-padding 0 !important;
+        div.column-wrapper {
+            //border: 1px solid red;
+            //background-color: rgba(blue, .1);
+            padding: $content-padding / 2;
+
+            & > div {
+                background-color: rgba($color-gray-dark-10, $bg-opacity-01);
+                padding: $content-padding;
+
+                & > h2 {
+                    text-align: center;
+                    margin: 0 0 $content-padding 0 !important;
+                }
+            }
         }
     }
 }

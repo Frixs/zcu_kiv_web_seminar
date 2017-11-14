@@ -50,15 +50,7 @@ class Session
             unset($_SESSION[$name]);
         }
     }
-        
-    /**
-         *  Method to flash information messages after form submission
-         *
-         *  @param name     session name
-         *  @param string   message
-         *  @return         create a session if the session doesnt exist.
-         *                  message if session exists and immediately delete one.
-         */
+    
     /**
      * Flash info messages after form submission
      *
