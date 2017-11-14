@@ -25,3 +25,8 @@
     transform: translate(-50%, -50%);
     overflow: auto;
 }
+
+hr {
+    border-top: 2px solid $color-orange-normal;
+    margin: $content-padding 0 $content-padding 0;
+}
