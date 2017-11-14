@@ -27,6 +27,10 @@
 }
 
 hr {
-    border-top: 2px solid $color-orange-normal;
+    border-top: 2px solid $color-gray-light-20;
     margin: $content-padding 0 $content-padding 0;
+
+    &.color {
+        border-top: 2px solid $color-orange-normal;
+    }
 }
