@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1:3306
--- Vytvořeno: Ned 29. říj 2017, 22:15
+-- Vytvořeno: Pon 20. lis 2017, 21:22
 -- Verze serveru: 5.7.19
 -- Verze PHP: 7.1.9
 
@@ -120,12 +120,20 @@ DROP TABLE IF EXISTS `web_servers`;
 CREATE TABLE IF NOT EXISTS `web_servers` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
-  `tag` varchar(5) COLLATE utf8_czech_ci NOT NULL,
+  `is_private` tinyint(1) UNSIGNED NOT NULL,
+  `has_background_box` tinyint(1) UNSIGNED NOT NULL,
   `edited_at` int(11) UNSIGNED NOT NULL,
   `created_at` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tag` (`tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `web_servers`
+--
+
+INSERT INTO `web_servers` (`id`, `name`, `is_private`, `has_background_box`, `edited_at`, `created_at`) VALUES
+(1, 'Test Server', 0, 0, 0, 0),
+(2, 'Druhý server', 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -147,6 +155,13 @@ CREATE TABLE IF NOT EXISTS `web_sessions` (
   KEY `remember` (`remember`),
   KEY `browser` (`browser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `web_sessions`
+--
+
+INSERT INTO `web_sessions` (`id`, `user_id`, `ip`, `browser`, `session_start`, `remember`) VALUES
+('300cf1e5c5649881a5d1408994fae5d5d5acf8094fd746165ab6f68a4af22f17', 4, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', 1511191905, 1);
 
 -- --------------------------------------------------------
 
@@ -171,14 +186,15 @@ CREATE TABLE IF NOT EXISTS `web_users` (
   UNIQUE KEY `email` (`email`),
   KEY `username_clean` (`username_clean`),
   KEY `verified` (`verified`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `web_users`
 --
 
 INSERT INTO `web_users` (`id`, `username`, `username_clean`, `email`, `password`, `lastvisit`, `registered`, `register_time`, `verified`, `actkey`, `form_salt`) VALUES
-(1, 'Anonymous', 'anonymous', '', '', 0, 0, 0, 0, '', '');
+(1, 'Anonymous', 'anonymous', '', '', 0, 0, 0, 0, '', ''),
+(4, 'Frixs', 'frixs', 'frixs.dotlog@gmail.com', '$2y$12$568qvZ2pgEW06FZUC9f38OXPmwUkqX5J2PLrt6WN1XbyFcJ1FVfOW', 1509993601, 1, 1509993601, 0, '', '3ef205b0117f9d6df28908f1c0524260');
 
 -- --------------------------------------------------------
 
@@ -195,6 +211,15 @@ CREATE TABLE IF NOT EXISTS `web_user_groups` (
   KEY `group_id` (`group_id`),
   KEY `server_id` (`server_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `web_user_groups`
+--
+
+INSERT INTO `web_user_groups` (`user_id`, `group_id`, `server_id`) VALUES
+(4, 4, 1),
+(4, 3, 1),
+(4, 4, 2);
 
 --
 -- Omezení pro exportované tabulky

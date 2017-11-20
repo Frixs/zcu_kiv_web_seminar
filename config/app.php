@@ -24,5 +24,7 @@ return [
         'Request' => \Frixs\Http\Request::class,
         'Token' => \Frixs\Http\Token::class,
         'Auth' => \Frixs\Auth\Auth::class,
+
+        'UserGroup' => \App\Models\UserGroup::class,
     ],
 ];
