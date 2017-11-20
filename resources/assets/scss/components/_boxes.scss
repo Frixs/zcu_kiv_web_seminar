@@ -1,1 +1,78 @@
 /* Global dialog windows or wrappers */
+.server-box {
+    display: block;
+    position: relative;
+    z-index: 0;
+    height: 75px !important;
+    padding: $content-padding / 2;
+    padding-left: $content-padding;
+    padding-right: $content-padding;
+    margin-bottom: $content-padding;
+    background-color: $color-gray-dark-20;
+    border: 2px solid $color-gray-dark-30;
+    overflow: hidden;
+
+    & > img {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        min-width: 100%;
+        height: 100%;
+        
+        opacity: .75;
+    }
+
+    &:hover {
+        & > img {
+            opacity: .25;
+        }
+
+        color: lighten($color-orange-normal, 40%);
+        text-shadow: 0 0 5px lighten($color-orange-normal, 30%);
+        border: 2px solid $color-gray-dark-20;
+    }
+
+    & > .rank-badge {
+        z-index: 5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $color-red-normal;
+        width: 25px;
+        height: 25px;
+        border-bottom-right-radius: 25px;
+
+        color: $color-clouds;
+        font-size: 12px;
+        padding-left: 4px;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .title {
+        position: relative;
+        z-index: 3;
+        white-space: nowrap;
+        color: $color-clouds;
+    }
+
+    .info {
+        position: relative;
+        z-index: 2;
+        color: $color-orange-light-10;
+        
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+            text-align: right;
+        }
+    }
+}

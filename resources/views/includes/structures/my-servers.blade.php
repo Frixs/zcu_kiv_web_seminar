@@ -11,7 +11,7 @@
 	@if ($myservers)
 		<div id="my-events-filter">
 		@foreach ($myservers as $server)
-			<a href="#" class="server-box" data-server-id="" data-filter-searchable>
+			<a href="#" class="server-box" data-server-id="{{ $server->server_id }}" data-filter-searchable>
 				@if ($server->has_background_box) <img src="images/structure/bg_server_default.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/bg_server_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
 				<div class="title">
 					{{ $server->name }}
@@ -29,6 +29,8 @@
 		@endforeach
 		</div>
 	@else
-		<p>nothing here</p>
+		<div class="text-center small">
+			{{ lang('validation.no_results_found') }}
+		</div>
 	@endif
 </div>

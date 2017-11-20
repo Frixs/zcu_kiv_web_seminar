@@ -16,4 +16,5 @@ return [
     'only_numbers' => 'Value can contains only numbers.',
     'color' => 'Value is not valid HEX color.',
     'date' => 'Field does not contain valid date format.',
+    'no_results_found' => 'No results found.',
 ];

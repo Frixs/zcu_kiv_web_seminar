@@ -46,7 +46,8 @@ class UserGroup extends Model
             FROM ". self::getTable() ." AS ug
             INNER JOIN ". Server::getTable() ." AS s
                 ON s.". Server::getPrimaryKey() ." = ug.server_id
-            WHERE ug.user_id = ? AND ug.server_id > ?"
+            WHERE ug.user_id = ? AND ug.server_id > ?
+            ORDER BY s.name ASC"
         , [
             $uid,
             0,

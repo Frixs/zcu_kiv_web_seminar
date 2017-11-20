@@ -26,5 +26,6 @@ return [
         'Auth' => \Frixs\Auth\Auth::class,
 
         'UserGroup' => \App\Models\UserGroup::class,
+        'Server' => \App\Models\Server::class,
     ],
 ];
