@@ -18,7 +18,13 @@
 				</div>
 				<div class="info small">
 					<div class="left">
-						@if ($server->is_private) <i class="fa fa-lock" aria-hidden="true"></i> {{ lang('structures.my-servers.private') }} @else <i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.my-servers.public') }} @endif
+						@if ($server->access_type == 0)
+							<i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.my-servers.public') }}
+						@elseif ($server->access_type == 1)
+							<i class="fa fa-unlock-alt" aria-hidden="true"></i> {{ lang('structures.my-servers.protected') }}
+						@else
+							<i class="fa fa-lock" aria-hidden="true"></i> {{ lang('structures.my-servers.private') }}
+						@endif
 					</div>
 					<div class="right">
 						<i class="fa fa-users" aria-hidden="true"></i> {{ $server->user_count }}

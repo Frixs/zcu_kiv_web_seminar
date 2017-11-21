@@ -26,16 +26,6 @@
         opacity: .75;
     }
 
-    &:hover {
-        & > img {
-            opacity: .25;
-        }
-
-        color: lighten($color-orange-normal, 40%);
-        text-shadow: 0 0 5px lighten($color-orange-normal, 30%);
-        border: 2px solid $color-gray-dark-20;
-    }
-
     & > .rank-badge {
         z-index: 5;
         position: absolute;
@@ -74,5 +64,20 @@
             float: right;
             text-align: right;
         }
+
+        .btn {
+            font-size: $font-size-small;
+            padding: 2px 5px 2px 5px;
+        }
     }
+}
+
+a.server-box:hover {
+    & > img {
+        opacity: .25;
+    }
+
+    color: lighten($color-orange-normal, 40%);
+    text-shadow: 0 0 5px lighten($color-orange-normal, 30%);
+    border: 2px solid $color-gray-dark-20;
 }

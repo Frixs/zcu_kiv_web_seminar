@@ -52,7 +52,7 @@ class Server extends Model
         $query = self::db()->query(
             "SELECT s.id,
                 s.name,
-                s.is_private,
+                s.access_type,
                 s.has_background_box,
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
@@ -61,7 +61,8 @@ class Server extends Model
                 ) AS user_count
             FROM ". self::getTable() ." AS s
             WHERE 1
-            ORDER BY user_count DESC"
+            ORDER BY user_count DESC, s.name ASC
+            LIMIT 3"
         , [
         ]);
 

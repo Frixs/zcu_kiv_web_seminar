@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1:3306
--- Vytvořeno: Pon 20. lis 2017, 21:22
+-- Vytvořeno: Úte 21. lis 2017, 10:27
 -- Verze serveru: 5.7.19
--- Verze PHP: 7.1.9
+-- Verze PHP: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -120,20 +120,22 @@ DROP TABLE IF EXISTS `web_servers`;
 CREATE TABLE IF NOT EXISTS `web_servers` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
-  `is_private` tinyint(1) UNSIGNED NOT NULL,
+  `access_type` tinyint(1) UNSIGNED NOT NULL COMMENT '0=public;1=protected;2=private',
   `has_background_box` tinyint(1) UNSIGNED NOT NULL,
   `edited_at` int(11) UNSIGNED NOT NULL,
   `created_at` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `web_servers`
 --
 
-INSERT INTO `web_servers` (`id`, `name`, `is_private`, `has_background_box`, `edited_at`, `created_at`) VALUES
-(1, 'Test Server', 0, 0, 0, 0),
-(2, 'Druhý server', 1, 0, 0, 0);
+INSERT INTO `web_servers` (`id`, `name`, `access_type`, `has_background_box`, `edited_at`, `created_at`) VALUES
+(1, 'Small Community', 1, 0, 0, 0),
+(2, 'ZGame', 1, 0, 0, 0),
+(3, 'Overwatch', 0, 0, 0, 0),
+(4, 'GGCommunity', 2, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -161,7 +163,8 @@ CREATE TABLE IF NOT EXISTS `web_sessions` (
 --
 
 INSERT INTO `web_sessions` (`id`, `user_id`, `ip`, `browser`, `session_start`, `remember`) VALUES
-('300cf1e5c5649881a5d1408994fae5d5d5acf8094fd746165ab6f68a4af22f17', 4, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', 1511191905, 1);
+('300cf1e5c5649881a5d1408994fae5d5d5acf8094fd746165ab6f68a4af22f17', 4, '::1', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', 1511191905, 1),
+('800fba8ac1afe1b5f45d2ff8dc918b677c7e3f7e7a9bfd9ec756d40674037d0e', 4, '::1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36', 1511255844, 1);
 
 -- --------------------------------------------------------
 
@@ -219,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `web_user_groups` (
 INSERT INTO `web_user_groups` (`user_id`, `group_id`, `server_id`) VALUES
 (4, 4, 1),
 (4, 3, 1),
-(4, 4, 2);
+(4, 5, 3);
 
 --
 -- Omezení pro exportované tabulky

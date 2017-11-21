@@ -36,7 +36,7 @@ class UserGroup extends Model
         $query = self::db()->query(
             "SELECT DISTINCT ug.server_id,
                 s.name,
-                s.is_private,
+                s.access_type,
                 s.has_background_box,
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
