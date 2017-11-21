@@ -23,7 +23,6 @@
 				</div>
 				<div class="info small">
 					<div class="left">
-{{-- TODO BUTTONS TO JOIN SERVER --}}
 						@if ($server->access_type == 0)
 							<a href="#" class="btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.community-box.join') }}</a>
 						@elseif ($server->access_type == 1)

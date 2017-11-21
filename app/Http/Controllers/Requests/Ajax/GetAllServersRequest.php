@@ -6,8 +6,6 @@ use Frixs\Http\Request;
 use Frixs\Http\Input;
 use Frixs\Config\Config;
 use Frixs\Validation\Validate;
-use Frixs\Language\Lang;
-use Frixs\Auth\Auth;
 
 use App\Models\User;
 
@@ -42,26 +40,33 @@ class GetAllServersRequest extends Request
     public function process()
     {
         if (!$this->inputValidation()->passed()) {
-            echo "FAILED";
+            echo "VALIDATION ERROR!";
             return;
         }
 
-        echo "HERE";
-        
-        /*
-        if (!Config::get('auth.register_email_verify')) {
-            // Register without verification.
-            User::register(Input::get('username'), Input::get('email'), Input::get('password'), 'NOVERIFY');
-            
-            $this->bindMessageSuccess(Lang::get('auth.register_success'));
-            $this->goBack();
+        $query = self::db()->query(
+            "SELECT s.id,
+                s.name,
+                s.access_type,
+                s.has_background_box,
+                (
+                    SELECT COUNT(DISTINCT ug.user_id)
+                    FROM ". \App\Models\UserGroup::getTable() ." AS ug
+                    WHERE ug.server_id = s.id
+                ) AS user_count
+            FROM ". \App\Models\Server::getTable() ." AS s
+            WHERE s.name LIKE ?
+            ORDER BY user_count DESC, s.name ASC
+            LIMIT 10"
+        , [
+            '%'. Input::get('name') .'%'
+        ]);
+
+        if ($query->error()) {
+            self::db()->rollBack();
+            return;
         }
         
-        // Register with the email verification.
-        User::register(Input::get('username'), Input::get('email'), Input::get('password'), 'VERIFY');
-        
-        $this->bindMessageSuccess(Lang::get('auth.register_success_verify'));
-        $this->goBack();
-        */
+        echo json_encode($query->get());
     }
 }

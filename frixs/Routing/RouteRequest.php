@@ -187,10 +187,10 @@ class RouteRequest extends Route
     protected function isAccessLegit()
     {
         // You can access to the request with POST.
-        if (!Input::exists('post') && Router::previousPageAddress()) {
-            return false;
+        if (Input::exists('post') && Router::previousPageAddress()) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

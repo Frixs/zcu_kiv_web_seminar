@@ -2,6 +2,7 @@
 
 namespace Frixs\Http;
 
+use Frixs\Database\Connection as DB;
 use Frixs\Routing\Router;
 use Frixs\Config\Config;
 use Frixs\Session\Session;
@@ -51,6 +52,16 @@ class Request
      * @var string
      */
     protected $outputMessageErrorArrayKey = 'output_message_error';
+
+    /**
+     * Return connection instance to execute query.
+     *
+     * @return mixed
+     */
+    protected static function db()
+    {
+        return DB::getInstance();
+    }
 
     /**
      * Redirect back to previous page. If it doest exist go bach to root
