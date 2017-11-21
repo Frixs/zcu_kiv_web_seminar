@@ -11,7 +11,7 @@
 	@if ($myservers)
 		<div id="my-events-filter">
 		@foreach ($myservers as $server)
-			<a href="#" class="server-box" data-server-id="{{ $server->server_id }}" data-filter-searchable>
+			<a href="server/server:{{ $server->server_id }}" class="server-box" data-server-id="{{ $server->server_id }}" data-filter-searchable>
 				@if ($server->has_background_box) <img src="images/structure/bg_server_default.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/bg_server_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
 				<div class="title">
 					{{ $server->name }}

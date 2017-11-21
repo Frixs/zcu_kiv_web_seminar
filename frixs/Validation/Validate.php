@@ -26,6 +26,9 @@ class Validate
     public function check($source, $items = [])
     {
         foreach ($items as $item => $rules) {
+            if (!isset($source[$item]))
+                return $this;
+
             foreach ($rules as $rule => $rule_value) {
                 $value = $source[$item];
 

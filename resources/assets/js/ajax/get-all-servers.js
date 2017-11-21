@@ -8,10 +8,10 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "_request/something",
+            url: "_request/ajax/get-all-servers",
             data: "name=" + $(this).val(),
             success: function (data) {
-                // TODO
+                console.log(data);
             }
         });
     });

@@ -53,6 +53,13 @@ class RouteRequest extends Route
     protected $requestExists = false;
 
     /**
+     * Bool of request ajax presence.
+     *
+     * @var boolean
+     */
+    protected $isAjaxBased = false;
+
+    /**
      * Create a new RouteRequest instance
      */
     private function __construct()
@@ -75,12 +82,12 @@ class RouteRequest extends Route
 
         // Validate form TOKEN.
         // Token input from correct form must have the same name as request name. - This is true if there is custom input token name not default.
-        if (!Token::validation()) {
+        if (!Token::validation() && !$this->isAjaxBased) {
             Router::redirectToError(500, Lang::get('error.unauthorized_token'));
         }
 
         // Put name of the request into a full name.
-        $controllerFullName = '\\App\\Http\\Controllers\\Requests\\'. $this->getControllerFullName();
+        $controllerFullName = '\\App\\Http\\Controllers\\Requests\\'. ($this->isAjaxBased ? "Ajax\\" : "") . $this->getControllerFullName();
 
         // Create the controller's instance
         $this->controllerInstance = new $controllerFullName();
@@ -125,9 +132,25 @@ class RouteRequest extends Route
             $this->controller = $this->url[1];
             unset($this->url[1]);
             return;
+        } else if (isset($this->url[1]) && $this->url[1] === 'ajax') {
+            $this->parseAjaxController();
+            return;
         }
 
         Router::redirectToError(501, Lang::get('error.failed_to_execute_request', ['request' => (isset($this->url[1]) ? $this->url[1] : '')]));
+    }
+    
+    private function parseAjaxController() {
+        unset($this->url[1]);
+        
+        if (isset($this->url[2]) && file_exists('../app/Http/Controllers/Requests/Ajax/'. $this->getControllerFullName($this->url[2]) .'.php')) {
+            $this->controller = $this->url[2];
+            unset($this->url[2]);
+            $this->isAjaxBased = true;
+            return;
+        }
+
+        Router::redirectToError(501, Lang::get('error.failed_to_execute_request', ['request' => (isset($this->url[2]) ? $this->url[2] : '')]));
     }
 
     /**
