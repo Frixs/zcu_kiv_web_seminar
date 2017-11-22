@@ -7,4 +7,5 @@ return [
     'public' => 'Public',
     'join' => 'Join',
     'send_request' => 'Send request',
+    'no_results' => 'No results',
 ];

@@ -7,8 +7,6 @@ use Frixs\Http\Input;
 use Frixs\Config\Config;
 use Frixs\Validation\Validate;
 
-use App\Models\User;
-
 class GetAllServersRequest extends Request
 {
     /**
