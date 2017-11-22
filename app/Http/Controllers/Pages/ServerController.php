@@ -10,4 +10,12 @@ class ServerController extends Controller
     {
         $this->view('server.index');
     }
+
+    public function join()
+    {
+    }
+
+    public function sendRequest()
+    {
+    }
 }

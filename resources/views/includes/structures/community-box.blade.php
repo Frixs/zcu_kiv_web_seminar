@@ -23,9 +23,9 @@
 				<div class="info small">
 					<div class="left">
 						@if ($server->access_type == 0)
-							<a href="#" class="btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.community-box.join') }}</a>
+							<a href="server/join/server:{{ $server->id }}" class="btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.community-box.join') }}</a>
 						@elseif ($server->access_type == 1)
-							<a href="#" class="btn btn-primary"><i class="fa fa-unlock-alt" aria-hidden="true"></i> {{ lang('structures.community-box.send_request') }}</a>
+							<a href="server/send-request/server:{{ $server->id }}" class="btn btn-primary"><i class="fa fa-unlock-alt" aria-hidden="true"></i> {{ lang('structures.community-box.send_request') }}</a>
 						@else
 							<i class="fa fa-lock" aria-hidden="true"></i> {{ lang('structures.community-box.private') }}
 						@endif

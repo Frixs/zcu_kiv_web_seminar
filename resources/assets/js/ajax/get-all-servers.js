@@ -3,7 +3,7 @@ $(document).ready(function () {
         let resultWrapperID = $(this).attr("data-search");
         let value = $(this).val();
 
-        if (value.length == 0) {
+        if (value.length < 3) {
             $(resultWrapperID).empty();
             return;
         }
@@ -47,10 +47,10 @@ $(document).ready(function () {
 
                         switch (parseInt(response[i]['access_type'])) {
                             case 0:
-                                stringAccessTypeBox = '<a href="#" class= "btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> ' + langJoin + '</a>';
+                                stringAccessTypeBox = '<a href="server/join/server:'+ response[i]['id'] +'" class= "btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> ' + langJoin + '</a>';
                                 break;
                             case 1:
-                                stringAccessTypeBox = '<a href="#" class="btn btn-primary"><i class="fa fa-unlock-alt" aria-hidden="true"></i> ' + langSendRequest + '</a>';
+                                stringAccessTypeBox = '<a href="server/send-request/server:'+ response[i]['id'] +'" class="btn btn-primary"><i class="fa fa-unlock-alt" aria-hidden="true"></i> ' + langSendRequest + '</a>';
                                 break;
                             case 2:
                                 stringAccessTypeBox = '<i class="fa fa-lock" aria-hidden="true"></i> ' + langPrivate;
