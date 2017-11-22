@@ -4,8 +4,16 @@
 
 <div class="structures my-servers">
 	{{-- FILTER INPUT --}}
-	<input type="text" name="filter-my-servers" value="" class="form-control filter-input" data-filter="#my-events-filter" placeholder="{{ lang('structures.my-servers.filter_ph') }}"
+	<div class="col-xs-10 gc-col-nosp-leftm">
+		<input type="text" name="filter-my-servers" value="" class="form-control filter-input" data-filter="#my-events-filter" placeholder="{{ lang('structures.my-servers.filter_ph') }}"
 	 maxlenght="100" tabindex="1" autocomplete="off">
+	</div>
+	<div class="col-xs-2 gc-col-nosp-rightm new-server-btn-wrapper">
+		<a href="server/create" class="btn btn-primary ttip --tt-darkest --tt-fat" data-toggle="tooltip" data-placement="left auto" title="{{ lang('structures.my-servers.new_server_ph') }}">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+		</a>
+	</div>
+	<div class="gc-cleaner"></div>
 	<hr>
 
 	@if ($myservers)

@@ -1,2 +1,16 @@
 .structures.my-servers {
+    .new-server-btn-wrapper {
+        a {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 42px;
+            text-align: center;
+
+            i {
+                line-height: 42px;
+            }
+        }
+    }
 }

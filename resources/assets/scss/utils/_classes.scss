@@ -44,8 +44,18 @@
     padding-left: 0;
 }
 
+.gc-col-nosp-leftm {
+    @extend .gc-col-nosp-left;
+    padding-right: $content-padding / 2;
+}
+
 .gc-col-nosp-right {
     padding-right: 0;
+}
+
+.gc-col-nosp-rightm {
+    @extend .gc-col-nosp-right;
+    padding-left: $content-padding / 2;
 }
 
 .gc-col-nosp {

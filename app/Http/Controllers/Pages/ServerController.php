@@ -18,4 +18,9 @@ class ServerController extends Controller
     public function sendRequest()
     {
     }
+
+    public function create()
+    {
+        $this->view('server.create');
+    }
 }
