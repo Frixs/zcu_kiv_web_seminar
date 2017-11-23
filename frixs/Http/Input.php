@@ -93,4 +93,35 @@ class Input
         }
         return null;
     }
+
+    /**
+     * Method to get file data from submitted form.
+     *
+     * @param [type] $item
+     * @param string $returnData
+     * @return mixed
+     */
+    public static function getFileData($item, $returnData = "basename") {
+        if (isset($_FILES[$item])) {
+            switch ($returnData) {
+                case "basename":
+                    return basename($_FILES[$item]["name"]);
+                    break;
+                case "extension":
+                    return pathinfo(basename($_FILES[$item]["name"]), PATHINFO_EXTENSION);
+                    break;
+                case "size":
+                    return $_FILES[$item]["size"];
+                    break;
+                case "dimension":
+                    return getimagesize($_FILES[$item]["tmp_name"]); // return array with 2 values (width, height)
+                    break;
+                case "tempname":
+                    return $_FILES[$item]["tmp_name"];
+                    break;
+            }
+        }
+        
+        return false;
+    }
 }

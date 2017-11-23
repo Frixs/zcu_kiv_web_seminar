@@ -4,6 +4,7 @@ namespace Frixs\Validation;
 
 use Frixs\Database\Connection as DB;
 use Frixs\Captcha\Captcha;
+use Frixs\Http\Input;
 
 class Validate
 {
@@ -32,9 +33,9 @@ class Validate
             foreach ($rules as $rule => $rule_value) {
                 $value = $source[$item];
 
-                if (($rule === 'required' && empty($value)) && $rule_value) {
+                if ($rule === 'required' && empty($value)) {
                     $this->addError("{$rule}|{$item}|");
-                } elseif (!empty($value)) {
+                } else if (!empty($value)) {
                     switch ($rule) {
                         case 'min':
                             if (strlen($value) < $rule_value) {
@@ -152,6 +153,7 @@ class Validate
                             }
                             break;
                     }
+                } else {
                 }
             }
         }

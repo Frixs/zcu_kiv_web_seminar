@@ -16,19 +16,19 @@
 		<div class="col-xs-12">
 			<label class="radio" for="radio1">
 				<input type="radio" name="access-type" value="public" id="radio1" data-toggle="radio" tabindex="2" @if (instance(
-				 'Request')->getInput('access-type') && (instance( 'Request')->getInput('access-type') == 'radio2' || instance( 'Request')->getInput('access-type')
+				 'Request')->getInput('access-type') && (instance('Request')->getInput('access-type') == 'radio2' || instance('Request')->getInput('access-type')
 				== 'radio3')) @else checked @endif> {{ lang('server.create.public') }}.
 				<div class="info">{{ lang('server.create.public_desc') }}</div>
 			</label>
 			<label class="radio" for="radio2">
 				<input type="radio" name="access-type" value="protected" id="radio2" data-toggle="radio" tabindex="3" @if (instance(
-				 'Request')->getInput('access-type') && instance( 'Request')->getInput('access-type') == 'radio2') checked @endif> {{ lang('server.create.protected')
+				 'Request')->getInput('access-type') && instance('Request')->getInput('access-type') == 'radio2') checked @endif> {{ lang('server.create.protected')
 				}}.
 				<div class="info">{{ lang('server.create.protected_desc') }}</div>
 			</label>
 			<label class="radio" for="radio3">
 				<input type="radio" name="access-type" value="private" id="radio3" data-toggle="radio" tabindex="4" @if (instance(
-				 'Request')->getInput('access-type') && instance( 'Request')->getInput('access-type') == 'radio3') checked @endif> {{ lang('server.create.private')
+				 'Request')->getInput('access-type') && instance('Request')->getInput('access-type') == 'radio3') checked @endif> {{ lang('server.create.private')
 				}}.
 				<div class="info">{{ lang('server.create.private_desc') }}</div>
 			</label>
