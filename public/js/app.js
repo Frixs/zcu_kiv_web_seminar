@@ -1,7 +1,7 @@
-$.getScript('../resources/assets/js/functions.js');
-$.getScript('../resources/assets/js/preloader.js');
-$.getScript('../resources/assets/js/bs-init.js');
-$.getScript('../resources/assets/js/filter.js');
+$.getScript(root +'/../resources/assets/js/functions.js');
+$.getScript(root +'/../resources/assets/js/preloader.js');
+$.getScript(root +'/../resources/assets/js/bs-init.js');
+$.getScript(root +'/../resources/assets/js/filter.js');
 
 // AJAX
-$.getScript('../resources/assets/js/ajax/get-all-servers.js');
+$.getScript(root +'/../resources/assets/js/ajax/get-all-servers.js');

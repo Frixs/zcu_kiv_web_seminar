@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Create a new server!',
+    'title' => 'Create a server',
 
     'inp_01' => 'Name',
     'inp_01_ph' => 'Enter server name',

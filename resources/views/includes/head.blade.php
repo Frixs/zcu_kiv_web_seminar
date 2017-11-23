@@ -21,11 +21,14 @@
 
 <!-- Flat-UI styles -->
 <!-- http://designmodo.github.io/Flat-UI/docs/components.html -->
-<link rel="stylesheet" href="css/vendor/Flat-UI-2.3.0/dist/css/flat-ui.css">
+<link rel="stylesheet" href="{{ instance('Config')::get('app.root') }}/css/vendor/Flat-UI-2.3.0/dist/css/flat-ui.css">
 <!-- Flat-UI JavaScript -->
-<script src="css/vendor/Flat-UI-2.3.0/dist/js/flat-ui.js"></script>
+<script src="{{ instance('Config')::get('app.root') }}/css/vendor/Flat-UI-2.3.0/dist/js/flat-ui.js"></script>
 
 <!-- App CSS -->
-<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="{{ instance('Config')::get('app.root') }}/css/app.css">
 <!-- App JS -->
-<script src="js/app.js"></script>
+<script>
+    var root =  "{{ instance('Config')::get('app.root') }}";
+</script>
+<script src="{{ instance('Config')::get('app.root') }}/js/app.js"></script>
