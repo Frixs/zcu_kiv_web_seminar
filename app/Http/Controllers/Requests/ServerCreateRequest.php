@@ -8,7 +8,6 @@ use Frixs\Config\Config;
 use Frixs\Validation\Validate;
 use Frixs\Language\Lang;
 use Frixs\Auth\Auth;
-use App\Http\Kernel;
 
 class ServerCreateRequest extends Request
 {

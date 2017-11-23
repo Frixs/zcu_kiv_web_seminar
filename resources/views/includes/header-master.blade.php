@@ -10,7 +10,7 @@
 		</div>
 		<div class="navbar-logo">
 			<a href="home">
-				<img class="logo img-responsive" src="{{ instance('Config')::get('app.root_images') }}/logo/app_logo_color.png" alt="logo"
+				<img class="logo img-responsive" src="{{ instance('Config')::get('app.root_images_rel') }}/logo/app_logo_color.png" alt="logo"
 				 draggable="false">
 			</a>
 		</div>

@@ -115,7 +115,7 @@ class Kernel
         if (!self::validateGlobalMiddleware()) {
             return false;
         }
-
+        
         // Validate Request if it is concerned.
         if ($isRequest) {
             if (isset(self::$requestMiddleware[$controller])) {
@@ -125,12 +125,12 @@ class Kernel
                     $methodSection      = isset($pieces[1]) ? $pieces[1] : '';
 
                     // Validate controller section
-                    if (!self::validateControllerSection($controller)) {
+                    if (!self::validateControllerSection($controllerSection)) {
                         return false;
                     }
 
                     // Validate controller's method section
-                    if (!self::validateMethodSection($controller, $method)) {
+                    if (!self::validateMethodSection($controllerSection, $methodSection)) {
                         return false;
                     }
                 }
