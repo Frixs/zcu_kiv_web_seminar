@@ -52,6 +52,8 @@ div.form-group {
 input[type=email],
 input[type=text],
 input[type=number],
+input[type=file],
+select.form-control,
 input[type=password] {
     border-color: $color-gray-light-20;
     background-color: $color-gray-light-20;
@@ -73,6 +75,11 @@ input[type=password] {
             background-color: $color-gray-light-20;
             color: $font-color-focus;
         }
+    }
+}
+
+select.form-control {
+    & > option {
     }
 }
 
