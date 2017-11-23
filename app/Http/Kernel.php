@@ -23,6 +23,13 @@ class Kernel
     protected static $routeMiddleware = [];
 
     /**
+     * The request middleware aliases
+     *
+     * @var array
+     */
+    protected static $requestMiddleware = [];
+
+    /**
      * Initialize middleware.
      */
     protected function __construct()
@@ -78,19 +85,77 @@ class Kernel
     }
 
     /**
+     * Set request middleware aliases to check.
+     *
+     * @return void
+     */
+    protected function setRequestMiddleware()
+    {
+        self::$requestMiddleware = [
+            'server-create' => [
+                'server.create',
+            ],
+        ];
+    }
+
+    /**
      * Run all middleware according to input parameters
      *
      * @param string $controller
      * @param string $method
      * @param array $parameters
-     * @return bool
+     * @return boolean
      */
-    public static function run($controller, $method, $parameters)
+    public static function run($controller, $method, $parameters, $isRequest = false)
     {
         // Initialize middleware.
         new self;
 
         // Validate global middleware
+        if (!self::validateGlobalMiddleware()) {
+            return false;
+        }
+
+        // Validate Request if it is concerned.
+        if ($isRequest) {
+            if (isset(self::$requestMiddleware[$controller])) {
+                for ($i = 0; $i < count(self::$requestMiddleware[$controller]); $i++) {
+                    $pieces             = explode('.', self::$requestMiddleware[$controller]);
+                    $controllerSection  = $pieces[0];
+                    $methodSection      = isset($pieces[1]) ? $pieces[1] : '';
+
+                    // Validate controller section
+                    if (!self::validateControllerSection($controller)) {
+                        return false;
+                    }
+
+                    // Validate controller's method section
+                    if (!self::validateMethodSection($controller, $method)) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            // Validate controller section
+            if (!self::validateControllerSection($controller)) {
+                return false;
+            }
+
+            // Validate controller's method section
+            if (!self::validateMethodSection($controller, $method)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate global middleware.
+     *
+     * @return boolean
+     */
+    private static function validateGlobalMiddleware() {
         foreach(self::$middleware as $key => $value) {
             if (is_array($value)) {
                 $middlewareTest = $key;
@@ -106,7 +171,16 @@ class Kernel
             }
         }
 
-        // Validate controller section
+        return true;
+    }
+
+    /**
+     * Validate controller section.
+     *
+     * @param string $controller
+     * @return boolean
+     */
+    private static function validateControllerSection($controller) {
         if (isset(self::$routeMiddleware[$controller])) {
             foreach(self::$routeMiddleware[$controller] as $key => $value) {
                 if (is_array($value)) {
@@ -124,7 +198,17 @@ class Kernel
             }
         }
 
-        // Validate controller's method section
+        return true;
+    }
+
+    /**
+     * Validate controller's method section.
+     *
+     * @param string $controller
+     * @param string $method
+     * @return boolean
+     */
+    private static function validateMethodSection($controller, $method) {
         if (isset(self::$routeMiddleware[$controller .'.'. $method])) {
             foreach(self::$routeMiddleware[$controller .'.'. $method] as $key => $value) {
                 if (is_array($value)) {
@@ -150,7 +234,7 @@ class Kernel
      *
      * @param string $middlewareTestClass       middleware class name including namespace
      * @param array $parameters
-     * @return bool
+     * @return boolean
      */
     private static function checkMiddleware($middlewareTestClass, $parameters = [])
     {

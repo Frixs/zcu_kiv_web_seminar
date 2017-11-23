@@ -102,7 +102,7 @@ class RouteRequest extends Route
         $this->bindParameters();
 
         // Run the mail validation tests (middleware)
-        if (Kernel::run($this->controller, $this->method, $this->parameters)) {
+        if (Kernel::run($this->controller, $this->method, $this->parameters, true)) {
             // call the controller's method
             $this->callControllerMethod($this->controllerInstance, $this->method, $this->parameters);
         }
