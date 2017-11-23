@@ -13,4 +13,10 @@ return [
     'success_text_pre' => 'Your server has been successfully created! Look at your',
     'success_text_link' => 'DASHBOARD',
     'success_text_post' => '!',
+    'public' => 'Public',
+    'public_desc' => 'Users can freely join your server.',
+    'protected' => 'Protected',
+    'protected_desc' => 'Users can send you request, which you have to validate, to join to your server.',
+    'private' => 'Private',
+    'private_desc' => 'Users cannot join your server.',
 ];

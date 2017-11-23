@@ -30,7 +30,7 @@ div.form-group {
             color: $color-red-normal;
             border-color: $color-red-normal;
         }
-        
+
         & div.form-feedback {
             color: $color-red-normal;
         }
@@ -79,12 +79,19 @@ input[type=password] {
 }
 
 select.form-control {
-    & > option {
-    }
+    & > option {}
 }
 
-label.control-label {
-    line-height: 36px;
-    height: 42px;
-    padding-right: 0px;
+label {
+    & > .info {
+        font-style: italic;
+        font-size: 12px;
+        color: $color-gray-light-50;
+    }
+
+    &.control-label {
+        line-height: 36px;
+        height: 42px;
+        padding-right: 0px;
+    }
 }

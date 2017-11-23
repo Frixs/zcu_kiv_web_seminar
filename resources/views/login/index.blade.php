@@ -10,6 +10,7 @@
 			<form class="form-horizontal" action="_request/login" method="post">
 				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
+				{{-- EMAIL --}}
 				<div class="form-group @if (instance('Request')->getInputError('email')) has-error @endif">
 					<label class="control-label col-md-3" for="email">{{ lang('login.index.norm_inp_01') }}:</label>
 					<div class="col-md-9">
@@ -17,6 +18,7 @@
 						<div class="form-feedback">@if (instance('Request')->getInputError('email')) {{ instance('Request')->getInputError('email') }} @endif</div>
 					</div>
 				</div>
+				{{-- PASSWORD --}}
 				<div class="form-group @if (instance('Request')->getInputError('password')) has-error @endif">
 					<label class="control-label col-md-3" for="pwd">{{ lang('login.index.norm_inp_02') }}:</label>
 					<div class="col-md-9">
@@ -24,6 +26,7 @@
 						<div class="form-feedback">@if (instance('Request')->getInputError('password')) {{ instance('Request')->getInputError('password') }} @endif</div>
 					</div>
 				</div>
+				{{-- REMEMBER --}}
 				<div class="form-group">
 					<div class="col-md-offset-3 col-md-9">
 						<label class="checkbox" for="checkbox1">

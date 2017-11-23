@@ -145,6 +145,12 @@ class Validate
                                 $this->addError("{$rule}|{$item}|".str_replace("|", "x", $rule_value));
                             }
                             break;
+                        case 'file_img_size_min':   // rule_value f.e. ("1920|1080")
+                            $dimension = explode("|", $rule_value);
+                            if (Input::getFileData($item,'dimension')[0] < $dimension[0] || Input::getFileData($item,'dimension')[1] < $dimension[1]) {
+                                $this->addError("{$rule}|{$item}|".str_replace("|", "x", $rule_value));
+                            }
+                            break;
                     }
                 }
             }

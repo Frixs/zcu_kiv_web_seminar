@@ -17,4 +17,8 @@ return [
     'color' => 'Value is not valid HEX color.',
     'date' => 'Field does not contain valid date format.',
     'no_results_found' => 'No results found.',
+    'file_size_max' => 'Maximal size of the file is :rule KB.',
+    'file_type_allowed' => 'Allowed file types: :rule.',
+    'file_img_size_max' => 'Maximum dimension: :rule',
+    'file_img_size_min' => 'Minimum dimension: :rule.',
 ];
