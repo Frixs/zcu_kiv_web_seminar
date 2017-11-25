@@ -76,7 +76,7 @@ class Kernel
                 'Authenticate',
             ],
             'server.index' => [
-                'Guard' => [
+                'GuardAny' => [
                     Group::SMember(),
                     Group::SRecruit(),
                 ],
