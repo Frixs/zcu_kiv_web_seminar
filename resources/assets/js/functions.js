@@ -24,7 +24,7 @@ function recognizeAjaxInput(data) {
  * @param {*}  path
  * @return {*} string
  */
-function lang(string, callback) {
+function lang(string) {
     var output = "PLACEHOLDER";
 
     $.ajax({
@@ -35,7 +35,6 @@ function lang(string, callback) {
         success: function (data) {
             if (recognizeAjaxInput(data) == 'LANG') {
                 output = data.substring(3);
-                return data.substring(3);
             }
         }
     });

@@ -6,8 +6,9 @@ use Frixs\Http\Request;
 use Frixs\Http\Input;
 use Frixs\Config\Config;
 use Frixs\Validation\Validate;
+use Frixs\Auth\Auth;
 
-class GetAllServersRequest extends Request
+class GetAllServersWithoutYoursRequest extends Request
 {
     /**
      * Validate inputs.
@@ -46,18 +47,23 @@ class GetAllServersRequest extends Request
             "SELECT s.id,
                 s.name,
                 s.access_type,
-                s.has_background_placeholder,
-                (
+                s.has_background_placeholder, (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". \App\Models\UserGroup::getTable() ." AS ug
                     WHERE ug.server_id = s.id
                 ) AS user_count
             FROM ". \App\Models\Server::getTable() ." AS s
-            WHERE s.name LIKE ?
+            WHERE s.name LIKE ? AND s.id NOT IN (
+                SELECT ug2.server_id
+                FROM ". \App\Models\UserGroup::getTable() ." AS ug2
+                WHERE ug2.user_id = ?
+                GROUP BY ug2.server_id
+            )
             ORDER BY user_count DESC, s.name ASC
             LIMIT 10"
         , [
-            '%'. Input::get('name') .'%'
+            '%'. Input::get('name') .'%',
+            Auth::id()
         ]);
 
         if ($query->error()) {

@@ -140,7 +140,7 @@ class RouteRequest extends Route
             unset($this->url[1]);
             return;
         // If Request does not exist, check if request exists in AJAX content.
-        } else if (isset($this->url[1]) && $this->url[1] === $ajaxRequestIdentifier) {
+        } else if (isset($this->url[1]) && $this->url[1] === $this->ajaxRequestIdentifier) {
             $this->parseAjaxController();
             return;
         }

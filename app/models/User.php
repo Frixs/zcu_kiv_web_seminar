@@ -117,4 +117,33 @@ class User extends Model
     protected static function generateActKey() {
         return;
     }
+
+    /**
+     * Check if user is member of server.
+     *
+     * @param integer $serverid
+     * @param integer $uid
+     * @return boolean
+     */
+    public static function hasServerAccess($uid, $serverid) {
+        if (!$uid || !$serverid) {
+            Router::redirectToError(501, 'User::hasServerAccess();');
+        }
+
+        $query = self::db()->selectAll(UserGroup::getTable(), [
+            'user_id', '=', $uid,
+            'AND', 'server_id', '=', $serverid
+        ], [], 1);
+
+        if ($query->error()) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        if ($query->count()) {
+            return true;
+        }
+
+        return false;
+    }
 }

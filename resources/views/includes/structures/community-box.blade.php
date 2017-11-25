@@ -1,4 +1,5 @@
 @php
+	$authUID 	= instance('Auth')::id();
 	$topservers = instance('Server')::getTopServers();
     $i = 0;
 @endphp
@@ -23,9 +24,17 @@
 				<div class="info small">
 					<div class="left">
 						@if ($server->access_type == 0)
-							<a href="server/join/server:{{ $server->id }}" class="btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.community-box.join') }}</a>
+							@if (instance('User')::hasServerAccess($authUID, $server->id))
+								<i class="fa fa-lock" aria-hidden="true"></i> {{ lang('structures.community-box.public') }}
+							@else
+								<a href="server/join/server:{{ $server->id }}" class="btn btn-primary"><i class="fa fa-unlock" aria-hidden="true"></i> {{ lang('structures.community-box.join') }}</a>
+							@endif
 						@elseif ($server->access_type == 1)
-							<a href="server/send-request/server:{{ $server->id }}" class="btn btn-primary"><i class="fa fa-unlock-alt" aria-hidden="true"></i> {{ lang('structures.community-box.send_request') }}</a>
+							@if (instance('User')::hasServerAccess($authUID, $server->id))
+								<i class="fa fa-lock" aria-hidden="true"></i> {{ lang('structures.community-box.protected') }}
+							@else
+								<a href="server/send-request/server:{{ $server->id }}" class="btn btn-primary"><i class="fa fa-unlock-alt" aria-hidden="true"></i> {{ lang('structures.community-box.send_request') }}</a>
+							@endif
 						@else
 							<i class="fa fa-lock" aria-hidden="true"></i> {{ lang('structures.community-box.private') }}
 						@endif

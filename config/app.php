@@ -30,6 +30,7 @@ return [
 
         'UserGroup' => \App\Models\UserGroup::class,
         'Server' => \App\Models\Server::class,
+        'User' => \App\Models\User::class,
     ],
 ];
 

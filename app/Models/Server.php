@@ -51,7 +51,7 @@ class Server extends Model
     public static function getServer($serverID)
     {
         if (!$serverID) {
-            Router::redirectToError(501);
+            Router::redirectToError(501, 'Server::getServer();');
         }
 
         $query = self::db()->selectAll(self::getTable(), [
