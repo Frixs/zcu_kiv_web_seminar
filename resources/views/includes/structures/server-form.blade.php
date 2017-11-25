@@ -42,7 +42,7 @@
 	<div class="form-group @if (instance('Request')->getInputError('background-placeholder')) has-error @endif">
 		<label class="col-xs-12" for="background-placeholder">{{ lang('server.create.inp_03') }}:</label>
 		<div class="col-xs-12">
-			<input type="file" name="background-placeholder" value="" class="form-control __input-dark" id="background-placeholder" tabindex="5"
+			<input type="file" name="background-placeholder" class="form-control __input-dark" id="background-placeholder" tabindex="5"
 			 autocomplete="off" autocomplete="off">
 			<div class="form-feedback">@if (instance('Request')->getInputError('background-placeholder')) {{ instance('Request')->getInputError('background-placeholder')
 				}} @endif</div>

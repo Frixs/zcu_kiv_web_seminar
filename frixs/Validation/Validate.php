@@ -26,41 +26,56 @@ class Validate
      */
     public function check($source, $items = [])
     {
+        $normalInputExists;
+        $fileInput = null;
+
+        // Iterate all input items.
         foreach ($items as $item => $rules) {
-            if (!isset($source[$item]))
-                return $this;
+            $normalInputExists = true;
 
-            foreach ($rules as $rule => $rule_value) {
-                $value = $source[$item];
+            // Check if input exists.
+            if (!isset($source[$item])) {
+                // If item does not exist, check FILE inputs.
+                $fileInput = Input::getFileData($item);
+                if (!$fileInput)
+                    return $this;
 
-                if ($rule === 'required' && empty($value)) {
+                $normalInputExists = false;
+            }
+
+            $value       = $normalInputExists ? $source[$item] : $fileInput;
+            $valueStatus = $normalInputExists ? !empty($source[$item]) : ($fileInput['error'] > 0 ? false : true);
+
+            // Iterate all rules in the item.
+            foreach ($rules as $rule => $ruleValue) {
+                if ($rule === 'required' && !$valueStatus) {
                     $this->addError("{$rule}|{$item}|");
-                } else if (!empty($value)) {
+                } else if ($valueStatus) {
                     switch ($rule) {
                         case 'min':
-                            if (strlen($value) < $rule_value) {
-                                $this->addError("{$rule}|{$item}|{$rule_value}");
+                            if (strlen($value) < $ruleValue) {
+                                $this->addError("{$rule}|{$item}|{$ruleValue}");
                             }
                             break;
                         case 'max':
-                            if (strlen($value) > $rule_value) {
-                                $this->addError("{$rule}|{$item}|{$rule_value}");
+                            if (strlen($value) > $ruleValue) {
+                                $this->addError("{$rule}|{$item}|{$ruleValue}");
                             }
                             break;
                         case 'matches':
-                            if ($value != $source[$rule_value]) {
-                                $this->addError("{$rule}|{$rule_value}|{$item}");
+                            if ($value != $source[$ruleValue]) {
+                                $this->addError("{$rule}|{$ruleValue}|{$item}");
                             }
                             break;
                         case 'unique':
-                            $check = $this->_db->selectAll($rule_value, array("LOWER($item)", '=', strtolower($value)));
+                            $check = $this->_db->selectAll($ruleValue, array("LOWER($item)", '=', strtolower($value)));
                             if ($check->count()) {
                                 $this->addError("{$rule}|{$item}|");
                             }
                             break;
                         case 'captcha':
                             $captcha = new Captcha();
-                            if (!$captcha->verify($rule_value)) {
+                            if (!$captcha->verify($ruleValue)) {
                                 $this->addError("{$rule}||");
                             }
                             break;
@@ -70,20 +85,20 @@ class Validate
                             }
                             break;
                         case 'contain':
-                            if (strpos($value, $rule_value) === false) {
-                                $this->addError("{$rule}|{$item}|{$rule_value}");
+                            if (strpos($value, $ruleValue) === false) {
+                                $this->addError("{$rule}|{$item}|{$ruleValue}");
                             }
                             break;
                         case 'media':   // rule_value f.e. ("video|image")
                             $notfound = true;
-                            foreach (explode("|", $rule_value) as $media) {
+                            foreach (explode("|", $ruleValue) as $media) {
                                 if ($media == self::checkMediaURL($value)) {
                                     $notfound = false;
                                     break;
                                 }
                             }
                             if ($notfound) {
-                                $this->addError("{$rule}|{$item}|".str_replace("|", ", ", $rule_value));
+                                $this->addError("{$rule}|{$item}|".str_replace("|", ", ", $ruleValue));
                             }
                             break;
                         case 'only_letters':
@@ -124,32 +139,32 @@ class Validate
                             }
                             break;
                         case 'file_size_max':
-                            if (Input::getFileData($item, 'size') > ($rule_value * 1000)) {
-                                $this->addError("{$rule}|{$item}|{$rule_value}");
+                            if (Input::getFileData($item, 'size') > ($ruleValue * 1000)) {
+                                $this->addError("{$rule}|{$item}|{$ruleValue}");
                             }
                             break;
                         case 'file_type_allowed':   // rule_value f.e. ("jpg|png")
                             $notfound = true;
-                            foreach (explode("|", $rule_value) as $fileType) {
+                            foreach (explode("|", $ruleValue) as $fileType) {
                                 if ($fileType == Input::getFileData($item, 'extension')) {
                                     $notfound = false;
                                     break;
                                 }
                             }
                             if($notfound) {
-                                $this->addError("{$rule}|{$item}|".str_replace("|", ", ", $rule_value));
+                                $this->addError("{$rule}|{$item}|".str_replace("|", ", ", $ruleValue));
                             }
                             break;
                         case 'file_img_size_max':   // rule_value f.e. ("1920|1080")
-                            $dimension = explode("|", $rule_value);
+                            $dimension = explode("|", $ruleValue);
                             if (Input::getFileData($item,'dimension')[0] > $dimension[0] || Input::getFileData($item,'dimension')[1] > $dimension[1]) {
-                                $this->addError("{$rule}|{$item}|".str_replace("|", "x", $rule_value));
+                                $this->addError("{$rule}|{$item}|".str_replace("|", "x", $ruleValue));
                             }
                             break;
                         case 'file_img_size_min':   // rule_value f.e. ("1920|1080")
-                            $dimension = explode("|", $rule_value);
+                            $dimension = explode("|", $ruleValue);
                             if (Input::getFileData($item,'dimension')[0] < $dimension[0] || Input::getFileData($item,'dimension')[1] < $dimension[1]) {
-                                $this->addError("{$rule}|{$item}|".str_replace("|", "x", $rule_value));
+                                $this->addError("{$rule}|{$item}|".str_replace("|", "x", $ruleValue));
                             }
                             break;
                     }

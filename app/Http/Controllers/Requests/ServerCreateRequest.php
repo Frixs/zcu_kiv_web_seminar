@@ -32,7 +32,6 @@ class ServerCreateRequest extends Request
                 'required' => true
             ],
             'background-placeholder' => [
-                'required' => true,
                 'file_size_max' => Config::get('fileupload.filesize_max.server_background_placeholder'),
                 'file_type_allowed' => 'jpg',
                 'file_img_size_max' => '650|75',
