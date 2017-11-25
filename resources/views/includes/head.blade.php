@@ -14,7 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="../resources/assets/fonts/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ instance('Config')::get('app.root_rel') }}/../resources/assets/fonts/font-awesome/css/font-awesome.min.css">
 
 <!-- Google ReCAPTCHA API -->
 <script src='https://www.google.com/recaptcha/api.js'></script>

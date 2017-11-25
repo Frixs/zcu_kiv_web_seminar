@@ -8,7 +8,9 @@ class ServerController extends Controller
 {
     public function index()
     {
-        $this->view('server.index');
+        $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
+
+        $this->view('server.index', ['thisserver' => $thisserver]);
     }
 
     public function join()

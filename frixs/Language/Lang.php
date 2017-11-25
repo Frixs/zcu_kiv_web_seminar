@@ -61,7 +61,7 @@ class Lang
      *
      * @param string $path          path in the lang array, f.e.: Lang::get('auth.failed')
      * @param array $parameters     parameters f.e. ['key' => 'value'] replace mark in the text like :key
-     * @return string               lang value if exists, returns empty string if not
+     * @return mixed                lang value if exists, returns empty string if not
      */
     public static function get($path, $parameters = [])
     {
@@ -75,7 +75,7 @@ class Lang
         }
         
         if (is_array($config)) {
-            return "";
+            return $config;
         }
 
         // replace anchors for parameters if exists

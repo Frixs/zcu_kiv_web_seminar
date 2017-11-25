@@ -103,6 +103,29 @@
         text-transform: uppercase;
         margin-bottom: $content-padding;
         margin-top: 50px;
+        margin-bottom: 0;
         font-size: 32px;
+    }
+
+    .toolbar {
+        margin-bottom: $content-padding;
+
+        & > i {
+            font-size: small;
+            color: $color-gray-light-50;
+        }
+
+        & > a {
+            margin-left: $content-padding / 2;
+            color: $color-gray-light-50;
+
+            &:hover {
+                color: $color-orange-normal;
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
     }
 }

@@ -43,6 +43,30 @@ class Server extends Model
     }
 
     /**
+     * Get server data by its ID.
+     *
+     * @param integer $serverID
+     * @return object
+     */
+    public static function getServer($serverID)
+    {
+        if (!$serverID) {
+            Router::redirectToError(501);
+        }
+
+        $query = self::db()->selectAll(self::getTable(), [
+            self::getPrimaryKey(), '=', $serverID
+        ], [], 1);
+
+        if ($query->error() || !$query->count()) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        return $query->getFirst();
+    }
+
+    /**
      * Get Top Servers.
      *
      * @return void

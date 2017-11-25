@@ -53,4 +53,14 @@ class Controller
         require_once $path;
         */
     }
+
+    /**
+     * Return connection instance to execute query
+     *
+     * @return mixed
+     */
+    protected static function db()
+    {
+        return DB::getInstance();
+    }
 }
