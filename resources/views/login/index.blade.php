@@ -7,7 +7,7 @@
 		<div class="form-wrapper col-xs-12 col-sm-6">
 			<div class="head-spacer"></div>
 			<h2 class="text-center">{{ lang('login.index.title') }}</h2>
-			<form class="form-horizontal" action="_request/login" method="post">
+			<form class="form-horizontal" action="__request/login" method="post">
 				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
 				{{-- EMAIL --}}

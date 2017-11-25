@@ -1,6 +1,6 @@
 @extends('layouts.plain-form')
 
-@include('includes.structures.server-form', ['form_action' => instance('Config')::get('app.root_rel').'/_request/server-create'])
+@include('includes.structures.server-form', ['form_action' => instance('Config')::get('app.root_rel').'/__request/server-create'])
 
 @section('title', lang('server.create.title'))
 

@@ -9,7 +9,7 @@
 			</button>
 		</div>
 		<div class="navbar-logo">
-			<a href="home">
+			<a href="{{ instance('Config')::get('app.root_rel') }}/home">
 				<img class="logo img-responsive" src="{{ instance('Config')::get('app.root_images_rel') }}/logo/app_logo_color.png" alt="logo"
 				 draggable="false">
 			</a>

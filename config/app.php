@@ -1,13 +1,14 @@
 <?php
 
 return [
-    'name' => 'Gamendar',
-    'locale' => 'en',
-    'developer_mode' => true,
-    'root' => ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\'),
-    'root_rel' => substr(getRelativeRoot(), 0, -1),
-    'root_images' => ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . '/images',
-    'root_images_rel' => getRelativeRoot() . 'images',
+    'name'                              => 'Gamendar',
+    'locale'                            => 'en',
+    'developer_mode'                    => true,
+    'root'                              => getAbsoluteRoot(),
+    'root_rel'                          => substr(getRelativeRoot(), 0, -1),
+    'root_images'                       => getAbsoluteRoot() . '/images',
+    'root_images_rel'                   => getRelativeRoot() . 'images',
+    'root_server_uploads_rel'           => getRelativeRoot() . 'storage/server',
 
 
     /*
@@ -32,6 +33,14 @@ return [
     ],
 ];
 
+function getAbsoluteRoot() {
+    return (
+        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
+        ? "https://"
+        : "http://"
+    ) . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+}
+
 /**
  * Get relative path to root.
  *
@@ -41,7 +50,8 @@ function getRelativeRoot() {
     $output = '';
     $i = 0;
 
-    for (; $i < substr_count($_SERVER['REDIRECT_QUERY_STRING'], '/'); $i++) {
+    // Calculate how much deep it is minus URL identifiers (f.e. request), which do not affect URL deep.
+    for (; $i < substr_count($_SERVER['REDIRECT_QUERY_STRING'], '/') - substr_count($_SERVER['REDIRECT_QUERY_STRING'], '__'); $i++) {
         $output .= '../';
     }
     

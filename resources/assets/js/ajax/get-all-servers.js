@@ -10,7 +10,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "_request/ajax/get-all-servers",
+            url: "__request/__ajax/get-all-servers",
             data: "name=" + $(this).val(),
             success: function (data) {
                 let response;
@@ -39,10 +39,10 @@ $(document).ready(function () {
                         response[i]['user_count'];
 
 
-                        if (parseInt(response[i]['has_background_box']) == 1) {
-                            stringBG = "storage/server/" + response[i]['id'] + "_background_box.jpg";
+                        if (parseInt(response[i]['has_background_placeholder']) == 1) {
+                            stringBG = "storage/server/" + response[i]['id'] + "_background_placeholder.jpg";
                         } else {
-                            stringBG = "images/structure/server_background_box_default.jpg";
+                            stringBG = "images/structure/server_background_placeholder_default.jpg";
                         }
 
                         switch (parseInt(response[i]['access_type'])) {

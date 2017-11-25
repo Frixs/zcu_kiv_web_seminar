@@ -111,8 +111,13 @@ class Validate
                                 $this->addError("{$rule}|{$item}|");
                             }
                             break;
-                        case 'letters_numbers_separators':
+                        case 'letters_numbers_undersc':
                             if (preg_match('/[^A-Za-z0-9_]/', $value)) {
+                                $this->addError("{$rule}|{$item}|");
+                            }
+                            break;
+                        case 'letters_numbers_undersc_space':
+                            if (preg_match('/[^A-Za-z0-9_ ]/', $value)) {
                                 $this->addError("{$rule}|{$item}|");
                             }
                             break;

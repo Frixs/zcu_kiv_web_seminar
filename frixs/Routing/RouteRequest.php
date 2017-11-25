@@ -43,7 +43,7 @@ class RouteRequest extends Route
      *
      * @var string
      */
-    protected $requestIdentifier = '_request';
+    protected $requestIdentifier = '__request';
 
     /**
      * Bool of request existance.
@@ -58,6 +58,13 @@ class RouteRequest extends Route
      * @var boolean
      */
     protected $isAjaxBased = false;
+
+    /**
+     * Ajax identifier.
+     *
+     * @var string
+     */
+    protected $ajaxRequestIdentifier = '__ajax';
 
     /**
      * Create a new RouteRequest instance
@@ -122,7 +129,7 @@ class RouteRequest extends Route
     }
 
     /**
-     * Parse controller from the URL
+     * Parse controller from the URL.
      *
      * @return void
      */
@@ -132,7 +139,8 @@ class RouteRequest extends Route
             $this->controller = $this->url[1];
             unset($this->url[1]);
             return;
-        } else if (isset($this->url[1]) && $this->url[1] === 'ajax') {
+        // If Request does not exist, check if request exists in AJAX content.
+        } else if (isset($this->url[1]) && $this->url[1] === $ajaxRequestIdentifier) {
             $this->parseAjaxController();
             return;
         }
@@ -140,6 +148,11 @@ class RouteRequest extends Route
         Router::redirectToError(501, Lang::get('error.failed_to_execute_request', ['request' => (isset($this->url[1]) ? $this->url[1] : '')]));
     }
     
+    /**
+     * Prase controller assigned to AJAX request.
+     *
+     * @return void
+     */
     private function parseAjaxController() {
         unset($this->url[1]);
         

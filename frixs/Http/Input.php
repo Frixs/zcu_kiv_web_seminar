@@ -106,31 +106,31 @@ class Input
             return null;
         }
 
-            if (!$returnData)
-                return $_FILES[$item];
-
-            switch ($returnData) {
-                case "name":
+        if (!$returnData)
+            return $_FILES[$item];
+        
+        switch ($returnData) {
+            case "name":
                 return $_FILES[$item]["name"];
                 break;
-                case "basename":
-                    return basename($_FILES[$item]["name"]);
-                    break;
-                case "extension":
-                    return pathinfo(basename($_FILES[$item]["name"]), PATHINFO_EXTENSION);
-                    break;
-                    case "tempname":
-                    return $_FILES[$item]["tmp_name"];
-                    break;
-                case "dimension":
-                    return getimagesize($_FILES[$item]["tmp_name"]); // return array with 2 values (width, height)
-                    break;
-                case "error":
-                    return $_FILES[$item]["error"];
-                    break;
-                case "size":
-                    return $_FILES[$item]["size"];
-                    break;
-            }
+            case "basename":
+                return basename($_FILES[$item]["name"]);
+                break;
+            case "extension":
+                return pathinfo(basename($_FILES[$item]["name"]), PATHINFO_EXTENSION);
+                break;
+            case "tempname":
+                return $_FILES[$item]["tmp_name"];
+                break;
+            case "dimension":
+                return getimagesize($_FILES[$item]["tmp_name"]); // return array with 2 values (width, height)
+                break;
+            case "error":
+                return $_FILES[$item]["error"];
+                break;
+            case "size":
+                return $_FILES[$item]["size"];
+                break;
+        }
     }
 }

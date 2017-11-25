@@ -20,7 +20,7 @@
 		<div id="my-events-filter">
 		@foreach ($myservers as $server)
 			<a href="server/server:{{ $server->server_id }}" class="server-box" data-server-id="{{ $server->server_id }}" data-filter-searchable>
-				@if ($server->has_background_box) <img src="images/structure/{{ $server->server_id }}_background_box.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/server_background_box_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
+				@if ($server->has_background_placeholder) <img src="{{ instance('Config')::get('app.root_server_uploads_rel') }}/{{ $server->server_id }}_background_placeholder.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/server_background_placeholder_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
 				<div class="title">
 					{{ $server->name }}
 				</div>

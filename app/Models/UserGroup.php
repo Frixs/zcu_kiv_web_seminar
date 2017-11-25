@@ -37,7 +37,7 @@ class UserGroup extends Model
             "SELECT DISTINCT ug.server_id,
                 s.name,
                 s.access_type,
-                s.has_background_box,
+                s.has_background_placeholder,
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". self::getTable() ." AS ug

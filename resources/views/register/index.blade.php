@@ -10,7 +10,7 @@
 		<div class="form-wrapper col-xs-12">
 			<div class="head-spacer"></div>
 			<h2 class="text-center">{{ lang('register.index.title') }}</h2>
-			<form class="form-horizontal" action="_request/register" method="post">
+			<form class="form-horizontal" action="__request/register" method="post">
 				<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }} @if (instance('Request')->messageSuccess()) {{ lang('register.index.success_text_pre') }} <a href="login">{{ lang('register.index.success_text_link') }}</a>{{ lang('register.index.success_text_post') }} @endif</div>
 				<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
 				{{-- USERNAME --}}

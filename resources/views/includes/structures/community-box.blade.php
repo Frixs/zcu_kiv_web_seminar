@@ -16,7 +16,7 @@
 		@foreach ($topservers as $server)
 			<div class="server-box" data-server-id="{{ $server->id }}">
                 <div class="rank-badge">{{ ++$i }}</div>
-				@if ($server->has_background_box) <img src="storage/server/{{ $server->id }}_background_box.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/server_background_box_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
+				@if ($server->has_background_placeholder) <img src="{{ instance('Config')::get('app.root_server_uploads_rel') }}/{{ $server->id }}_background_placeholder.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/server_background_placeholder_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
 				<div class="title">
 					{{ $server->name }}
 				</div>

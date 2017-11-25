@@ -29,7 +29,7 @@ function lang(string, callback) {
 
     $.ajax({
         type: "POST",
-        url: "_request/ajax/get-lang",
+        url: "__request/__ajax/get-lang",
         async: false,
         data: "string=" + string,
         success: function (data) {

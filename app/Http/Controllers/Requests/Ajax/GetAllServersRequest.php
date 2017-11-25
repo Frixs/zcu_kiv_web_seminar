@@ -46,7 +46,7 @@ class GetAllServersRequest extends Request
             "SELECT s.id,
                 s.name,
                 s.access_type,
-                s.has_background_box,
+                s.has_background_placeholder,
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". \App\Models\UserGroup::getTable() ." AS ug
