@@ -205,18 +205,18 @@ class Auth
     public static function guard($groupId)
     {
         $query = DB::getInstance()->query("
-                SELECT g.server_group
+                SELECT ug.server_id
                 FROM ". UserGroup::getTable() ." AS ug
                 INNER JOIN ". Group::getTable() ." AS g
-                    ON ug.group_id = ". Group::getPrimaryKey() ."
+                    ON ug.group_id = g.". Group::getPrimaryKey() ."
                 WHERE ug.user_id = ? AND ug.group_id = ? AND (g.server_group = ? OR (g.server_group = ? AND ug.server_id = ?))
             ", [
-                Auth::id(),
+                self::id(),
                 $groupId,
                 0,
                 1,
                 \App\Models\Server::getServerID()
-            ]);
+        ]);
 
         if ($query->error()) {
             Router::redirectToError(500);

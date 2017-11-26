@@ -12,7 +12,7 @@
 @endphp
 
 <form class="form-horizontal" action="{{ $form_action }}" method="post" enctype="multipart/form-data">
-	<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }} @if (instance('Request')->messageSuccess()) {{ lang('server.create.success_text_pre') }} <a href="../dashboard">{{ lang('server.create.success_text_link') }}</a>{{ lang('server.create.success_text_post') }} @endif</div>
+	<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }} @if (!isset($loading_data) && instance('Request')->messageSuccess()) {{ lang('server.create.success_text_pre') }} <a href="../dashboard">{{ lang('server.create.success_text_link') }}</a>{{ lang('server.create.success_text_post') }} @endif</div>
 	<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
 	{{-- NAME --}}
 	<div class="form-group @if (instance('Request')->getInputError('name')) has-error @endif">
@@ -69,7 +69,12 @@
 		</div>
 	</div>
 	{{-- TOKEN --}}
-	<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" /> {{-- SUBMIT --}}
+	<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
+	@if (isset($loading_data))
+		{{-- SERVER ID --}}
+		<input type="hidden" name="serverid" value="{{ $loading_data->id }}" />
+	@endif
+	{{-- SUBMIT --}}
 	<div class="form-group gc-no-margin-bottom">
 		<div class="col-md-offset-3 col-md-9">
 			<button type="submit" class="btn btn-primary gc-float-right" tabindex="7">{{ $inpSubmit }}</button>

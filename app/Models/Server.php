@@ -5,6 +5,7 @@ namespace App\Models;
 use Frixs\Database\Eloquent\Model;
 
 use Frixs\Routing\Router;
+use Frixs\Http\Input;
 
 class Server extends Model
 {
@@ -28,6 +29,12 @@ class Server extends Model
      */
     public static function getServerID()
     {
+        if (!self::$server) {
+            if (Input::get('serverid')) {
+                self::setServerID(Input::get('serverid'));
+            }
+        }
+
         return self::$server;
     }
 

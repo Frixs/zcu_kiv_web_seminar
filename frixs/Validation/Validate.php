@@ -181,7 +181,7 @@ class Validate
         if (empty($this->_errors)) {
             $this->_passed = true;
         }
-            
+        
         return $this;
     }
         

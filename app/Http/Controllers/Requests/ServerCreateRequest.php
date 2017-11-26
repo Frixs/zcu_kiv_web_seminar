@@ -63,7 +63,7 @@ class ServerCreateRequest extends Request
             $this->goBack();
         }
 
-        $hasBackgroundPlaceholder = Input::getFileData('background-placeholder') ? 1 : 0;
+        $hasBackgroundPlaceholder = Input::getFileData('background-placeholder')['error'] === 0 ? 1 : 0;
 
         self::db()->beginTransaction();
 

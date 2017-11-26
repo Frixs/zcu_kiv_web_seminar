@@ -9,6 +9,7 @@ use Frixs\Validation\Validate;
 use Frixs\Language\Lang;
 use Frixs\Routing\Router;
 use Frixs\Auth\Auth;
+use Frixs\Auth\Guard;
 
 class ServerEditRequest extends Request
 {
@@ -24,12 +25,16 @@ class ServerEditRequest extends Request
         }
 
         $validation = (new Validate())->check(Input::all('post'), [
+            'serverid' => [
+            ],
             'name' => [
+                'required' => true,
                 'min'      => 3,
                 'max'      => 50,
                 'letters_numbers_undersc_space' => true
             ],
             'access-type' => [
+                'required' => true
             ],
             'background-placeholder' => [
                 'file_size_max' => Config::get('fileupload.filesize_max.server_background_placeholder'),
@@ -42,7 +47,7 @@ class ServerEditRequest extends Request
                 'captcha' => Input::get('g-recaptcha-response')
             ]
         ]);
-
+        
         return $this->_validation = $validation;
     }
 
@@ -56,22 +61,34 @@ class ServerEditRequest extends Request
         $hasBackgroundPlaceholder;
         $serverID = null;
         $authUID = Auth::id();
-
+        $updateArr = null;
+        
         if (!$this->inputValidation()->passed()) {
             $this->goBack();
         }
 
-        $hasBackgroundPlaceholder = Input::getFileData('background-placeholder') ? 1 : 0;
-/*
+        $serverID = Input::get('serverid');
+        $hasBackgroundPlaceholder = Input::getFileData('background-placeholder')['error'] === 0 ? 1 : 0;
+
         self::db()->beginTransaction();
 
-        $query = self::db()->insert(\App\Models\Server::getTable(), [
+        if (!Guard::has('server.settings.basics')) {
+            Router::redirectToError(500);
+        }
+
+        $updateArr = [
             'name' => Input::get('name'),
             'access_type' => Input::get('access-type') === 'public' ? 0 : (Input::get('access-type') === 'protected' ? 1 : 2),
             'has_background_placeholder' => $hasBackgroundPlaceholder,
-            'edited_at' => 0,
-            'created_at' => time(),
-            'owner' => $authUID
+            'edited_at' => time()
+        ];
+
+        if ($hasBackgroundPlaceholder) {
+            $updateArr['has_background_placeholder'] = $hasBackgroundPlaceholder;
+        }
+
+        $query = self::db()->update(\App\Models\Server::getTable(), $updateArr, [
+            'id', '=', $serverID
         ]);
 
         if (!$query) {
@@ -79,26 +96,6 @@ class ServerEditRequest extends Request
             Router::redirectToError(500);
         }
 
-        $serverID = self::db()->lastInsertId();
-
-        $ownerGroups = [
-            \App\Models\Group::SMaster(),
-            \App\Models\Group::SMember(),
-        ];
-
-        for ($i = 0; $i < count($ownerGroups); $i++) {
-            $query = self::db()->insert(\App\Models\UserGroup::getTable(), [
-                'user_id' => $authUID,
-                'group_id' => $ownerGroups[$i],
-                'server_id' => $serverID
-            ]);
-
-            if (!$query) {
-                self::db()->rollBack();
-                Router::redirectToError(500);
-            }
-        }
-        
         if ($hasBackgroundPlaceholder) {
             $filename = $serverID ."_background_placeholder.". Input::getFileData('background-placeholder', 'extension');
             if (!move_uploaded_file(Input::getFileData('background-placeholder', 'tempname'), Config::get('app.root_server_uploads_rel') .'/'. $filename)) {
@@ -107,9 +104,8 @@ class ServerEditRequest extends Request
             }
         }
 
-        $this->bindMessageSuccess(Lang::get('server.create.success_text'));
+        $this->bindMessageSuccess(Lang::get('server.settings.success_edit'));
         self::db()->commit();
-*/
         $this->goBack();
     }
 }
