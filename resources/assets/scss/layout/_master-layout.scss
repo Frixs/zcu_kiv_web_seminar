@@ -107,6 +107,14 @@
         font-size: 32px;
     }
 
+    & > .title {
+        color: $color-clouds;
+
+        &:hover {
+            text-shadow: 0 0 7px $color-orange-light-10;
+        }
+    }
+
     .toolbar {
         margin-bottom: $content-padding;
 

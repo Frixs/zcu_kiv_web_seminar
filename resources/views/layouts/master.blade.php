@@ -11,11 +11,17 @@
 
 	<!-- Section Container -->
 	<section class="master-section-container text-center">
-		<h1>@yield('header')</h1>
+		@if (isset($thisserver))
+			<a href="server/server:{{ $thisserver->id }}" class="title">
+				<h1>@yield('header')</h1>
+			</a>
+		@else
+			<h1>@yield('header')</h1>
+		@endif
 		<div class="toolbar">
 			@if (isset($thisserver))
 				<a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>
-				<a href="#"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+				<a href="settings/server:{{ $thisserver->id }}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 			@else
 				<i>{{ lang('calls.'. rand(0, count(lang('calls')) - 1)) }}</i>
 			@endif

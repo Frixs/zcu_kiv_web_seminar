@@ -25,4 +25,11 @@ class ServerController extends Controller
     {
         $this->view('server.create');
     }
+
+    public function settings()
+    {
+        $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
+
+        $this->view('server.settings', ['thisserver' => $thisserver]);
+    }
 }

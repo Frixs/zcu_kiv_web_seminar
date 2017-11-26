@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'title' => 'Server Room',
+    'title' => 'Server',
 ];
