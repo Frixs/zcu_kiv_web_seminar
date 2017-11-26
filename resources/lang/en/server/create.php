@@ -10,6 +10,7 @@ return [
     'inp_03' => 'Background placeholder',
     'inp_03_ph' => 'Background placeholder',
     'inp_sub' => 'CREATE',
+    'inp_sub_edit' => 'SUBMIT',
     'success_text' => 'Your server has been successfully created!',
     'success_text_pre' => 'Look at your',
     'success_text_link' => 'DASHBOARD',

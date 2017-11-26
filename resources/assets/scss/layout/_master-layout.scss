@@ -1,29 +1,30 @@
 .master-header {
     .navbar {
-        z-index:            2;
-        position:           relative;
-        background-color:   $color-gray-dark-20;
-        min-height:         60px;
-        margin-bottom:      0;
+        z-index: 2;
+        position: relative;
+        background-color: $color-gray-dark-20;
+        min-height: 60px;
+        margin-bottom: 0;
 
         .navbar-collapse {
             @extend %no-spacing;
+
             border: none;
         }
 
         .navbar-brand,
         .navbar-toggle,
         .navbar-nav li a {
-            line-height:    60px;
-            height:         60px;
-            padding:        0 $content-padding 0 $content-padding;
+            line-height: 60px;
+            height: 60px;
+            padding: 0 $content-padding 0 $content-padding;
         }
-        
+
         .navbar-btn {
-            height:         50px;
-            line-height:    20px;
-            margin-top:     5px;
-            margin-bottom:  5px;
+            height: 50px;
+            line-height: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         .navbar-right {
@@ -38,7 +39,7 @@
             left: 0;
             right: 0;
             margin: auto;
-            max-width:          110px;
+            max-width: 110px;
 
             a {
                 display: block;
@@ -48,7 +49,7 @@
                 }
 
                 img {
-                    max-width:  110px;
+                    max-width: 110px;
                 }
             }
         }
@@ -58,14 +59,12 @@
             padding: 0 !important;
             border: 2px solid $color-gray-dark-30;
 
-            .navbar-user
-            {
+            .navbar-user {
                 min-width: 305px;
                 padding: $content-padding;
                 padding-bottom: 0px;
 
-                .icon-size
-                {
+                .icon-size {
                     font-size: 48px;
                 }
 
@@ -76,8 +75,7 @@
                 }
             }
 
-            .navbar-user-session
-            {
+            .navbar-user-session {
                 padding: 15px;
                 padding-top: 0;
                 margin-bottom: 0;
@@ -97,21 +95,43 @@
 .master-section-container {
     position: relative;
     overflow: auto;
-    background-color: rgba($color-gray-dark-20, .25);
+    background-color: rgba($color-gray-dark-20, 0.25);
 
-    h1 {
-        text-transform: uppercase;
-        margin-bottom: $content-padding;
-        margin-top: 50px;
-        margin-bottom: 0;
-        font-size: 32px;
-    }
+    .titlebar {
+        position: relative;
 
-    & > .title {
-        color: $color-clouds;
+        h1 {
+            text-transform: uppercase;
+            margin-bottom: $content-padding;
+            margin-top: 50px;
+            margin-bottom: 0;
+            font-size: 32px;
+        }
 
-        &:hover {
-            text-shadow: 0 0 7px $color-orange-light-10;
+        & > .title {
+            color: $color-clouds;
+
+            &:hover {
+                text-shadow: 0 0 7px $color-orange-light-10;
+            }
+        }
+
+        & > .sub-titlebar {
+            position: absolute;
+            bottom: -$content-padding / 2;
+            left: 0;
+            right: 0;
+            margin: auto;
+            pointer-events: none;
+
+            i {
+                padding: $content-padding / 4 $content-padding $content-padding / 4 $content-padding;
+                //background-color: $color-gray-dark-20;
+                text-shadow: 0 0 2px $color-gray-dark-30, 0 0 2px $color-gray-dark-30, 0 0 2px $color-gray-dark-30, 0 0 5px $color-gray-dark-30, 0 0 7px $color-gray-dark-30;
+                color: $color-orange-normal;
+                font-size: $font-size-small;
+                text-transform: uppercase;
+            }
         }
     }
 

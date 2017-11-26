@@ -1,6 +1,6 @@
 @extends('layouts.master') @section('title', lang('dashboard.index.title')) @section('header', lang('dashboard.index.title'))
 @section('content')
-<div class="dashboard-wrapper">
+<div class="dashboard-wrapper dashboard-layout">
 	<div class="col-xs-12 col-sm-6 column-master-wrapper">
 		<div class="col-sm-12 col-lg-6 column-wrapper my-servers-wrapper">
 			<div>
