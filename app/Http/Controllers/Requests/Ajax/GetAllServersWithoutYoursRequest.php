@@ -44,16 +44,16 @@ class GetAllServersWithoutYoursRequest extends Request
         }
 
         $query = self::db()->query(
-            "SELECT s.id,
+            "SELECT s.". \App\Models\Server::getPrimaryKey() .",
                 s.name,
                 s.access_type,
                 s.has_background_placeholder, (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". \App\Models\UserGroup::getTable() ." AS ug
-                    WHERE ug.server_id = s.id
+                    WHERE ug.server_id = s.". \App\Models\Server::getPrimaryKey() ."
                 ) AS user_count
             FROM ". \App\Models\Server::getTable() ." AS s
-            WHERE s.name LIKE ? AND s.id NOT IN (
+            WHERE s.name LIKE ? AND s.". \App\Models\Server::getPrimaryKey() ." NOT IN (
                 SELECT ug2.server_id
                 FROM ". \App\Models\UserGroup::getTable() ." AS ug2
                 WHERE ug2.user_id = ?

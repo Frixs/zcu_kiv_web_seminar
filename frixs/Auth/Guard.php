@@ -17,16 +17,12 @@ class Guard
     /**
      * Constructor.
      */
-    private function __construct() {
-        $this->_data = [
-            'server' => [
-                'settings' => [
-                    'basics' => [
-                        Group::SMaster(),
-                    ],
-                ],
-            ],
-        ];
+    private function __construct($data) {
+        if (!$data) {
+            Router::redirectToError(501);
+        }
+
+        $this->_data = $data;
     }
 
     /**
@@ -34,10 +30,10 @@ class Guard
      *
      * @return object   Database instance
      */
-    public static function getInstance()
+    public static function getInstance($data = null)
     {
         if (!isset(self::$_instance)) {
-            self::$_instance = new Guard();
+            self::$_instance = new Guard($data);
         }
         return self::$_instance;
     }

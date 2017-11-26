@@ -4,8 +4,19 @@ namespace App\Http;
 
 use App\Models\Group;
 
+use Frixs\Auth\Guard;
+
 class Kernel
 {
+    /*
+     |  Kernel's attributes.
+     |  ==============================================
+     |
+     |
+     |
+     |________________________________________________
+    */
+
     /**
      * The application's global middleware stack
      * These middleware are run during every request to your application
@@ -30,13 +41,41 @@ class Kernel
     protected static $requestMiddleware = [];
 
     /**
+     * Guard's permissions.
+     *
+     * @var array
+     */
+    protected static $guardPermissions = [];
+
+    /*
+     |  Initialization of the Kernel config arrays.
+     |  ==============================================
+     |
+     |
+     |
+     |________________________________________________
+    */
+
+    /**
      * Initialize middleware.
      */
     protected function __construct()
     {
+        // Initialize settings.
         self::setMiddleware();
         self::setRouteMiddleware();
+        self::setRequestMiddleware();
+        self::setGuardPermissions();
     }
+
+    /*
+     |  The Kernel config arrays.
+     |  ==============================================
+     |
+     |
+     |
+     |________________________________________________
+    */
 
     /**
      * Set the application's global middleware stack.
@@ -99,6 +138,33 @@ class Kernel
     }
 
     /**
+     * Set guard's permissions.
+     *
+     * @return void
+     */
+    protected function setGuardPermissions()
+    {
+        self::$guardPermissions = [
+            'server' => [
+                'settings' => [
+                    'basics' => [
+                        Group::SMaster(),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /*
+     |  Kernel's methods.
+     |  ==============================================
+     |
+     |
+     |
+     |________________________________________________
+    */
+
+    /**
      * Run all middleware according to input parameters
      *
      * @param string $controller
@@ -110,6 +176,9 @@ class Kernel
     {
         // Initialize middleware.
         new self;
+
+        // Initialize Guard's permissions.
+        Guard::getInstance(self::$guardPermissions);
 
         // Validate global middleware
         if (!self::validateGlobalMiddleware()) {
