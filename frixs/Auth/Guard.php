@@ -77,8 +77,12 @@ class Guard
         }
         
         for ($i = 0; $i < count($perms); $i++) {
-            if (isset($perms[$i]) && Auth::guard($perms[$i])) {
-                return true;
+            if (isset($perms[$i])) {
+                if (is_bool($perms[$i]) && $perms[$i]) {
+                    return true;
+                } else if (Auth::guard($perms[$i])) {
+                    return true;
+                }
             }
         }
 

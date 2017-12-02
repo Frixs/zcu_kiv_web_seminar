@@ -120,6 +120,11 @@ class Kernel
                     Group::SRecruit(),
                 ],
             ],
+            'server.settings' => [
+                'GuardAny' => [
+                    Group::SMaster(),
+                ],
+            ],
         ];
     }
 
@@ -147,8 +152,20 @@ class Kernel
         self::$guardPermissions = [
             'server' => [
                 'settings' => [
-                    'basics' => [
+                    '_display' => [
                         Group::SMaster(),
+                    ],
+                    'groups' => [
+                        Group::SMaster(),
+                    ],
+                    'notifications' => [
+                        Group::SMaster(),
+                    ],
+                    'discord' => [
+                        Group::SMaster(),
+                    ],
+                    'basics' => [
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                 ],
             ],

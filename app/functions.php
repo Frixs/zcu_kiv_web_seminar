@@ -24,6 +24,10 @@ function instance($classname, $parameters = [])
 
     $class = Config::get('app.aliases')[$classname];
 
+    if (method_exists($class, '__construct') && (new \ReflectionMethod($class, '__construct'))->isPrivate()) {
+        return $class::getInstance(implode(', ', $parameters));
+    }
+
     return new $class(implode(', ', $parameters));
 }
 

@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="toolbar">
-			@if (isset($thisserver))
+			@if (isset($thisserver) && instance('Guard')::has('server.settings._display'))
 				<a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>
 				<a href="settings/server:{{ $thisserver->id }}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 			@else

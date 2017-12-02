@@ -6,4 +6,5 @@ return [
     'register_success' => 'Account successfully created!',
     'register_success_verify' => 'Account successfully created! Check your email to verify your account.',
     'logout' => 'Logout',
+    'no_permissions' => 'No permissions.',
 ];

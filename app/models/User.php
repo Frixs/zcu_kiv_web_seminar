@@ -146,4 +146,31 @@ class User extends Model
 
         return false;
     }
+
+    /**
+     * Get bool if logged user is owner of the server.
+     *
+     * @param integer $serverid
+     * @return boolean
+     */
+    public static function isServerOwner($serverid) {
+        if (!$serverid) {
+            Router::redirectToError(501, "User::isServerOwner();");
+        }
+        
+        $query = self::db()->select(Server::getTable(), [
+            Server::getPrimaryKey(), '=', $serverid,
+            'AND', 'owner', '=', Auth::id()
+        ], ['owner']);
+        
+        if ($query->error()) {
+            Router::redirectToError(501, "User::isServerOwner();");
+        }
+
+        if ($query->count()) {
+            return true;
+        }
+
+        return false;
+    }
 }
