@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @include('includes.structures.server-form', ['form_action' => instance('Config')::get('app.root_rel').'/__request/server-edit', 'loading_data' => $thisserver])
+@include('includes.structures.server-group-settings', ['thisserver' => $thisserver])
 
 @section('title', $thisserver->name .' | '. lang('server.settings.title'))
 @section('header', $thisserver->name) @section('sub-header', lang('server.settings.title'))
@@ -21,6 +22,7 @@
 			<div>
 				<h2>{{ lang('server.settings.title_box_01') }}</h2>
 				<hr class="color">
+				@yield('server-group-settings')
 			</div>
 			@else
 			<div class="text-center">

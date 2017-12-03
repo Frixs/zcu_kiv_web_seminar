@@ -1,0 +1,22 @@
+.server-group-settings-wrapper {
+    & .user-wrapper {
+        margin-top: $content-padding;
+        &:first-child { margin-top: 0; }
+
+        .name-box {
+            line-height: 42px;
+        }
+        .group-box {
+            font-size: $font-size-base;
+            line-height: 42px;
+            color: $color-gray-light-50;
+
+            span {
+                display: block;
+                background-color: $color-gray-light-20;
+                padding-left: $content-padding + 2px;
+                font-size: $font-size-small;
+            }
+        }
+    }
+}

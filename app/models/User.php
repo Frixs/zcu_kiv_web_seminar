@@ -155,7 +155,7 @@ class User extends Model
      */
     public static function isServerOwner($serverid) {
         if (!$serverid) {
-            Router::redirectToError(501, "User::isServerOwner();");
+            return false;
         }
         
         $query = self::db()->select(Server::getTable(), [

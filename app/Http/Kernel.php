@@ -59,7 +59,7 @@ class Kernel
     /**
      * Initialize middleware.
      */
-    protected function __construct()
+    private function __construct()
     {
         // Initialize settings.
         self::setMiddleware();
@@ -162,7 +162,7 @@ class Kernel
                         Group::SMaster(),
                     ],
                     'discord' => [
-                        Group::SMaster(),
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'basics' => [
                         \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),

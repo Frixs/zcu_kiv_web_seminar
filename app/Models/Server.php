@@ -104,4 +104,75 @@ class Server extends Model
         
         return $query->get();
     }
+
+    /**
+     * Get all members of the server.
+     *
+     * @param integer $serverid
+     * @return object
+     */
+    public static function getMembers($serverid)
+    {
+        if (!$serverid) {
+            return null;
+        }
+
+        $query = self::db()->query(
+            "SELECT DISTINCT u.". User::getPrimaryKey() .",
+                u.username,
+                u.lastvisit,
+                u.registered
+            FROM ". UserGroup::getTable() ." AS ug
+            INNER JOIN ". User::getTable() ." AS u
+                ON u.". User::getPrimaryKey() ." = ug.user_id
+            WHERE ug.server_id = ?
+            ORDER BY u.username ASC"
+        , [
+            $serverid
+        ]);
+
+        if ($query->error()) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Get user groups.
+     *
+     * @param integer $serverid
+     * @return object
+     */
+    public static function getUserGroups($serverid, $uid)
+    {
+        if (!$serverid || !$uid) {
+            return null;
+        }
+
+        $query = self::db()->query(
+            "SELECT DISTINCT g.". Group::getPrimaryKey() .",
+                g.name,
+                g.priority,
+                g.color,
+                MAX(g.priority) AS priority_max
+            FROM ". UserGroup::getTable() ." AS ug
+            INNER JOIN ". Group::getTable() ." AS g
+                ON g.". Group::getPrimaryKey() ." = ug.group_id
+            WHERE ug.user_id = ? AND ug.server_id = ? AND g.server_group = ?
+            ORDER BY g.priority DESC"
+        , [
+            $uid,
+            $serverid,
+            1
+        ]);
+
+        if ($query->error()) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        return $query->get();
+    }
 }

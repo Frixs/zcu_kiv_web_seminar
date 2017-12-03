@@ -23,7 +23,7 @@ class Group extends Model
 
     public static function loadGroupData()
     {
-        $query = self::db()->selectAll(self::getTable(), [1]);
+        $query = self::db()->selectAll(self::getTable(), [1], ['priority', 'DESC']);
         if ($query->error()) {
             Router::redirectToError(501);
         }
@@ -31,10 +31,39 @@ class Group extends Model
         $id = self::getPrimaryKey();
         foreach ($query->get() as $item) {
             self::$_data[$item->$id] = [
-                'name'  => $item->name,
-                'color' => $item->color
+                'name'          => $item->name,
+                'priority'      => $item->priority,
+                'server_group'  => $item->server_group,
+                'color'         => $item->color
             ];
         }
+    }
+
+    /**
+     * Get all groups.
+     *
+     * @param boolean $onlyServerGroups
+     * @param boolean $onlyGlobalGroups
+     * @return array
+     */
+    public static function getAllServerGroups($onlyServerGroups = false, $onlyGlobalGroups = false)
+    {
+        $output = [];
+        $search;
+
+        if (!$onlyServerGroups && !$onlyGlobalGroups) {
+            return self::$_data;
+        } else if ($onlyServerGroups) {
+            $search = 1;
+        } else {
+            $search = 0;
+        }
+
+        foreach (self::$_data as $key => $item)
+            if ($item['server_group'] == $search)
+                $output[$key] = $item;
+
+        return $output;
     }
 
     /**
