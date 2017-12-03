@@ -101,6 +101,26 @@ class Group extends Model
      *
      * @return integer
      */
+    public static function SRecruiter()
+    {
+        return 6;
+    }
+
+    /**
+     * Get ID of the current group.
+     *
+     * @return integer
+     */
+    public static function SOrganizer()
+    {
+        return 7;
+    }
+
+    /**
+     * Get ID of the current group.
+     *
+     * @return integer
+     */
     public static function SMember()
     {
         return 4;

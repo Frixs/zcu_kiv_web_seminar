@@ -4,7 +4,19 @@
         &:first-child { margin-top: 0; }
 
         .name-box {
+            position: relative;
             line-height: 42px;
+            white-space: nowrap;
+
+            .on-group-update-snack {
+                line-height: initial;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+
+                font-size: 10px;
+                color: $color-green-normal;
+            }
         }
         .group-box {
             font-size: $font-size-base;

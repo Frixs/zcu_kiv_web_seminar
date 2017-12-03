@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1:3306
--- Vytvořeno: Úte 21. lis 2017, 10:27
+-- Vytvořeno: Ned 03. pro 2017, 18:13
 -- Verze serveru: 5.7.19
--- Verze PHP: 7.1.10
+-- Verze PHP: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -94,21 +94,24 @@ CREATE TABLE IF NOT EXISTS `web_groups` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(30) COLLATE utf8_czech_ci NOT NULL,
   `server_group` tinyint(1) UNSIGNED NOT NULL,
+  `priority` tinyint(3) UNSIGNED NOT NULL,
   `color` varchar(6) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `server_group` (`server_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `web_groups`
 --
 
-INSERT INTO `web_groups` (`id`, `name`, `server_group`, `color`) VALUES
-(1, 'Administrator', 0, 'FF0000'),
-(2, 'Moderator', 0, '00FF00'),
-(3, 'Master', 1, '0000FF'),
-(4, 'Member', 1, '00C12B'),
-(5, 'Recruit', 1, 'D8005F');
+INSERT INTO `web_groups` (`id`, `name`, `server_group`, `priority`, `color`) VALUES
+(1, 'Administrator', 0, 100, 'FF0000'),
+(2, 'Moderator', 0, 75, '00FF00'),
+(3, 'Master', 1, 50, 'F98D00'),
+(4, 'Member', 1, 25, '00C12B'),
+(5, 'Recruit', 1, 10, 'D8005F'),
+(6, 'Recruiter', 1, 40, '4286F4'),
+(7, 'Organizer', 1, 30, 'DAE023');
 
 -- --------------------------------------------------------
 
@@ -121,21 +124,24 @@ CREATE TABLE IF NOT EXISTS `web_servers` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
   `access_type` tinyint(1) UNSIGNED NOT NULL COMMENT '0=public;1=protected;2=private',
-  `has_background_box` tinyint(1) UNSIGNED NOT NULL,
+  `has_background_placeholder` tinyint(1) UNSIGNED NOT NULL,
   `edited_at` int(11) UNSIGNED NOT NULL,
   `created_at` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+  `owner` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `web_servers`
 --
 
-INSERT INTO `web_servers` (`id`, `name`, `access_type`, `has_background_box`, `edited_at`, `created_at`) VALUES
-(1, 'Small Community', 1, 0, 0, 0),
-(2, 'ZGame', 1, 0, 0, 0),
-(3, 'Overwatch', 0, 0, 0, 0),
-(4, 'GGCommunity', 2, 0, 0, 0);
+INSERT INTO `web_servers` (`id`, `name`, `access_type`, `has_background_placeholder`, `edited_at`, `created_at`, `owner`) VALUES
+(1, 'Small Community', 1, 0, 0, 0, 0),
+(2, 'ZGame', 1, 0, 0, 0, 0),
+(3, 'Overwatch', 0, 0, 0, 0, 0),
+(4, 'GGCommunity', 2, 0, 0, 0, 0),
+(25, 'Dota2 Room', 0, 0, 1511723310, 1511624618, 4);
 
 -- --------------------------------------------------------
 
@@ -189,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `web_users` (
   UNIQUE KEY `email` (`email`),
   KEY `username_clean` (`username_clean`),
   KEY `verified` (`verified`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `web_users`
@@ -197,7 +203,8 @@ CREATE TABLE IF NOT EXISTS `web_users` (
 
 INSERT INTO `web_users` (`id`, `username`, `username_clean`, `email`, `password`, `lastvisit`, `registered`, `register_time`, `verified`, `actkey`, `form_salt`) VALUES
 (1, 'Anonymous', 'anonymous', '', '', 0, 0, 0, 0, '', ''),
-(4, 'Frixs', 'frixs', 'frixs.dotlog@gmail.com', '$2y$12$568qvZ2pgEW06FZUC9f38OXPmwUkqX5J2PLrt6WN1XbyFcJ1FVfOW', 1509993601, 1, 1509993601, 0, '', '3ef205b0117f9d6df28908f1c0524260');
+(4, 'Frixs', 'frixs', 'frixs.dotlog@gmail.com', '$2y$12$568qvZ2pgEW06FZUC9f38OXPmwUkqX5J2PLrt6WN1XbyFcJ1FVfOW', 1509993601, 1, 1509993601, 0, '', '3ef205b0117f9d6df28908f1c0524260'),
+(5, 'TestFrixs', 'testfrixs', 'testfrixs@testfrixs.com', '$2y$12$568qvZ2pgEW06FZUC9f38OXPmwUkqX5J2PLrt6WN1XbyFcJ1FVfOW', 1507893603, 1, 1507793602, 0, '', '3ef205b0117f9d6df28908f1c0524260');
 
 -- --------------------------------------------------------
 
@@ -209,7 +216,7 @@ DROP TABLE IF EXISTS `web_user_groups`;
 CREATE TABLE IF NOT EXISTS `web_user_groups` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `group_id` bigint(20) UNSIGNED NOT NULL,
-  `server_id` bigint(20) UNSIGNED NOT NULL,
+  `server_id` bigint(20) UNSIGNED DEFAULT NULL,
   KEY `user_id` (`user_id`),
   KEY `group_id` (`group_id`),
   KEY `server_id` (`server_id`)
@@ -222,7 +229,11 @@ CREATE TABLE IF NOT EXISTS `web_user_groups` (
 INSERT INTO `web_user_groups` (`user_id`, `group_id`, `server_id`) VALUES
 (4, 4, 1),
 (4, 3, 1),
-(4, 5, 3);
+(4, 5, 3),
+(4, 3, 25),
+(4, 4, 25),
+(4, 1, NULL),
+(5, 4, 25);
 
 --
 -- Omezení pro exportované tabulky

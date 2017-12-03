@@ -10,7 +10,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "__request/__ajax/get-all-servers-without-yours",
+            url: root + "/__request/__ajax/get-all-servers-without-yours",
             data: "name=" + $(this).val(),
             success: function (data) {
                 let response;

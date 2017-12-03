@@ -12,12 +12,12 @@
         <div class="col-xs-6 name-box gc-col-nosp">
         {{ $user->username }}
         </div>
-        <div class="col-xs-6 group-box gc-col-nosp">
-            @if ($userCurrentGroups[0]->priority_max -10 >= $userGroups[0]->priority_max)
+        <div class="col-xs-6 group-box gc-col-nosp" data-serverid="{{  $thisserver->id }}">
+            @if ($userCurrentGroups[0]->priority_max >= $userGroups[0]->priority_max)
                 <select class="form-control" data-uid="{{ $user->id }}">
                 @foreach (instance('Group')::getAllServerGroups(true) as $groupKey => $group)
                     @if ($userCurrentGroups[0]->priority_max >= $group['priority'])
-                        <option style="color:#{{ $group['color'] }};" @if ($userGroups[0]->id == $groupKey) selected="selected" @endif>{{ $group['name'] }}</option>
+                        <option value="{{ $groupKey }}" style="color:#{{ $group['color'] }};" @if ($userGroups[0]->id == $groupKey) selected="selected" @endif>{{ $group['name'] }}</option>
                     @endif
                 @endforeach
                 </select>

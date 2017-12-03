@@ -8,4 +8,5 @@ return [
     'title_box_03' => 'Discord',
     'title_box_04' => 'Basics',
     'success_edit' => 'Successfully changed!',
+    'snack_group_updated' => 'Updated!',
 ];

@@ -5,3 +5,4 @@ $.getScript(root +'/../resources/assets/js/filter.js');
 
 // AJAX
 $.getScript(root +'/../resources/assets/js/ajax/get-all-servers.js');
+$.getScript(root +'/../resources/assets/js/ajax/set-server-user-group.js');
