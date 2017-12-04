@@ -71,6 +71,10 @@
     margin-bottom: 0 !important;
 }
 
+.gc-margin-top {
+    margin-top: $content-padding;
+}
+
 .g-recaptcha {
     transform:scale(0.77);
     transform-origin:0 0;

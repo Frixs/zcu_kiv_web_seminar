@@ -9,4 +9,5 @@ return [
     'undefined_input_type' => 'Undefined input type.',
     'undefined_registration_method' => 'Undefined registration method.',
     'undefined_error_redirection' => 'Undefined error redirection.',
+    'server_is_not_joinable' => 'Server is not joinable!',
 ];

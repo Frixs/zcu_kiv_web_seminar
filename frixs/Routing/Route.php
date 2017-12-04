@@ -225,10 +225,11 @@ class Route
     {
         // check if the next parameter exists
         if (isset($this->url[1])) {
+            $methodName = $this->convertToCamelCase($this->url[1]);
             // if it is method, grab it
-            if ($this->methodExists($this->controllerInstance, $this->url[1])) {
-                if ($this->isMethodPublic($this->controllerInstance, $this->url[1])) {
-                    $this->method = $this->url[1];
+            if ($this->methodExists($this->controllerInstance, $methodName)) {
+                if ($this->isMethodPublic($this->controllerInstance, $methodName)) {
+                    $this->method = $methodName;
                     unset($this->url[1]);
                 }
             }

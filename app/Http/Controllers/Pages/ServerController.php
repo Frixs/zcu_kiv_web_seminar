@@ -15,10 +15,16 @@ class ServerController extends Controller
 
     public function join()
     {
+        $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
+
+        $this->view('server.join', ['thisserver' => $thisserver]);
     }
 
     public function sendRequest()
     {
+        $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
+
+        $this->view('server.join', ['thisserver' => $thisserver]);
     }
 
     public function create()

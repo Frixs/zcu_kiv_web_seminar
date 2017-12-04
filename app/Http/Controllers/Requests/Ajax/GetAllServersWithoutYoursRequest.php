@@ -56,7 +56,7 @@ class GetAllServersWithoutYoursRequest extends Request
             WHERE s.name LIKE ? AND s.". \App\Models\Server::getPrimaryKey() ." NOT IN (
                 SELECT ug2.server_id
                 FROM ". \App\Models\UserGroup::getTable() ." AS ug2
-                WHERE ug2.user_id = ?
+                WHERE ug2.user_id = ? AND ug2.server_id IS NOT NULL
                 GROUP BY ug2.server_id
             )
             ORDER BY user_count DESC, s.name ASC
