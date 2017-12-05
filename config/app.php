@@ -54,7 +54,7 @@ function getRelativeRoot() {
     $i = 0;
 
     // Calculate how much deep it is minus URL identifiers (f.e. request), which do not affect URL deep.
-    for (; $i < substr_count($_SERVER['REDIRECT_QUERY_STRING'], '/') - substr_count($_SERVER['REDIRECT_QUERY_STRING'], '__'); $i++) {
+    for (; $i < substr_count($_SERVER['QUERY_STRING'], '/'); $i++) {
         $output .= '../';
     }
     
