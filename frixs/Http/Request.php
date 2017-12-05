@@ -74,7 +74,7 @@ class Request
             Router::redirectTo(Router::previousPageAddress(), true);
         }
 
-        Router::redirectTo(Config::get('app.root'), true);
+        Router::redirectTo(Config::get('app.root_rel'), true);
     }
 
     /**

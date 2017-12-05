@@ -13,7 +13,7 @@ use Frixs\Auth\Auth;
 use App\Models\User;
 use App\Models\Server;
 
-class ServerJoinRequest extends Request
+class ServerLeaveRequest extends Request
 {
     /**
      * Validate inputs.
@@ -55,29 +55,28 @@ class ServerJoinRequest extends Request
         $serverID = Input::get('serverid');
         $server = Server::getServeR($serverID);
 
+        // Check if user has acces to this server.
+        if (!User::hasServerAccess($authUID, $serverID)) {
+            Router::redirectToError(500);
+        }
+        
         // Check if server is joinable.
-        if ($server->access_type != 0 // Public room
-            && $server->access_type != 1 // Protected room
-        ) {
-            $this->bindMessageError(Lang::get('error.server_is_not_joinable'));
+        if (User::isServerOwner($authUID)) {
+            $this->bindMessageError(Lang::get('server.leave.leave_as_owner'));
             $this->goBack();
         }
 
-        // Check if user already has acces to this server.
-        if (!User::hasServerAccess($authUID, $serverID)) {
-            // Add group recruit to the user.
-            $query = self::db()->insert(\App\Models\UserGroup::getTable(), [
-                'user_id' => $authUID,
-                'group_id' => \App\Models\Group::SRecruit(),
-                'server_id' => $serverID
-            ]);
-            
-            if(!$query) {
-                self::db()->rollBack();
-                Router::redirectToError(500);
-            }
-        }
+        // Add group recruit to the user.
+        $query = self::db()->delete(\App\Models\UserGroup::getTable(), [
+            'user_id', '=', $authUID,
+            'AND', 'server_id', '=', $serverID
+        ]);
         
-        Router::redirectTo('server/server:'. $serverID);
+        if(!$query) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+  
+        Router::redirectTo('dashboard');
     }
 }

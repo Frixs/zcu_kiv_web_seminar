@@ -1,0 +1,19 @@
+.server-leave-page {
+    text-align: center;
+
+    .server-name {
+        display: block;
+        font-size: $font-size-big;
+        color: $color-orange-normal;
+        margin-bottom: $content-padding;
+    }
+
+    button {
+        float: none;
+        background-color: $color-red-normal;
+
+        &:hover {
+            background-color: lighten($color-red-normal, 5%);
+        }
+    }
+}

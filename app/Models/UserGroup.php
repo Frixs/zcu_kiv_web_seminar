@@ -38,6 +38,7 @@ class UserGroup extends Model
                 s.name,
                 s.access_type,
                 s.has_background_placeholder,
+                s.owner,
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". self::getTable() ." AS ug

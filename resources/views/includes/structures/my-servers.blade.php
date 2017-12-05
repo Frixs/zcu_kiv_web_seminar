@@ -1,5 +1,6 @@
 @php
-	$myservers = instance('UserGroup')::getUserServers(instance('Auth')::id());
+	$authUID = instance('Auth')::id();
+	$myservers = instance('UserGroup')::getUserServers($authUID);
 @endphp
 
 <div class="structures my-servers">
@@ -19,11 +20,23 @@
 	@if ($myservers)
 		<div id="my-events-filter">
 		@foreach ($myservers as $server)
-			<a href="server/server:{{ $server->server_id }}" class="server-box" data-server-id="{{ $server->server_id }}" data-filter-searchable>
+			<div class="server-box" data-server-id="{{ $server->server_id }}" data-filter-searchable>
+				<a href="{{ instance('Config')::get('app.root_rel') }}/server/server:{{ $server->server_id }}" class="overlay-link"></a>
 				@if ($server->has_background_placeholder) <img src="{{ instance('Config')::get('app.root_server_uploads_rel') }}/{{ $server->server_id }}_background_placeholder.jpg" alt="" draggable="false" tabindex="-1"> @else <img src="images/structure/server_background_placeholder_default.jpg" alt="" draggable="false" tabindex="-1"> @endif
+
+				@if ($server->owner !== $authUID)
+					<a href="{{ instance('Config')::get('app.root_rel') }}/server/leave/server:{{ $server->server_id }}" class="btn-leave">
+						<i class="fa fa-sign-out" aria-hidden="true"></i>
+					</a>
+				@endif
+
 				<div class="title">
 					{{ $server->name }}
+					@if ($server->owner === $authUID)
+						<i class="fa fa-star" aria-hidden="true"></i>
+					@endif
 				</div>
+
 				<div class="info small">
 					<div class="left">
 						@if ($server->access_type == 0)
@@ -39,7 +52,7 @@
 					</div>
 					<div class="gc-cleaner"></div>
 				</div>
-			</a>
+			</div>
 		@endforeach
 		</div>
 	@else

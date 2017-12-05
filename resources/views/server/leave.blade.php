@@ -1,14 +1,14 @@
 @extends('layouts.plain-form')
 
-@section('title', lang('server.join.title'))
+@section('title', lang('server.leave.title'))
 
 @section('content')
-<div class="server-join-page">
+<div class="server-leave-page">
 	<div class="form-wrapper col-xs-12">
 		<div class="head-spacer"></div>
-		<h2 class="text-center">{{ lang('server.join.title') }}</h2>
+		<h2 class="text-center">{{ lang('server.leave.title') }}</h2>
         <strong class="server-name">{{ $thisserver->name }}</strong>
-		<form class="form-horizontal" action="{{ instance('Config')::get('app.root_rel') }}/__request/server-join" method="post">
+		<form class="form-horizontal" action="{{ instance('Config')::get('app.root_rel') }}/__request/server-leave" method="post">
             <div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
             <div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
             {{-- CAPTCHA --}}
@@ -29,7 +29,7 @@
             {{-- SUBMIT --}}
             <div class="form-group gc-margin-top">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary gc-float-right" tabindex="7">{{ lang('server.join.inp_sub') }}</button>
+                    <button type="submit" class="btn btn-primary gc-float-right" tabindex="7">{{ lang('server.leave.inp_sub') }}</button>
                 </div>
             </div>
             <div class="gc-cleaner"></div>

@@ -12,6 +12,15 @@
     border: 2px solid $color-gray-dark-30;
     overflow: hidden;
 
+    & > .overlay-link {
+        z-index: 4;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     & > img {
         z-index: 1;
         position: absolute;
@@ -22,6 +31,25 @@
         min-width: 100%;
         height: 100%;
         opacity: .75;
+    }
+
+    & > .btn-leave {
+        z-index: 6;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transition: none;
+
+        padding: $content-padding / 4;
+        margin-top: $content-padding / 2 + 2px;
+        margin-right: $content-padding / 2;
+
+        color: $color-red-normal;
+
+        &:hover {
+            color: lighten($color-red-normal, 15%);
+            text-shadow: none;
+        }
     }
 
     & > .rank-badge {
@@ -51,14 +79,17 @@
 
     .info {
         position: relative;
-        z-index: 2;
         color: $color-orange-light-10;
 
         .left {
+            z-index: 2;
+            position: relative;
             float: left;
         }
 
         .right {
+            z-index: 2;
+            position: relative;
             float: right;
             text-align: right;
         }
@@ -70,9 +101,13 @@
     }
 }
 
-a.server-box:hover {
+.server-box:hover {
     & > img {
         opacity: .25;
+    }
+
+    & > .btn-leave {
+        text-shadow: 0 0 5px lighten($color-red-normal, 5%);
     }
 
     color: lighten($color-orange-normal, 40%);

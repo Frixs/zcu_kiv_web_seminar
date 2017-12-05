@@ -27,6 +27,13 @@ class ServerController extends Controller
         $this->view('server.join', ['thisserver' => $thisserver]);
     }
 
+    public function leave()
+    {
+        $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
+
+        $this->view('server.leave', ['thisserver' => $thisserver]);
+    }
+
     public function create()
     {
         $this->view('server.create');
