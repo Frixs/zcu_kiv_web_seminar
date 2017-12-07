@@ -17,6 +17,11 @@
 
         .event-list-box {
             background-color: rgba($color-gray-dark-10, $bg-opacity-01);
+
+            .event-menu-box {
+                background-color: $color-gray-dark-20;
+                padding: $content-padding;
+            }
         }
 
         .event-preview-box {

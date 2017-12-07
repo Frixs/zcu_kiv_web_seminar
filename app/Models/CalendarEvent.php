@@ -59,7 +59,7 @@ class CalendarEvent extends Model
             INNER JOIN ". User::getTable() ." as u
                     ON u.". User::getPrimaryKey() ." = e.founder_user_id
             WHERE e.server_id = ?
-            ORDER BY e.time_from DESC"
+            ORDER BY e.time_from ASC"
         , [
             $serverid
         ]);
