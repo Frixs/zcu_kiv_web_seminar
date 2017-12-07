@@ -34,7 +34,7 @@ class UserGroup extends Model
         }
 
         $query = self::db()->query(
-            "SELECT DISTINCT ug.server_id,
+            "SELECT DISTINCT s.". Server::getPrimaryKey() .",
                 s.name,
                 s.access_type,
                 s.has_background_placeholder,
@@ -42,7 +42,7 @@ class UserGroup extends Model
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". self::getTable() ." AS ug
-                    WHERE ug.user_id = ? AND ug.server_id > ?
+                    WHERE ug.server_id = s.". Server::getPrimaryKey() ."
                 ) AS user_count
             FROM ". self::getTable() ." AS ug
             INNER JOIN ". Server::getTable() ." AS s
@@ -50,8 +50,6 @@ class UserGroup extends Model
             WHERE ug.user_id = ? AND ug.server_id > ?
             ORDER BY s.name ASC"
         , [
-            $uid,
-            0,
             $uid,
             0
         ]);

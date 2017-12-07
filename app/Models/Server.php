@@ -81,14 +81,14 @@ class Server extends Model
     public static function getTopServers()
     {
         $query = self::db()->query(
-            "SELECT s.id,
+            "SELECT s.". self::getPrimaryKey() .",
                 s.name,
                 s.access_type,
                 s.has_background_placeholder,
                 (
                     SELECT COUNT(DISTINCT ug.user_id)
                     FROM ". UserGroup::getTable() ." AS ug
-                    WHERE ug.server_id = s.id
+                    WHERE ug.server_id = s.". self::getPrimaryKey() ."
                 ) AS user_count
             FROM ". self::getTable() ." AS s
             WHERE 1

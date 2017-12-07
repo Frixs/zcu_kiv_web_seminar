@@ -1,0 +1,26 @@
+.server-index-wrapper {
+    padding: $content-padding / 2;
+    
+    .column-wrapper {
+        padding: $content-padding / 2;
+
+        .event-list-box,
+        .event-preview-box {
+            padding: $content-padding;
+
+            & > h2 {
+                font-size: $font-size-big;
+                text-align: center;
+                margin: 0 0 $content-padding 0 !important;
+            }
+        }
+
+        .event-list-box {
+            background-color: rgba($color-gray-dark-10, $bg-opacity-01);
+        }
+
+        .event-preview-box {
+            background-color: rgba($color-gray-dark-10, $bg-opacity-01);
+        }
+    }
+}
