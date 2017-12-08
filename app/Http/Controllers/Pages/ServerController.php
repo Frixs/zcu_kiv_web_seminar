@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 
 class ServerController extends Controller
 {
-    public function index()
+    public function index($eventid = null)
     {
         $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
 
-        $this->view('server.index', ['thisserver' => $thisserver]);
+        $this->view('server.index', ['thisserver' => $thisserver, 'eid' => $eventid]);
     }
 
     public function join()

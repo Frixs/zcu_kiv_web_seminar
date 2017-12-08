@@ -114,7 +114,21 @@ class Route
     public function parseUrl()
     {
         if (isset($_GET['url'])) {
-            return preg_split( "/(\/|\?|&)/", filter_var(rtrim($_GET['url'], '/')));
+            $arrGET         = $_GET;
+
+            // Save URL.
+            $url            = $arrGET['url'];
+            // Save dynamically added parameters with '?' or '&' delimiter.
+            $pramsAsKeys    = array_keys($arrGET);
+            // Remove the first value from the array - 'url' - We want only the parameters. The first is always 'url'.
+            array_shift($pramsAsKeys);
+            // Implode the paramters to our format.
+            $params         = implode('/', $pramsAsKeys);
+
+            // Stick it together with the URL.
+            $url .= $params ? '/'. $params : '';
+
+            return preg_split( "/(\/|\?|&)/", filter_var(rtrim($url, '/')));
         }
     }
 
@@ -311,6 +325,7 @@ class Route
             $serverKeyName = 'server';
             if ($item[0] === $serverKeyName && is_numeric($item[1])) {
                 \App\Models\Server::setServerID($item[1]);
+                // Parameter 'server' is ignored for output params.
                 continue;
             }
             // ---
