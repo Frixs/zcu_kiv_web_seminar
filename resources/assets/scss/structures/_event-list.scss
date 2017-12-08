@@ -1,3 +1,113 @@
-.event-list {
-    
+.event-list-wrapper {
+    background-color: $color-gray-dark-20;
+    padding: $content-padding;
+
+    .event-box {
+        position: relative;
+        display: block;
+        padding: $content-padding / 2 $content-padding $content-padding / 2 $content-padding;
+        background-color: $color-gray-light-10;
+        margin-top: $content-padding;
+        &:first-child { margin-top: 0; }
+
+        &:hover {
+            background-color: lighten($color-gray-light-10, 2%);
+        }
+
+        &.__passed {
+            .passed-box {
+                display: block;
+                z-index: 5;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                line-height: 95px;
+                background-color: rgba($color-gray-dark-30, .4);
+
+                span {
+                    display: block;
+                    text-transform: uppercase;
+                    color: rgba($color-red-normal, .1);
+                    font-size: $font-size-big * 2;
+                    font-weight: bold;
+                    transform: rotate(-7deg);
+                }
+            }
+        }
+
+        &.__in-progress {
+            animation-name: event-box-breathe;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+
+            @keyframes event-box-breathe {
+                0%  {box-shadow: 0 0 15px rgba($color-orange-light-20, 1);}
+                50%  {box-shadow: 0 0 15px rgba($color-orange-light-20, .7);}
+                100%  {box-shadow: 0 0 15px rgba($color-orange-light-20, 1);}
+            }
+        }
+
+        &.__type-active {
+            border-bottom: 5px solid $color-gray-dark-30;
+            border-right: 5px solid $color-gray-dark-30;
+        }
+        .type-box {
+            position: absolute;
+            top: 0; right: 0;
+            padding: 0 5px 0 5px;
+            background-color: $color-gray-dark-30;
+            
+            span {
+                font-size: $font-size-small;
+                color: $color-clouds;
+            }
+        }
+
+        .date-start-box {
+            border-bottom: 2px dotted $color-orange-normal;
+            
+            & > span {
+                font-size: $font-size-small;
+                font-weight: bold;
+                color: $color-clouds;
+                
+                span {
+                    color: $color-orange-normal;
+                }
+            }
+        }
+
+        .info-box {
+            font-size: $font-size-small;
+            
+            .time-box {
+                float: left;
+                font-weight: bold;
+                color: $color-orange-normal;
+            }
+            
+            .user-count-box {
+                float: right;
+                color: $color-clouds;
+                
+                span {
+                    color: $color-green-normal;
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .title-box {
+            font-size: $font-color-base;
+            overflow: hidden;
+
+            strong {
+                color: $color-clouds;
+                white-space: nowrap;
+            }
+        }
+    }
 }

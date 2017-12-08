@@ -114,7 +114,7 @@ class Route
     public function parseUrl()
     {
         if (isset($_GET['url'])) {
-            return explode('/', filter_var(rtrim($_GET['url'], '/')));
+            return preg_split( "/(\/|\?|&)/", filter_var(rtrim($_GET['url'], '/')));
         }
     }
 

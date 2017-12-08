@@ -168,6 +168,20 @@ class Kernel
                         \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                 ],
+                'calendar_events' => [
+                    '_display' => [
+                        Group::SMember(),
+                        Group::SRecruit(),
+                    ],
+                    'add_new' => [
+                        Group::SMaster(),
+                        Group::SOrganizer(),
+                    ],
+                    'view_history' => [
+                        Group::SMaster(),
+                        Group::SRecruiter(),
+                    ],
+                ],
             ],
         ];
     }
