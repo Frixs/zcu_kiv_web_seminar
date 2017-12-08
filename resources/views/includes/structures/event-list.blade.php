@@ -36,7 +36,7 @@
 	@endforeach
 
     @if (!$eventCount)
-    <div class="text-center">
+    <div class="text-center small">
         <i>{{ lang('structures.event-list.no_events_ph') }}</i>
     </div>
     @endif

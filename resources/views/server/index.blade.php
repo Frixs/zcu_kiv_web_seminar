@@ -3,6 +3,7 @@
 @section('title', $thisserver->name) @section('header', $thisserver->name)
 
 @include('includes.structures.event-list', ['thisserver' => $thisserver])
+@include('includes.structures.event-preview', ['thisserver' => $thisserver, 'eid' => $eid])
 
 @php
 $guardCADisplay = instance('Guard')::has('server.calendar_events._display');
@@ -47,7 +48,7 @@ $guardCAViewHistory = instance('Guard')::has('server.calendar_events.view_histor
 				@endif
 			</div>
 			@else
-			<div class="event-menu-box pill-box text-center">
+			<div class="event-menu-box pill-box text-center small">
 				<i>{{ lang('server.index.no_permissions') }}</i>
 			</div>
 			@endif
@@ -57,6 +58,7 @@ $guardCAViewHistory = instance('Guard')::has('server.calendar_events.view_histor
 		<div class="event-preview-box">
 			<h2>{{ lang('server.index.title_box_02') }}</h2>
 			<hr class="color">
+			@yield('event-preview')
 		</div>
 	</div>
 	<div class="gc-cleaner"></div>

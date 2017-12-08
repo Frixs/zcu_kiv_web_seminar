@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    // remove Delete BTN's cover.
+    $(".delete-btn + div").click(function(){
+        $(this).hide();
+    });
+});
+
 /**
  * Recognize what input is.
  * @return

@@ -1,18 +1,34 @@
 /* Global buttons */
-.btn-primary {
+.btn {
     text-transform: uppercase;
 }
 
+.btn-success {
+    background-color: $color-green-normal;
+
+    &:hover {
+        background-color: lighten($color-green-normal, 5%);
+    }
+}
+
+.btn-danger {
+    background-color: $color-red-normal;
+
+    &:hover {
+        background-color: lighten($color-red-normal, 5%);
+    }
+}
+
 .pill-box {
-    padding: $content-padding / 2 !important;
-    
+    padding: ($content-padding / 2) !important;
+
     ul {
         li {
             margin: 0;
             display: block;
             height: calc(42px + ($content-padding / 2));
             text-align: center;
-            padding: $content-padding / 2 !important;
+            padding: ($content-padding / 2) !important;
 
             a {
                 padding: 5px 10px 5px 10px;
@@ -24,7 +40,7 @@
                 text-transform: lowercase;
                 border-radius: 0 !important;
                 background-color: $color-gray-light-20 !important;
-                
+
                 &:hover {
                     background-color: lighten($color-gray-light-20, 5%) !important;
                 }
@@ -33,25 +49,33 @@
             &.active {
                 & > a {
                     background-color: $color-orange-normal !important;
-                    
+
                     &:hover {
                         background-color: lighten($color-orange-normal, 5%) !important;
                     }
                 }
             }
 
-            &.--w33     { width: 33.333%; }
-            &.--w50     { width: 50%; }
-            &.--w100    { width: 100%; }
+            &.--w33 {
+                width: 33.333%;
+            }
+
+            &.--w50 {
+                width: 50%;
+            }
+
+            &.--w100 {
+                width: 100%;
+            }
 
             &.__button {
                 & > a {
                     background-color: $color-orange-normal !important;
-                    
+
                     &:hover {
                         background-color: lighten($color-orange-normal, 5%) !important;
                     }
-                    
+
                     &:active {
                         background-color: darken($color-orange-normal, 5%) !important;
                     }
