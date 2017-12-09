@@ -140,3 +140,20 @@
         }
     }
 }
+
+.master-form-layout {
+    position: relative;
+
+    .form-middle-wrapper {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-top: 0;
+
+        h2 {
+            font-size: $font-size-big;
+            text-align: center;
+            margin: 0 0 $content-padding 0 !important;
+        }
+    }
+}

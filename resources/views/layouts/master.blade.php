@@ -29,7 +29,7 @@
 		<div class="toolbar">
 			@if (isset($thisserver) && instance('Guard')::has('server.settings._display'))
 				<a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a>
-				<a href="settings/server:{{ $thisserver->id }}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+				<a href="{{ instance('Config')::get('app.root_rel') }}/server/settings/server:{{ $thisserver->id }}"><i class="fa fa-cogs" aria-hidden="true"></i></a>
 			@else
 				<i>{{ lang('calls.'. rand(0, count(lang('calls')) - 1)) }}</i>
 			@endif

@@ -23,14 +23,14 @@ $guardCAViewHistory = instance('Guard')::has('server.calendar_events.view_histor
 				<ul class="nav nav-pills">
 					@if ($guardCAAddNew)
 					<li class="--w100 __button">
-						<a href="#">add new</a>
+						<a href="{{ instance('Config')::get('app.root_rel') }}/server/event-new/server:{{ $thisserver->id }}">{{ lang('server.index.add_new_ph') }}</a>
 					</li>
 					@endif @if ($guardCAViewHistory)
 					<li class="--w50 active">
-						<a data-toggle="pill" href="#list">List</a>
+						<a data-toggle="pill" href="#list">{{ lang('server.index.list_ph') }}</a>
 					</li>
 					<li class="--w50">
-						<a data-toggle="pill" href="#history">History</a>
+						<a data-toggle="pill" href="#history">{{ lang('server.index.history_ph') }}</a>
 					</li>
 					@endif
 				</ul>
