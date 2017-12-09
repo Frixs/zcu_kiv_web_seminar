@@ -108,6 +108,26 @@
         }
     }
 
+    .rating-box {
+        margin-top: $content-padding;
+        background-color: rgba($color-gray-dark-20, 0.5);
+        border: 2px solid $color-gray-light-10;
+        padding: $content-padding;
+
+        .title {
+            font-size: $font-size-base;
+            color: $color-orange-normal;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+            font-size: $font-size-small;
+        }
+    }
+
     .button-box {
         position: relative;
         margin-top: $content-padding;
@@ -179,10 +199,10 @@
         #nav-section {
             a {
                 white-space: nowrap;
-                
+
                 & > b {
                     font-size: $font-size-small;
-                    background-color: rgba($color-gray-dark-30, .5);
+                    background-color: rgba($color-gray-dark-30, 0.5);
                     padding: 2px 10px 2px 10px;
                     margin-left: 2px;
                 }
@@ -190,6 +210,11 @@
         }
 
         .table-wrapper {
+            tr.__delimiter td {
+                color: $color-red-normal;
+                font-weight: bold;
+            }
+
             .event-participation-yes,
             .event-participation-no {
                 cursor: pointer;
@@ -197,10 +222,11 @@
 
             .event-participation-yes {
                 color: $color-green-normal;
-                
+
                 &:hover {
                     color: lighten($color-green-normal, 5%);
                 }
+
                 &:active {
                     color: darken($color-green-normal, 5%);
                 }
@@ -208,10 +234,11 @@
 
             .event-participation-no {
                 color: $color-red-normal;
-                
+
                 &:hover {
                     color: lighten($color-red-normal, 5%);
                 }
+
                 &:active {
                     color: darken($color-red-normal, 5%);
                 }

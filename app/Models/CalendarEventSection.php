@@ -72,7 +72,8 @@ class CalendarEventSection extends Model
                 ON esu.calendar_event_section_id = es.". self::getPrimaryKey() ."
             INNER JOIN ". User::getTable() ." AS u
                 ON u.". User::getPrimaryKey() ." = esu.user_id
-            WHERE es.". self::getPrimaryKey() ." = ?"
+            WHERE es.". self::getPrimaryKey() ." = ?
+            ORDER BY esu.joined_time ASC"
         , [
             $sectionid
         ]);

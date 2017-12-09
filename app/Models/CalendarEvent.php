@@ -42,7 +42,8 @@ class CalendarEvent extends Model
                 (
                     SELECT COUNT(eu2.user_id)
                     FROM ". CalendarEventUser::getTable() ." AS eu2
-                    WHERE eu2.user_id = ". \Frixs\Auth\Auth::id() ."
+                    WHERE eu2.calendar_event_id = e.". self::getPrimaryKey() ."
+                        AND eu2.user_id = ". \Frixs\Auth\Auth::id() ."
                 ) AS participation
             FROM ". self::getTable() ." AS e
             INNER JOIN ". User::getTable() ." as u
@@ -86,7 +87,8 @@ class CalendarEvent extends Model
                 (
                     SELECT COUNT(eu2.user_id)
                     FROM ". CalendarEventUser::getTable() ." AS eu2
-                    WHERE eu2.user_id = ". \Frixs\Auth\Auth::id() ."
+                    WHERE eu2.calendar_event_id = e.". self::getPrimaryKey() ."
+                        AND eu2.user_id = ". \Frixs\Auth\Auth::id() ."
                 ) AS participation
             FROM ". self::getTable() ." AS e
             INNER JOIN ". User::getTable() ." as u

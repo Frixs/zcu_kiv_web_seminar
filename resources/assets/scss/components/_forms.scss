@@ -82,13 +82,22 @@ textarea {
 }
 
 textarea {
+    min-height: 60px;
+
     &.__fixed {
         resize: none;
+    }
+
+    &.__full-width {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
     }
 
     &.__h150 {
         height: 150px;
     }
+
 }
 
 select.form-control {

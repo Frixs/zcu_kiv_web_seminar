@@ -40,6 +40,14 @@
     float: right;
 }
 
+.gc-col-nosp-left-xs {
+    padding-left: 0;
+
+    @media screen and (max-width: 768px) {
+        padding-right: 0;
+    }
+}
+
 .gc-col-nosp-left {
     padding-left: 0;
 }
@@ -47,6 +55,14 @@
 .gc-col-nosp-leftm {
     @extend .gc-col-nosp-left;
     padding-right: $content-padding / 2;
+}
+
+.gc-col-nosp-right-xs {
+    padding-right: 0;
+
+    @media screen and (max-width: 768px) {
+        padding-left: 0;
+    }
 }
 
 .gc-col-nosp-right {
@@ -73,6 +89,16 @@
 
 .gc-margin-top {
     margin-top: $content-padding;
+}
+
+.gc-margin-bottom {
+    margin-bottom: $content-padding;
+}
+
+.gc-margin-bottom-xsonly {
+    @media screen and (max-width: 768px) {
+        margin-bottom: $content-padding;
+    }
 }
 
 .g-recaptcha {

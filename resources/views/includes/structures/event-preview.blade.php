@@ -14,6 +14,7 @@ $guardCAEdit = instance('Guard')::has('server.calendar_events.edit');
 $guardCADelete = instance('Guard')::has('server.calendar_events.delete');
 $guardCAJoin = instance('Guard')::has('server.calendar_events.join');
 $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
+$guardCARating = instance('Guard')::has('server.calendar_events.rating');
 
 @endphp
 <script>
@@ -84,7 +85,7 @@ $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 				<span class="__cred">{{ lang('structures.event-preview.edited_ph') }}</span> {{ date("j.n. H:i", $event->edited_time) }}</span>
 			@endif
 			{{-- DELETE THE EVENT BTN --}}
-			@if ($guardCADelete)
+			@if (($guardCADelete || $event->founder === $authUID) && !$event->recorded)
 			<form action="#" method="post" class="delete-form">
 				<input type="hidden" name="'.$tokenFlash_delete.'" value="'.$tokenGenerate.'" />
 				<button type="submit" class="delete-btn">
@@ -94,7 +95,7 @@ $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 			</form>
 			@endif
 			{{-- EDIT THE EVENT BTN --}}
-			@if ($guardCAEdit)
+			@if (($guardCAEdit || $event->founder === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
 			<a href="#" class="edit-btn">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			</a>
@@ -108,6 +109,46 @@ $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 		<span class="title">{{ lang('structures.event-preview.description_ph') }}</span>
 		<p>{{ $event->description }}</p>
 	</div>
+	@endif
+
+	{{-- RATING BOX --}}
+	@if (($guardCARating || $event->founder === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) <= time())
+	@if ($event->recorded)
+	<div class="rating-box">
+		<span class="title">{{ lang('structures.event-preview.inp_01') }}:</span>
+		<p>{{ $event->rating }}</p>
+	</div>
+	@else
+	<div class="rating-box">
+        <div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
+        <div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
+	    <form action="#" method="post">
+           	{{-- EVENT ID --}}
+	        <input type="hidden" name="eventid" value="{{ $event->id }}" />
+			{{-- SERVER ID --}}
+			<input type="hidden" name="serverid" value="{{ $thisserver->id }}" />
+			{{-- TOKEN --}}
+			<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
+			{{-- MESSAGE --}}
+			<div class="form-group @if (instance('Request')->getInputError('message')) has-error @endif">
+				<label class="col-xs-12 gc-col-nosp" for="message">{{ lang('structures.event-preview.inp_01') }}:
+				<div class="info">Available soon! This option will allow you to save the event to the event history! Now, you can delete this event.</div></label>
+				<div class="col-xs-12 gc-col-nosp">
+					<textarea id="message" class="__full-width __h150" name="message" maxlength="1000" placeholder="{{ lang('structures.event-preview.inp_01_ph') }}">{{ instance('Request')->getInputError('message') }}</textarea>
+					<div class="form-feedback">@if (instance('Request')->getInputError('message')) {{ instance('Request')->getInputError('message') }} @endif</div>
+				</div>
+				<div class="gc-cleaner"></div>
+			</div>
+			{{-- SUBMIT --}}
+			<div class="form-group gc-no-margin-bottom">
+				<div class="col-xs-12 gc-col-nosp">
+					<button type="submit" class="btn btn-primary gc-float-right" tabindex="7">{{ lang('structures.event-preview.inp_sub') }}</button>
+				</div>
+			</div>
+	    </form>
+		<div class="gc-cleaner"></div>
+	</div>
+	@endif
 	@endif
 
 	{{-- JOIN/LEAVE THE SECTION --}}
@@ -140,7 +181,7 @@ $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 	{{-- SECTIONS --}}
 	<div class="event-table-box">
 		{{-- SECTION MENU --}}
-		<div class="col-xs-12 col-sm-4 col-lg-3 table-menu-wrapper pill-box col-no-spacing-left">
+		<div class="col-xs-12 col-sm-4 col-lg-3 table-menu-wrapper pill-box gc-margin-bottom-xsonly">
 			<ul id="nav-section" class="nav nav-pills">
 			@php $i = 0; @endphp
 			@foreach ($eventSections as $section)
@@ -152,7 +193,7 @@ $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 			</ul>
 		</div>
 		{{-- SECTION WRAPPER --}}
-		<div class="tab-content table-wrapper col-xs-12 col-sm-8 col-lg-9 col-no-spacing-right">
+		<div class="tab-content table-wrapper col-xs-12 col-sm-8 col-lg-9 gc-col-nosp-right-xs">
 			@php $i = 0; @endphp
 			@foreach ($eventSections as $section)
 			<div id="section-{{ $i }}" class="table-responsive tab-pane fade @if (!$i) in active @endif">
@@ -165,7 +206,13 @@ $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 						</tr>
 					</thead>
 					<tbody>
+						@php $j = 0; $hasDelimiter = false; @endphp
 						@foreach (instance('CalendarEventSection')::getUsers($section->id) as $sUser)
+						@php $j++; @endphp
+						@if ($section->is_limited && !$hasDelimiter && $section->limit_max < $j)
+							@php $hasDelimiter = true; @endphp
+							<tr class="__delimiter"><td>- - -</td><td></td><td></td></tr>
+						@endif
                         <tr>
                             <td>
                                 <span>{{ $sUser->username }}</span>

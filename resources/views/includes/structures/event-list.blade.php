@@ -22,11 +22,7 @@
                 {{ date("H:i", $event->time_from) }}
 			</div>
 			<div class="user-count-box">
-                @if ($event->participation)
-                <span><i class="fa fa-user" aria-hidden="true"></i></span>
-                @endif
-                {{ $event->user_count }}
-			</div>
+                @if ($event->participation)<span><i class="fa fa-user" aria-hidden="true"></i></span>@endif {{ $event->user_count }}</div>
 		</div>
         <div class="gc-cleaner"></div>
 		<div class="title-box">

@@ -18,4 +18,8 @@ return [
     'nickname_ph' => 'Nickname',
     'participation_ph' => 'Participation',
     'notice_ph' => 'Notice',
+
+    'inp_01' => 'Rating',
+    'inp_01_ph' => 'Rate the event.',
+    'inp_sub' => 'Submit',
 ];

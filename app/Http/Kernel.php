@@ -177,6 +177,10 @@ class Kernel
                         Group::SMaster(),
                         Group::SOrganizer(),
                     ],
+                    'rating' => [
+                        Group::SMaster(),
+                        // + OWNER
+                    ],
                     'view_history' => [
                         Group::SMaster(),
                         Group::SRecruiter(),
