@@ -86,8 +86,13 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 			@endif
 			{{-- DELETE THE EVENT BTN --}}
 			@if (($guardCADelete || $event->founder === $authUID) && !$event->recorded)
-			<form action="#" method="post" class="delete-form">
-				<input type="hidden" name="'.$tokenFlash_delete.'" value="'.$tokenGenerate.'" />
+			<form action="{{ instance('Config')::get('app.root_rel') }}/__request/event-delete" method="post" class="delete-form">
+				{{-- EVENT ID --}}
+				<input type="hidden" name="eventid" value="{{ $event->id }}" />
+				{{-- SERVER ID --}}
+				<input type="hidden" name="serverid" value="{{ $thisserver->id }}" />
+				{{-- TOKEN --}}
+				<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
 				<button type="submit" class="delete-btn">
 					<i class="fa fa-window-close" aria-hidden="true"></i>
 				</button>
@@ -134,7 +139,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 				<label class="col-xs-12 gc-col-nosp" for="message">{{ lang('structures.event-preview.inp_01') }}:
 				<div class="info">Available soon! This option will allow you to save the event to the event history! Now, you can delete this event.</div></label>
 				<div class="col-xs-12 gc-col-nosp">
-					<textarea id="message" class="__full-width __h150" name="message" maxlength="1000" placeholder="{{ lang('structures.event-preview.inp_01_ph') }}">{{ instance('Request')->getInputError('message') }}</textarea>
+					<textarea id="message" class="__full-width" name="message" maxlength="1000" placeholder="{{ lang('structures.event-preview.inp_01_ph') }}">{{ instance('Request')->getInputError('message') }}</textarea>
 					<div class="form-feedback">@if (instance('Request')->getInputError('message')) {{ instance('Request')->getInputError('message') }} @endif</div>
 				</div>
 				<div class="gc-cleaner"></div>

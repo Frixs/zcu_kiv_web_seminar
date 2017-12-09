@@ -175,4 +175,33 @@ class Server extends Model
 
         return $query->get();
     }
+
+    /**
+     * Check, server has assigned the event.
+     *
+     * @param integer $serverid
+     * @param integer $eid
+     * @return boolean
+     */
+    public static function hasEvent($serverid, $eid) {
+        if (!$serverid || !$eid) {
+            return false;
+        }
+
+        $query = self::db()->select(CalendarEvent::getTable(), [
+            CalendarEvent::getPrimaryKey(), '=', $eid,
+            'AND', 'server_id', '=', $serverid
+        ], [CalendarEvent::getPrimaryKey()]);
+
+        if ($query->error()) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        if ($query->count()) {
+            return true;
+        }
+
+        return false;
+    }
 }
