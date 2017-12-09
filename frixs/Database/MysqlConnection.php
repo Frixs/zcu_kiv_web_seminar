@@ -406,20 +406,18 @@ class MysqlConnection
     *************************
     * query()
     *************************
-        $query = DB::getInstance()->query( "SELECT username FROM phpbb_users WHERE username = ?", array('Frixs') );
-        if($query->error()){
+        $query = DB::getInstance()->query("SELECT username FROM phpbb_users WHERE username = ?", array['Frixs']);
+        if ($query->error()) {
             echo "Wrong command";
-        }else{
-            echo "OK!";
         }
     
     *************************
     * selectAll(), select(), delete()
     *************************
-        $query = DB::getInstance()->select( 'phpbb_users', array('username','=','Frixs'), array('username','user_id') );
-        if(!$query->count()){
+        $query = DB::getInstance()->select('phpbb_users', ['username', '=', 'Frixs'], ['username', 'user_id']);
+        if (!$query->count()) {
             echo "Undefined user";
-        }else{
+        } else {
             echo "User exists";
             //
             foreach($query->get() as $item)
@@ -435,28 +433,20 @@ class MysqlConnection
     *************************
     * insert()
     *************************
-        $query = DB::getInstance()->insert( 'phpbb_users', array('username'=>'Frixs', 'user_email'=>'frixs@seznam.cz') );
-        if($query){
+        $query = DB::getInstance()->insert('phpbb_users', ['username' => 'Frixs', 'user_email' => 'frixs@seznam.cz']);
+        if ($query) {
             echo "Inserted!";
-        }else{
+        } else {
             echo "Wrong command";
         }
         
     *************************
     * update()
     *************************
-        $query = DB::getInstance()->update( 'phpbb_users', array("username"=>"Frixs"), array('username',
-                                                                                              '=',
-                                                                                              'Frixsik',
-                                                                                              'AND',
-                                                                                              'user_email',
-                                                                                              '=',
-                                                                                              'frixs@seznam.cz',
-                                                                                            ) );
-
-        if( $query ){
+        $query = DB::getInstance()->update('phpbb_users', ["username"=>"Frixs"], ['username', '=', 'Frixsik', 'AND', 'user_email', '=', 'frixs@seznam.cz']);
+        if ($query) {
             echo "OK!";
-        }else{
+        } else {
             echo "Wrong sql";
         }
 */

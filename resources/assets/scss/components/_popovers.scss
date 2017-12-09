@@ -1,0 +1,39 @@
+.popover {
+    background-color: $color-gray-light-10;
+    border: 0;
+    border-radius: 1px;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 0 15px $color-gray-dark-30, 0 0 15px $color-gray-dark-30;
+
+    .popover-title {
+        color: $color-gray-light-50;
+        font-size: 15px;
+        border: 0;
+        border-radius: 0;
+        padding: $content-padding / 2 $content-padding $content-padding / 2 $content-padding;
+        background-color: $color-gray-dark-20;
+    }
+
+    .popover-content {
+        color: $color-gray-light-10;
+        font-size: 10px;
+        padding: $content-padding;
+    }
+
+    &.top .arrow:after {
+        border-top-color: $color-gray-light-10;
+    }
+
+    &.bottom .arrow:after {
+        border-bottom-color: $color-gray-light-10;
+    }
+
+    &.left .arrow:after {
+        border-left-color: $color-gray-light-10;
+    }
+
+    &.right .arrow:after {
+        border-right-color: $color-gray-light-10;
+    }
+}

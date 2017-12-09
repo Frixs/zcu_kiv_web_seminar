@@ -34,6 +34,7 @@ return [
         'Group' => \App\Models\Group::class,
         'User' => \App\Models\User::class,
         'CalendarEvent' => \App\Models\CalendarEvent::class,
+        'CalendarEventSection' => \App\Models\CalendarEventSection::class,
     ],
 ];
 

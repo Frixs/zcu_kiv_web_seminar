@@ -54,11 +54,13 @@ input[type=text],
 input[type=number],
 input[type=file],
 select.form-control,
-input[type=password] {
+input[type=password],
+textarea {
     border-color: $color-gray-light-20;
     background-color: $color-gray-light-20;
     color: $font-color-base;
     font-size: $font-size-small;
+    outline: none;
 
     &:focus {
         border-color: $color-gray-light-30;
@@ -76,6 +78,16 @@ input[type=password] {
             background-color: $color-gray-light-20;
             color: $font-color-focus;
         }
+    }
+}
+
+textarea {
+    &.__fixed {
+        resize: none;
+    }
+
+    &.__h150 {
+        height: 150px;
     }
 }
 

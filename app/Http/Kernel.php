@@ -181,6 +181,22 @@ class Kernel
                         Group::SMaster(),
                         Group::SRecruiter(),
                     ],
+                    'edit' => [
+                        Group::SMaster(),
+                        // + OWNER
+                    ],
+                    'delete' => [
+                        Group::SMaster(),
+                        // + OWNER
+                    ],
+                    'join' => [
+                        Group::SMember(),
+                        Group::SRecruit(),
+                    ],
+                    'leave' => [
+                        Group::SMember(),
+                        Group::SRecruit(),
+                    ],
                 ],
             ],
         ];

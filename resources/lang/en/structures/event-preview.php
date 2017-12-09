@@ -14,4 +14,8 @@ return [
     'delete_btn' => 'delete',
     'join_btn' => 'join',
     'leave_btn' => 'leave',
+
+    'nickname_ph' => 'Nickname',
+    'participation_ph' => 'Participation',
+    'notice_ph' => 'Notice',
 ];
