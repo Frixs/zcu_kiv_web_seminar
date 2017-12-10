@@ -16,5 +16,8 @@ return [
     'inp_04_ph' => 'Enter event end time (not required).',
     'inp_05' => 'Estimated hours',
     'inp_05_ph' => 'Enter duration of the event in hours (not required).',
+    'inp_06' => 'Section',
+    'inp_06_ph' => 'Enter name.',
+    'inp_06_ph_2' => 'Enter limit (not required).',
     'inp_sub' => 'create',
 ];

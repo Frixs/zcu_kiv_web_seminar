@@ -8,9 +8,10 @@
 
 @section('content-form')
 
-<form class="form-horizontal" action="#" method="post">
+<form class="event-new-form form-horizontal" action="#" method="post">
 	<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 	<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
+    {{-- DETAILS --}}
     <div class="col-xs-12 col-sm-6 gc-col-nosp-leftm-xs">
 		<h2>{{ lang('server.event-new.title_box_01') }}</h2>
 		<hr class="color">
@@ -49,7 +50,7 @@
                 <div class="form-feedback">@if (instance('Request')->getInputError('date-to')) {{ instance('Request')->getInputError('date-to') }} @endif</div>
             </div>
         </div>
-        {{-- TITLE --}}
+        {{-- ESTIMATED HOURS --}}
         <div class="form-group @if (instance('Request')->getInputError('estimated-hours')) has-error @endif">
             <label class="col-xs-12" for="estimated-hours">{{ lang('server.event-new.inp_05') }}:</label>
             <div class="col-xs-12">
@@ -59,16 +60,37 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-6 gc-col-nosp-rightm-xs">
+    {{-- SECTIONS --}}
+    <div class="col-xs-12 col-sm-6 gc-col-nosp-rightm-xs section-wrapper">
 		<h2>{{ lang('server.event-new.title_box_02') }}</h2>
 		<hr class="color">
+        {{-- SECTION BLOCK --}}
+        <div class="section-box">
+            {{-- NAME --}}
+            <div class="form-group @if (instance('Request')->getInputError('section-name')) has-error @endif">
+                <label class="col-xs-12" for="section-name">{{ lang('server.event-new.inp_06') }}:</label>
+                <div class="col-xs-12">
+                    <input type="text" name="section-name" value="{{ instance('Request')->getInputError('section-name') }}" class="form-control __input-dark" id="section-name"
+                    placeholder="{{ lang('server.event-new.inp_06_ph') }}" maxlength="15" tabindex="6" autocomplete="off">
+                    <div class="form-feedback">@if (instance('Request')->getInputError('section-name')) {{ instance('Request')->getInputError('section-name') }} @endif</div>
+                </div>
+            </div>
+            {{-- LIMIT --}}
+            <div class="form-group @if (instance('Request')->getInputError('section-limit')) has-error @endif">
+                <div class="col-xs-12">
+                    <input type="number" name="section-limit" value="{{ instance('Request')->getInputError('section-limit') }}" class="form-control __input-dark" id="section-limit"
+                    placeholder="{{ lang('server.event-new.inp_06_ph_2') }}" min="0" max="999" tabindex="7" autocomplete="off">
+                    <div class="form-feedback">@if (instance('Request')->getInputError('section-limit')) {{ instance('Request')->getInputError('section-limit') }} @endif</div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="gc-cleaner"></div>
     <hr>
 	{{-- CAPTCHA --}}
 	<div class="form-group @if (instance('Request')->getInputError('g-recaptcha-response')) has-error @endif">
 		<div class="col-xs-12" style="height: 62px;">
-			<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" tabindex="6"
+			<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" tabindex="8"
 			 style="margin: 0 0 0 auto;"></div>
 		</div>
 		<div class="col-xs-12">
@@ -82,7 +104,7 @@
 	{{-- SUBMIT --}}
 	<div class="form-group gc-no-margin-bottom">
 		<div class="col-md-offset-3 col-md-9">
-			<button type="submit" class="btn btn-primary gc-float-right" tabindex="7">{{ lang('server.event-new.inp_sub') }}</button>
+			<button type="submit" class="btn btn-primary gc-float-right" tabindex="9">{{ lang('server.event-new.inp_sub') }}</button>
 		</div>
 	</div>
 </form>
