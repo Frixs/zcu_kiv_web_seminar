@@ -25,6 +25,17 @@ class InputValidation extends \Frixs\Http\Middleware
     {
         if (Input::exists($type)) {
             foreach (Input::all($type) as $key => $value) {
+                // If input is an array.
+                if (is_array($value)) {
+                    $tempArr = [];
+                    foreach ($value as $valKey => $valValue) {
+                        $tempArr[$valKey] = Escape::input($value[$valKey]);
+                    }
+                    // Input value validation
+                    Input::set($type, $key, $tempArr);
+                    continue;
+                }
+
                 // Input value validation
                 Input::set($type, $key, Escape::input($value));
             }

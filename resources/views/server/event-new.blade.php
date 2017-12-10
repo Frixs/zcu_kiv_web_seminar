@@ -51,7 +51,7 @@
     });
 </script>
 
-<form class="event-new-form form-horizontal" action="#" method="post">
+<form class="event-new-form form-horizontal" action="{{ instance('Config')::get('app.root_rel') }}/__request/event-create" method="post">
 	<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 	<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
     {{-- DETAILS --}}
@@ -62,7 +62,7 @@
         <div class="form-group @if (instance('Request')->getInputError('title')) has-error @endif">
             <label class="col-xs-12" for="title">{{ lang('server.event-new.inp_01') }}:</label>
             <div class="col-xs-12">
-                <input type="text" name="title" value="{{ instance('Request')->getInputError('title') }}" class="form-control __input-dark" id="title"
+                <input type="text" name="title" value="{{ instance('Request')->getInput('title') }}" class="form-control __input-dark" id="title"
                 placeholder="{{ lang('server.event-new.inp_01_ph') }}" maxlength="30" tabindex="1" autocomplete="off" autofocus>
                 <div class="form-feedback">@if (instance('Request')->getInputError('title')) {{ instance('Request')->getInputError('title') }} @endif</div>
             </div>
@@ -79,7 +79,7 @@
         <div class="form-group @if (instance('Request')->getInputError('date-from')) has-error @endif">
             <label class="col-xs-12" for="date-from">{{ lang('server.event-new.inp_03') }}:</label>
             <div class="col-xs-12">
-                <input type="datetime-local" name="date-from" value="{{ instance('Request')->getInputError('date-from') }}" class="form-control __input-dark" id="date-from"
+                <input type="datetime-local" name="date-from" value="{{ instance('Request')->getInput('date-from') }}" class="form-control __input-dark" id="date-from"
                 placeholder="{{ lang('server.event-new.inp_03_ph') }}" tabindex="3" autocomplete="off">
                 <div class="form-feedback">@if (instance('Request')->getInputError('date-from')) {{ instance('Request')->getInputError('date-from') }} @endif</div>
             </div>
@@ -88,7 +88,7 @@
         <div class="form-group @if (instance('Request')->getInputError('date-to')) has-error @endif">
             <label class="col-xs-12" for="date-to">{{ lang('server.event-new.inp_04') }}:</label>
             <div class="col-xs-12">
-                <input type="datetime-local" name="date-to" value="{{ instance('Request')->getInputError('date-to') }}" class="form-control __input-dark" id="date-to"
+                <input type="datetime-local" name="date-to" value="{{ instance('Request')->getInput('date-to') }}" class="form-control __input-dark" id="date-to"
                 placeholder="{{ lang('server.event-new.inp_04_ph') }}" tabindex="4" autocomplete="off">
                 <div class="form-feedback">@if (instance('Request')->getInputError('date-to')) {{ instance('Request')->getInputError('date-to') }} @endif</div>
             </div>
@@ -97,7 +97,7 @@
         <div class="form-group @if (instance('Request')->getInputError('estimated-hours')) has-error @endif">
             <label class="col-xs-12" for="estimated-hours">{{ lang('server.event-new.inp_05') }}:</label>
             <div class="col-xs-12">
-                <input type="number" name="estimated-hours" value="{{ instance('Request')->getInputError('estimated-hours') }}" class="form-control __input-dark" id="estimated-hours"
+                <input type="number" name="estimated-hours" value="{{ instance('Request')->getInput('estimated-hours') }}" class="form-control __input-dark" id="estimated-hours"
                 placeholder="{{ lang('server.event-new.inp_05_ph') }}" min="1" max="999" tabindex="5" autocomplete="off">
                 <div class="form-feedback">@if (instance('Request')->getInputError('estimated-hours')) {{ instance('Request')->getInputError('estimated-hours') }} @endif</div>
             </div>
@@ -107,6 +107,8 @@
     <div class="col-xs-12 col-sm-6 gc-col-nosp-rightm-xs section-wrapper">
 		<h2>{{ lang('server.event-new.title_box_02') }}</h2>
 		<hr class="color">
+        <div class="form-feedback">@if (instance('Request')->getInputError('section-name')) {{ instance('Request')->getInputError('section-name') }} @endif</div>
+        <div class="form-feedback">@if (instance('Request')->getInputError('section-limit')) {{ instance('Request')->getInputError('section-limit') }} @endif</div>
         {{-- SECTION BLOCK --}}
         <div class="section-box">
             {{-- NAME --}}
@@ -129,16 +131,6 @@
     </div>
     <div class="gc-cleaner"></div>
     <hr>
-	{{-- CAPTCHA --}}
-	<div class="form-group @if (instance('Request')->getInputError('g-recaptcha-response')) has-error @endif">
-		<div class="col-xs-12" style="height: 62px;">
-			<div class="g-recaptcha" data-sitekey="{{ instance('Config')::get('captcha.g_recaptcha.site_key') }}" data-theme="dark" tabindex="8"
-			 style="margin: 0 0 0 auto;"></div>
-		</div>
-		<div class="col-xs-12">
-			<div class="form-feedback text-right">@if (instance('Request')->getInputError('g-recaptcha-response')) {{ instance('Request')->getInputError('g-recaptcha-response') }} @endif</div>
-		</div>
-	</div>
 	{{-- TOKEN --}}
 	<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
 	{{-- SERVER ID --}}
