@@ -20,4 +20,6 @@ return [
     'inp_06_ph' => 'Enter name.',
     'inp_06_ph_2' => 'Enter limit (not required).',
     'inp_sub' => 'create',
+
+    'section_add_btn' => 'add section',
 ];

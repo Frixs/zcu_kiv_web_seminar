@@ -1,6 +1,10 @@
 /* Global buttons */
 .btn {
     text-transform: uppercase;
+
+    &.__w100 {
+        width: 100%;
+    }
 }
 
 .btn-success {

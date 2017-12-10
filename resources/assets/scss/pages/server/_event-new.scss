@@ -1,9 +1,37 @@
 .event-new-form {
     .section-wrapper {
         .section-box {
+            position: relative;
             background-color: rgba($color-gray-dark-20, 0.5);
             border: 2px solid $color-gray-light-10;
-            padding: $content-padding;
+            padding: $content-padding / 8 $content-padding 0 $content-padding;
+
+            margin-top: $content-padding;
+            &::first-child { margin-top: 0; }
+
+            .section-remove {
+                padding: 0;
+                margin: 0;
+
+                z-index: 2;
+                position: absolute;
+                top: $content-padding / 1.6;
+                right: $content-padding;
+                outline: none;
+
+                color: $color-red-normal;
+                border: 0;
+                background-color: transparent;
+                cursor: pointer;
+
+                &:hover {
+                    color: lighten($color-red-normal, 5%);
+                }
+                
+                &:active {
+                    color: darken($color-red-normal, 5%);
+                }
+            }
         }
     }
 }

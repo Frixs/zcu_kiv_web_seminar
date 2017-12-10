@@ -3,10 +3,53 @@
 @section('title', $thisserver->name .' | '. lang('server.event-new.title'))
 @section('header', $thisserver->name) @section('sub-header', lang('server.event-new.title'))
 
+@section('content-form')
+
 @php
 @endphp
+<script>
+    $(document).ready(function () {
+        $("#add-section-btn").click(function () {
+            let sectionBoxHTML = ' \
+                <div class="section-box gc-hidden"> \
+                    <button class="section-remove" type="button"><i class="fa fa-times" aria-hidden="true"></i></button> \
+                    <div class="form-group"> \
+                        <label class="col-xs-12">{{ lang("server.event-new.inp_06") }}:</label> \
+                        <div class="col-xs-12"> \
+                            <input type="text" name="section-name[]" value="" class="form-control __input-dark" \
+                            placeholder="{{ lang("server.event-new.inp_06_ph") }}" maxlength="15" tabindex="6" autocomplete="off"> \
+                        </div> \
+                    </div> \
+                    <div class="form-group"> \
+                        <div class="col-xs-12"> \
+                            <input type="number" name="section-limit[]" value="" class="form-control __input-dark" \
+                            placeholder="{{ lang("server.event-new.inp_06_ph_2") }}" min="0" max="999" tabindex="7" autocomplete="off"> \
+                        </div> \
+                    </div> \
+                </div> \
+            ';
 
-@section('content-form')
+            $(".section-wrapper").find(".section-box").last().after(sectionBoxHTML);
+            $(".section-wrapper").find(".section-box.gc-hidden").slideDown(300, function () {
+                $(this).removeClass("gc-hidden");
+            });
+            
+            if ($(".section-wrapper").find(".section-box").length >= {{ instance('Config')::get('event.section_limit') }}) {
+                $(this).slideUp();
+            }
+        });
+        
+        $(".section-wrapper").on("click", ".section-remove", function () {
+            $(this).parent().slideUp(300, function () {
+                $(this).remove();
+                
+                if ($(".section-wrapper").find(".section-box").length < {{ instance('Config')::get('event.section_limit') }}) {
+                    $("#add-section-btn").slideDown();
+                }
+            });
+        });
+    });
+</script>
 
 <form class="event-new-form form-horizontal" action="#" method="post">
 	<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
@@ -67,23 +110,22 @@
         {{-- SECTION BLOCK --}}
         <div class="section-box">
             {{-- NAME --}}
-            <div class="form-group @if (instance('Request')->getInputError('section-name')) has-error @endif">
-                <label class="col-xs-12" for="section-name">{{ lang('server.event-new.inp_06') }}:</label>
+            <div class="form-group">
+                <label class="col-xs-12">{{ lang('server.event-new.inp_06') }}:</label>
                 <div class="col-xs-12">
-                    <input type="text" name="section-name" value="{{ instance('Request')->getInputError('section-name') }}" class="form-control __input-dark" id="section-name"
+                    <input type="text" name="section-name[]" value="" class="form-control __input-dark"
                     placeholder="{{ lang('server.event-new.inp_06_ph') }}" maxlength="15" tabindex="6" autocomplete="off">
-                    <div class="form-feedback">@if (instance('Request')->getInputError('section-name')) {{ instance('Request')->getInputError('section-name') }} @endif</div>
                 </div>
             </div>
             {{-- LIMIT --}}
-            <div class="form-group @if (instance('Request')->getInputError('section-limit')) has-error @endif">
+            <div class="form-group">
                 <div class="col-xs-12">
-                    <input type="number" name="section-limit" value="{{ instance('Request')->getInputError('section-limit') }}" class="form-control __input-dark" id="section-limit"
+                    <input type="number" name="section-limit[]" value="" class="form-control __input-dark"
                     placeholder="{{ lang('server.event-new.inp_06_ph_2') }}" min="0" max="999" tabindex="7" autocomplete="off">
-                    <div class="form-feedback">@if (instance('Request')->getInputError('section-limit')) {{ instance('Request')->getInputError('section-limit') }} @endif</div>
                 </div>
             </div>
         </div>
+        <button id="add-section-btn" class="btn btn-primary __w100 gc-margin-top" type="button">{{ lang('server.event-new.section_add_btn') }}</button>
     </div>
     <div class="gc-cleaner"></div>
     <hr>
