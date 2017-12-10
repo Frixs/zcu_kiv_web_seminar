@@ -32,6 +32,12 @@
                     color: darken($color-red-normal, 5%);
                 }
             }
+
+            .form-feedback {
+                margin-top: $content-padding / 2;
+                font-size: $font-size-small;
+                color: $color-red-normal;
+            }
         }
     }
 }

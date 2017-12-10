@@ -107,9 +107,8 @@
     <div class="col-xs-12 col-sm-6 gc-col-nosp-rightm-xs section-wrapper">
 		<h2>{{ lang('server.event-new.title_box_02') }}</h2>
 		<hr class="color">
-        <div class="form-feedback">@if (instance('Request')->getInputError('section-name')) {{ instance('Request')->getInputError('section-name') }} @endif</div>
-        <div class="form-feedback">@if (instance('Request')->getInputError('section-limit')) {{ instance('Request')->getInputError('section-limit') }} @endif</div>
         {{-- SECTION BLOCK --}}
+        @if (!instance('Request')->getInput('section-name'))
         <div class="section-box">
             {{-- NAME --}}
             <div class="form-group">
@@ -127,6 +126,31 @@
                 </div>
             </div>
         </div>
+        @else
+        @foreach (instance('Request')->getInput('section-name') as $key => $section)
+        <div class="section-box">
+            <div class="form-feedback">@if (instance('Request')->getInputError($key)) {{ instance('Request')->getInputError($key) }} @endif</div>
+            @if (!$loop->first)
+            <button class="section-remove" type="button"><i class="fa fa-times" aria-hidden="true"></i></button>
+            @endif
+            {{-- NAME --}}
+            <div class="form-group">
+                <label class="col-xs-12">{{ lang('server.event-new.inp_06') }}:</label>
+                <div class="col-xs-12">
+                    <input type="text" name="section-name[]" value="{{ $section }}" class="form-control __input-dark"
+                    placeholder="{{ lang('server.event-new.inp_06_ph') }}" maxlength="15" tabindex="6" autocomplete="off">
+                </div>
+            </div>
+            {{-- LIMIT --}}
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <input type="number" name="section-limit[]" value="{{ instance('Request')->getInput('section-limit')[$key] }}" class="form-control __input-dark"
+                    placeholder="{{ lang('server.event-new.inp_06_ph_2') }}" min="0" max="999" tabindex="7" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        @endforeach
+        @endif
         <button id="add-section-btn" class="btn btn-primary __w100 gc-margin-top" type="button">{{ lang('server.event-new.section_add_btn') }}</button>
     </div>
     <div class="gc-cleaner"></div>

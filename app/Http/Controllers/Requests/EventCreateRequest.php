@@ -76,13 +76,9 @@ class EventCreateRequest extends Request
                     (''.$i) => [
                         'only_numbers' => true,
                         'min' => 1,
-                        'max' => 4
+                        'max' => 3
                     ]
                 ]);
-
-                if (!$validation->passed()) {
-                    break;
-                }
             }
         }
 
