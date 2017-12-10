@@ -108,6 +108,7 @@
 		<h2>{{ lang('server.event-new.title_box_02') }}</h2>
 		<hr class="color">
         {{-- SECTION BLOCK --}}
+        @php $i = 0; @endphp
         @if (!instance('Request')->getInput('section-name'))
         <div class="section-box">
             {{-- NAME --}}
@@ -149,9 +150,10 @@
                 </div>
             </div>
         </div>
+        @php $i++; @endphp
         @endforeach
         @endif
-        <button id="add-section-btn" class="btn btn-primary __w100 gc-margin-top" type="button">{{ lang('server.event-new.section_add_btn') }}</button>
+        <button id="add-section-btn" class="btn btn-primary __w100 gc-margin-top @if ($i >= instance('Config')::get('event.section_limit')) gc-hidden @endif" type="button">{{ lang('server.event-new.section_add_btn') }}</button>
     </div>
     <div class="gc-cleaner"></div>
     <hr>
