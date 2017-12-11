@@ -53,7 +53,7 @@ class ServerLeaveRequest extends Request
         }
         
         $serverID = Input::get('serverid');
-        $server = Server::getServeR($serverID);
+        $server = Server::getServer($serverID);
 
         // Check if user has acces to this server.
         if (!User::hasServerAccess($authUID, $serverID)) {

@@ -13,7 +13,7 @@ $guardCAViewHistory = instance('Guard')::has('server.calendar_events.view_histor
 
 @section('content')
 <div class="server-index-wrapper">
-	<div class="col-xs-12 col-sm-3 column-wrapper">
+	<div class="col-xs-12 col-sm-4 col-md-3 column-wrapper">
 		<div class="event-list-box">
 			<h2>{{ lang('server.index.title_box_01') }}</h2>
 			<hr class="color">
@@ -54,7 +54,7 @@ $guardCAViewHistory = instance('Guard')::has('server.calendar_events.view_histor
 			@endif
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-9 column-wrapper">
+	<div class="col-xs-12 col-sm-8 col-md-9 column-wrapper">
 		<div class="event-preview-box">
 			<h2>{{ lang('server.index.title_box_02') }}</h2>
 			<hr class="color">

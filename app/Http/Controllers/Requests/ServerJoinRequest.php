@@ -53,7 +53,7 @@ class ServerJoinRequest extends Request
         }
         
         $serverID = Input::get('serverid');
-        $server = Server::getServeR($serverID);
+        $server = Server::getServer($serverID);
 
         // Check if server is joinable.
         if ($server->access_type != 0 // Public room

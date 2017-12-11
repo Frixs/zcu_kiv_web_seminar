@@ -60,7 +60,7 @@ class EventDeleteRequest extends Request
             Router::redirectToError(500);
         }
         // Check user permissions.
-        if (!Guard::has('server.calendar_events.delete') && $authUID !== CalendarEvent::getEvent(Input::get('eventid'))->founder) {
+        if (!Guard::has('server.calendar_events.delete') && $authUID !== CalendarEvent::getEvent(Input::get('eventid'))->founder_user_id) {
             Router::redirectToError(500);
         }
 

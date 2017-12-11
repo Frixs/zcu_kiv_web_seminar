@@ -31,7 +31,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 
 		$('#nav-section > li').click(function () {
 			let sectionID = $(this).find('a').attr('data-section');
-			let sectionName = $(this).find('a').text();
+			let sectionName = $(this).find('a').clone().children().remove().end().text();
 			$('#sectionid').val(sectionID);
 			$('#section-placeholder').text(sectionName);
 		});
@@ -85,7 +85,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 				<span class="__cred">{{ lang('structures.event-preview.edited_ph') }}</span> {{ date("j.n. H:i", $event->edited_time) }}</span>
 			@endif
 			{{-- DELETE THE EVENT BTN --}}
-			@if (($guardCADelete || $event->founder === $authUID) && !$event->recorded)
+			@if (($guardCADelete || $event->founder_user_id === $authUID) && !$event->recorded)
 			<form action="{{ instance('Config')::get('app.root_rel') }}/__request/event-delete" method="post" class="delete-form">
 				{{-- EVENT ID --}}
 				<input type="hidden" name="eventid" value="{{ $event->id }}" />
@@ -100,7 +100,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 			</form>
 			@endif
 			{{-- EDIT THE EVENT BTN --}}
-			@if (($guardCAEdit || $event->founder === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
+			@if (($guardCAEdit || $event->founder_user_id === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
 			<a href="#" class="edit-btn">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			</a>
@@ -117,7 +117,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 	@endif
 
 	{{-- RATING BOX --}}
-	@if (($guardCARating || $event->founder === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) <= time())
+	@if (($guardCARating || $event->founder_user_id === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) <= time())
 	@if ($event->recorded)
 	<div class="rating-box">
 		<span class="title">{{ lang('structures.event-preview.inp_01') }}:</span>

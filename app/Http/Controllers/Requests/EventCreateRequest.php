@@ -14,6 +14,7 @@ use Frixs\Auth\Guard;
 use App\Models\User;
 use App\Models\Server;
 use App\Models\CalendarEvent;
+use App\Models\CalendarEventSection;
 
 class EventCreateRequest extends Request
 {
@@ -97,30 +98,56 @@ class EventCreateRequest extends Request
         }
 
         $authUID = Auth::id();
-/*
+
         // Check, user has access to the server.
         if (!User::hasServerAccess($authUID, Input::get('serverid'))) {
             Router::redirectToError(500);
         }
-        // Check event is assigned to the server.
-        if (!Server::hasEvent(Input::get('serverid'), Input::get('eventid'))) {
-            Router::redirectToError(500);
-        }
+
         // Check user permissions.
-        if (!Guard::has('server.calendar_events.delete') && $authUID !== CalendarEvent::getEvent(Input::get('eventid'))->founder) {
+        if (!Guard::has('server.calendar_events.add_new')) {
             Router::redirectToError(500);
         }
 
-        // Delete the event.
-        $query = self::db()->delete(CalendarEvent::getTable(), [
-            CalendarEvent::getPrimaryKey(), '=', Input::get('eventid')
+        self::db()->beginTransaction();
+
+        $query = self::db()->insert(CalendarEvent::getTable(), [
+            'server_id' => Input::get('serverid'),
+            'type' => 0,
+            'title' => Input::get('title'),
+            'description' => (!empty(Input::get('description')) ? Input::get('description') : ''),
+            'time_from' => strtotime(Input::get('date-from')),
+            'time_to' => (!empty(Input::get('date-to')) ? strtotime(Input::get('date-to')) : 0),
+            'time_estimated_hours' => Input::get('estimated-hours'),
+            'rating' => '',
+            'recorded' => 0,
+            'edited' => 0,
+            'edited_time' => 0,
+            'founder_user_id' => $authUID
         ]);
-        
+
         if(!$query) {
             self::db()->rollBack();
             Router::redirectToError(500);
         }
-*/
-        $this->goBack();
+
+        $eventID = self::db()->lastInsertId();
+
+        for ($i = 0; $i < count(Input::get('section-name')); $i++) {
+            $query = self::db()->insert(CalendarEventSection::getTable(), [
+                'calendar_event_id' => $eventID,
+                'name' => Input::get('section-name')[$i],
+                'is_limited' => (isset(Input::get('section-limit')[$i]) && Input::get('section-limit')[$i] > 0 ? 1 : 0),
+                'limit_max' => (isset(Input::get('section-limit')[$i]) && Input::get('section-limit')[$i] > 0 ? Input::get('section-limit')[$i] : 0)
+            ]);
+
+            if(!$query) {
+                self::db()->rollBack();
+                Router::redirectToError(500);
+            }
+        }
+
+        self::db()->commit();
+        Router::redirectTo('server/server:'. Input::get('serverid') .'/event:'. $eventID);
     }
 }

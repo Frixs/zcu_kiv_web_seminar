@@ -30,6 +30,7 @@ class Server extends Model
     public static function getServerID()
     {
         if (!self::$server) {
+            // If server is null, check if input exists - 'serverid' - it can be request.
             if (Input::get('serverid')) {
                 self::setServerID(Input::get('serverid'));
             }
