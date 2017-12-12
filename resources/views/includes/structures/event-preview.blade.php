@@ -159,16 +159,15 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 	{{-- JOIN/LEAVE THE SECTION --}}
 	@if ($guardCAJoin || $guardCALeave) 
 	<div class="button-box">
-		<form action="#" method="post" class="join-leave-form">
+		<form action="{{ instance('Config')::get('app.root_rel') }}/__request/event-@if (!$event->participation){{ 'join' }}@else{{ 'leave' }}@endif" method="post" class="join-leave-form">
 			<input type="hidden" name="serverid" value="{{ $thisserver->id }}" />
 			<input type="hidden" name="eventid" value="{{ $event->id }}" />
 			<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
             {{-- LEAVE BTN --}}
 			@if ($guardCALeave && $event->participation && ($event->time_from - instance('Config')::get('event.leave_time_before_start')) > time())
             <input type="submit" name="leave_event" value="{{ lang('structures.event-preview.leave_btn') }}" class="btn btn-danger" />
-			@endif
             {{-- JOIN BTN --}}
-			@if ($guardCAJoin && !$event->participation && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
+			@elseif ($guardCAJoin && !$event->participation && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
 			<input id="notice-inp" type="hidden" name="notice" value="" />
 			<input id="sectionid" type="hidden" name="sectionid" value="{{ $eventSections[0]->id }}" />
 			<input type="submit" name="join_event" value="{{ lang('structures.event-preview.join_btn') }}" class="btn btn-success" />
