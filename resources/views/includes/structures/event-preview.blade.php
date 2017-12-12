@@ -217,7 +217,7 @@ $guardCAKick = instance('Guard')::has('server.calendar_events.kick');
 						@php $j++; @endphp
 						@if ($section->is_limited && !$hasDelimiter && $section->limit_max < $j)
 							@php $hasDelimiter = true; @endphp
-							<tr class="__delimiter"><td>- - -</td><td></td><td></td></tr>
+							<tr class="__delimiter"><td>- - -</td><td></td><td></td><td></td></tr>
 						@endif
                         <tr>
                             <td>

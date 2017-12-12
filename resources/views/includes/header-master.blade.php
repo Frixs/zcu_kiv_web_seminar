@@ -41,7 +41,7 @@
 						<li class="divider"></li>
 						<li>
 							<p class="navbar-user-session">
-								<a href="logout" class="btn btn-danger btn-block">{{ lang('auth.logout') }}</a>
+								<a href="{{ instance('Config')::get('app.root_rel') }}/logout" class="btn btn-danger btn-block">{{ lang('auth.logout') }}</a>
 							</p>
 						</li>
 					</ul>

@@ -1,0 +1,15 @@
+TestObject1
+Email:	testobject1@testobject.xyz
+PW:	TestObject12345
+
+TestObject2
+Email:	testobject2@testobject.xyz
+PW:	HeSlo543
+
+JenJa
+Email:	testobject3@testobject.xyz
+PW:	hesloBEZhesla
+
+NickTester
+Email:	testobject4@testobject.xyz
+PW:	SpatneHeslo1
