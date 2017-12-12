@@ -101,7 +101,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 			@endif
 			{{-- EDIT THE EVENT BTN --}}
 			@if (($guardCAEdit || $event->founder_user_id === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
-			<a href="#" class="edit-btn">
+			<a href="{{ instance('Config')::get('app.root_rel') }}/server/event-edit/server:{{ $thisserver->id }}/event:{{ $event->id }}" class="edit-btn">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			</a>
 			@endif

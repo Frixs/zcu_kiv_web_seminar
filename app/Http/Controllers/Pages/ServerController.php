@@ -52,4 +52,11 @@ class ServerController extends Controller
 
         $this->view('server.event-new', ['thisserver' => $thisserver]);
     }
+
+    public function eventEdit($eventid = null)
+    {
+        $thisserver = \App\Models\Server::getServer(\App\Models\Server::getServerID());
+
+        $this->view('server.event-edit', ['thisserver' => $thisserver, 'eid' => $eventid]);
+    }
 }

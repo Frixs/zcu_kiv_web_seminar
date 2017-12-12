@@ -28,6 +28,7 @@ return [
         'Token' => \Frixs\Http\Token::class,
         'Auth' => \Frixs\Auth\Auth::class,
         'Guard' => \Frixs\Auth\Guard::class,
+        'Router' => \Frixs\Routing\Router::class,
 
         'UserGroup' => \App\Models\UserGroup::class,
         'Server' => \App\Models\Server::class,

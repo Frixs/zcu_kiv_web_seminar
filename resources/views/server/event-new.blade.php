@@ -6,6 +6,17 @@
 @section('content-form')
 
 @php
+    $isEdit = false;
+    if (isset($edit_form_active)) {
+        $isEdit = true;
+
+        // Check event is assigned to the server.
+        if (!instance('Server')::hasEvent($thisserver->id, $eid)) {
+            instance('Router')::redirectToError(500);
+        }
+
+        $event = instance('CalendarEvent')::getEvent($eid);
+    }
 @endphp
 <script>
     $(document).ready(function () {
@@ -51,18 +62,18 @@
     });
 </script>
 
-<form class="event-new-form form-horizontal" action="{{ instance('Config')::get('app.root_rel') }}/__request/event-create" method="post">
+<form class="event-new-form form-horizontal" action="{{ instance('Config')::get('app.root_rel') }}/__request/event-@if (!$isEdit){{ 'create' }}@else{{ 'edit' }}@endif" method="post">
 	<div class="form-feedback __success">{{ instance('Request')->messageSuccess() }}</div>
 	<div class="form-feedback __error">{{ instance('Request')->messageError() }}</div>
     {{-- DETAILS --}}
-    <div class="col-xs-12 col-sm-6 gc-col-nosp-leftm-xs">
+    <div class="col-xs-12 @if (!$isEdit) col-sm-6 gc-col-nosp-leftm-xs @else gc-col-nosp @endif">
 		<h2>{{ lang('server.event-new.title_box_01') }}</h2>
 		<hr class="color">
         {{-- TITLE --}}
         <div class="form-group @if (instance('Request')->getInputError('title')) has-error @endif">
             <label class="col-xs-12" for="title">{{ lang('server.event-new.inp_01') }}:</label>
             <div class="col-xs-12">
-                <input type="text" name="title" value="{{ instance('Request')->getInput('title') }}" class="form-control __input-dark" id="title"
+                <input type="text" name="title" value="@if (!$isEdit || instance('Request')->getInputError('title')){{ instance('Request')->getInput('title') }}@else{{ $event->title }}@endif" class="form-control __input-dark" id="title"
                 placeholder="{{ lang('server.event-new.inp_01_ph') }}" maxlength="30" tabindex="1" autocomplete="off" autofocus>
                 <div class="form-feedback">@if (instance('Request')->getInputError('title')) {{ instance('Request')->getInputError('title') }} @endif</div>
             </div>
@@ -71,7 +82,7 @@
         <div class="form-group @if (instance('Request')->getInputError('description')) has-error @endif">
             <label class="col-xs-12" for="description">{{ lang('server.event-new.inp_02') }}:</label>
             <div class="col-xs-12">
-                <textarea id="description" class="__full-width __input-dark" name="description" placeholder="{{ lang('server.event-new.inp_02_ph') }}" maxlength="1000" tabindex="2" autocomplete="off">{{ instance('Request')->getInputError('description') }}</textarea>
+                <textarea id="description" class="__full-width __input-dark" name="description" placeholder="{{ lang('server.event-new.inp_02_ph') }}" maxlength="1000" tabindex="2" autocomplete="off">@if (!$isEdit || instance('Request')->getInputError('description')){{ instance('Request')->getInputError('description') }}@else{{ $event->description }}@endif</textarea>
                 <div class="form-feedback">@if (instance('Request')->getInputError('description')) {{ instance('Request')->getInputError('description') }} @endif</div>
             </div>
         </div>
@@ -79,7 +90,7 @@
         <div class="form-group @if (instance('Request')->getInputError('date-from')) has-error @endif">
             <label class="col-xs-12" for="date-from">{{ lang('server.event-new.inp_03') }}:</label>
             <div class="col-xs-12">
-                <input type="datetime-local" name="date-from" value="{{ instance('Request')->getInput('date-from') }}" class="form-control __input-dark" id="date-from"
+                <input type="datetime-local" name="date-from" value="@if (!$isEdit || instance('Request')->getInput('date-from')){{ instance('Request')->getInput('date-from') }}@else{{ date('Y-m-d\TH:i:s', $event->time_from) }}@endif" class="form-control __input-dark" id="date-from"
                 placeholder="{{ lang('server.event-new.inp_03_ph') }}" tabindex="3" autocomplete="off">
                 <div class="form-feedback">@if (instance('Request')->getInputError('date-from')) {{ instance('Request')->getInputError('date-from') }} @endif</div>
             </div>
@@ -88,7 +99,7 @@
         <div class="form-group @if (instance('Request')->getInputError('date-to')) has-error @endif">
             <label class="col-xs-12" for="date-to">{{ lang('server.event-new.inp_04') }}:</label>
             <div class="col-xs-12">
-                <input type="datetime-local" name="date-to" value="{{ instance('Request')->getInput('date-to') }}" class="form-control __input-dark" id="date-to"
+                <input type="datetime-local" name="date-to" value="@if (!$isEdit || instance('Request')->getInputError('date-to')){{ instance('Request')->getInput('date-to') }}@elseif ($event->time_to > 0){{ date('Y-m-d\TH:i:s', $event->time_to) }}@endif" class="form-control __input-dark" id="date-to"
                 placeholder="{{ lang('server.event-new.inp_04_ph') }}" tabindex="4" autocomplete="off">
                 <div class="form-feedback">@if (instance('Request')->getInputError('date-to')) {{ instance('Request')->getInputError('date-to') }} @endif</div>
             </div>
@@ -97,13 +108,14 @@
         <div class="form-group @if (instance('Request')->getInputError('estimated-hours')) has-error @endif">
             <label class="col-xs-12" for="estimated-hours">{{ lang('server.event-new.inp_05') }}:</label>
             <div class="col-xs-12">
-                <input type="number" name="estimated-hours" value="{{ instance('Request')->getInput('estimated-hours') }}" class="form-control __input-dark" id="estimated-hours"
+                <input type="number" name="estimated-hours" value="@if (!$isEdit || instance('Request')->getInputError('estimated-hours')){{ instance('Request')->getInput('estimated-hours') }}@else{{ $event->time_estimated_hours }}@endif" class="form-control __input-dark" id="estimated-hours"
                 placeholder="{{ lang('server.event-new.inp_05_ph') }}" min="1" max="999" tabindex="5" autocomplete="off">
                 <div class="form-feedback">@if (instance('Request')->getInputError('estimated-hours')) {{ instance('Request')->getInputError('estimated-hours') }} @endif</div>
             </div>
         </div>
     </div>
     {{-- SECTIONS --}}
+    @if (!$isEdit)
     <div class="col-xs-12 col-sm-6 gc-col-nosp-rightm-xs section-wrapper">
 		<h2>{{ lang('server.event-new.title_box_02') }}</h2>
 		<hr class="color">
@@ -155,16 +167,21 @@
         @endif
         <button id="add-section-btn" class="btn btn-primary __w100 gc-margin-top @if ($i >= instance('Config')::get('event.section_limit')) gc-hidden @endif" type="button">{{ lang('server.event-new.section_add_btn') }}</button>
     </div>
+    @endif
     <div class="gc-cleaner"></div>
     <hr>
 	{{-- TOKEN --}}
 	<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
 	{{-- SERVER ID --}}
 	<input type="hidden" name="serverid" value="{{ $thisserver->id }}" />
+	{{-- EVENT ID --}}
+    @if ($isEdit)
+	<input type="hidden" name="eventid" value="{{ $eid }}" />
+    @endif
 	{{-- SUBMIT --}}
 	<div class="form-group gc-no-margin-bottom">
 		<div class="col-md-offset-3 col-md-9">
-			<button type="submit" class="btn btn-primary gc-float-right" tabindex="9">{{ lang('server.event-new.inp_sub') }}</button>
+			<button type="submit" class="btn btn-primary gc-float-right" tabindex="9">@if (!$isEdit){{ lang('server.event-new.inp_sub') }}@else{{ lang('server.event-edit.inp_sub') }}@endif</button>
 		</div>
 	</div>
 </form>
