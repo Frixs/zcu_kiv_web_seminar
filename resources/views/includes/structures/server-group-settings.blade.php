@@ -15,9 +15,10 @@
         <div class="col-xs-6 group-box gc-col-nosp" data-serverid="{{  $thisserver->id }}">
             @if ($userCurrentGroups[0]->priority_max >= $userGroups[0]->priority_max)
                 <select class="form-control" data-uid="{{ $user->id }}">
+                @php $isSelected = false; @endphp
                 @foreach (instance('Group')::getAllServerGroups(true) as $groupKey => $group)
                     @if ($userCurrentGroups[0]->priority_max >= $group['priority'])
-                        <option value="{{ $groupKey }}" style="color:#{{ $group['color'] }};" @if ($userGroups[0]->id == $groupKey) selected="selected" @endif>{{ $group['name'] }}</option>
+                        <option value="{{ $groupKey }}" style="color:#{{ $group['color'] }};" @if ($userGroups[0]->id == $groupKey && !$isSelected) selected="selected" @php $isSelected = true; @endphp @endif>{{ $group['name'] }}</option>
                     @endif
                 @endforeach
                 </select>

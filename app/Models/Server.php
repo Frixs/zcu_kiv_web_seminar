@@ -162,6 +162,7 @@ class Server extends Model
             INNER JOIN ". Group::getTable() ." AS g
                 ON g.". Group::getPrimaryKey() ." = ug.group_id
             WHERE ug.user_id = ? AND ug.server_id = ? AND g.server_group = ?
+            GROUP BY g.". Group::getPrimaryKey() ."
             ORDER BY g.priority DESC"
         , [
             $uid,
