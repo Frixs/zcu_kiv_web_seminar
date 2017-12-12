@@ -66,17 +66,42 @@ class ServerLeaveRequest extends Request
             $this->goBack();
         }
 
-        // Add group recruit to the user.
+        self::db()->beginTransaction();
+
         $query = self::db()->delete(\App\Models\UserGroup::getTable(), [
             'user_id', '=', $authUID,
             'AND', 'server_id', '=', $serverID
         ]);
-        
+
         if(!$query) {
             self::db()->rollBack();
             Router::redirectToError(500);
         }
-  
+
+        // Remove user from server events.
+        $query = self::db()->select(\App\Models\CalendarEvent::getTable(), ['server_id', '=', $serverID], [\App\Models\CalendarEvent::getPrimaryKey()]);
+        
+        if ($query->error()) {
+            self::db()->rollBack();
+            Router::redirectToError(500);
+        }
+
+        $events = $query->get();
+
+        foreach ($events as $event) {
+            $query = self::db()->delete(\App\Models\CalendarEventUser::getTable(), [
+                'user_id', '=', $authUID,
+                'AND', 'calendar_event_id', '=', $event->id
+            ]);
+
+            if(!$query) {
+                self::db()->rollBack();
+                Router::redirectToError(500);
+            }
+        }
+        
+        // Success.
+        self::db()->commit();
         Router::redirectTo('dashboard');
     }
 }

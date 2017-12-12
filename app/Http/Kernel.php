@@ -123,6 +123,7 @@ class Kernel
             'server.settings' => [
                 'GuardAny' => [
                     Group::SMaster(),
+                    Group::SRecruiter(),
                 ],
             ],
         ];
@@ -154,9 +155,11 @@ class Kernel
                 'settings' => [
                     '_display' => [
                         Group::SMaster(),
+                        Group::SRecruiter(),
                     ],
                     'groups' => [
                         Group::SMaster(),
+                        Group::SRecruiter(),
                     ],
                     'notifications' => [
                         Group::SMaster(),
