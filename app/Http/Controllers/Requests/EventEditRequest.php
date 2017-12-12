@@ -82,7 +82,7 @@ class EventEditRequest extends Request
         }
 
         // Check user permissions.
-        if (!Guard::has('server.calendar_events.edit') && $authUID !== CalendarEvent::getEvent(Input::get('eventid'))->founder_user_id) {
+        if (!Guard::has('server.calendar_events.edit') && !User::isServerOwner(Server::getServerID())) {
             Router::redirectToError(500);
         }
 

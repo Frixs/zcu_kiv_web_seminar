@@ -124,6 +124,7 @@ class Kernel
                 'GuardAny' => [
                     Group::SMaster(),
                     Group::SRecruiter(),
+                    \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                 ],
             ],
         ];
@@ -156,13 +157,16 @@ class Kernel
                     '_display' => [
                         Group::SMaster(),
                         Group::SRecruiter(),
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'groups' => [
                         Group::SMaster(),
                         Group::SRecruiter(),
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'notifications' => [
                         Group::SMaster(),
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'discord' => [
                         \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
@@ -182,7 +186,7 @@ class Kernel
                     ],
                     'rating' => [
                         Group::SMaster(),
-                        // + OWNER
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'view_history' => [
                         Group::SMaster(),
@@ -190,11 +194,11 @@ class Kernel
                     ],
                     'edit' => [
                         Group::SMaster(),
-                        // + OWNER
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'delete' => [
                         Group::SMaster(),
-                        // + OWNER
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                     'join' => [
                         Group::SMember(),
@@ -206,7 +210,7 @@ class Kernel
                     ],
                     'kick' => [
                         Group::SMaster(),
-                        // + OWNER
+                        \App\Models\User::isServerOwner(\App\Models\Server::getServerID()),
                     ],
                 ],
             ],
@@ -247,7 +251,7 @@ class Kernel
         if ($isRequest) {
             if (isset(self::$requestMiddleware[$controller])) {
                 for ($i = 0; $i < count(self::$requestMiddleware[$controller]); $i++) {
-                    $pieces             = explode('.', self::$requestMiddleware[$controller]);
+                    $pieces             = explode('.', self::$requestMiddleware[$controller][$i]);
                     $controllerSection  = $pieces[0];
                     $methodSection      = isset($pieces[1]) ? $pieces[1] : '';
 

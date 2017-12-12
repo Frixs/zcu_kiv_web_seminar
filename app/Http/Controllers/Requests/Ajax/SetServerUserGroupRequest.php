@@ -9,6 +9,7 @@ use Frixs\Validation\Validate;
 
 use Frixs\Auth\Auth;
 use Frixs\Auth\Guard;
+
 use App\Models\Server;
 use App\Models\Group;
 use App\Models\UserGroup;
@@ -67,7 +68,7 @@ class SetServerUserGroupRequest extends Request
         $serverGroups      = Group::getAllServerGroups(true);
 
         // Check if user has perms to assign this group.
-        if ($userCurrentGroups[0]->priority_max < $serverGroups[Input::get('gid')]['priority']) {
+        if ($userCurrentGroups[0]->priority_max < $serverGroups[Input::get('gid')]['priority'] && !User::isServerOwner(Server::getServerID())) {
             return;
         }
 

@@ -103,7 +103,7 @@ class ServerCreateRequest extends Request
         
         if ($hasBackgroundPlaceholder) {
             $filename = $serverID ."_background_placeholder.". Input::getFileData('background-placeholder', 'extension');
-            if (!move_uploaded_file(Input::getFileData('background-placeholder', 'tempname'), Config::get('app.root_server_uploads_rel') .'/'. $filename)) {
+            if (!move_uploaded_file(Input::getFileData('background-placeholder', 'tempname'), Config::get('app.root_server_uploads_rel') .'/'. $filename)) {exit();
                 self::db()->rollBack();
                 Router::redirectToError(500);
             }

@@ -86,7 +86,7 @@ $guardCAKick = instance('Guard')::has('server.calendar_events.kick');
 				<span class="__cred">{{ lang('structures.event-preview.edited_ph') }}</span> {{ date("j.n. H:i", $event->edited_time) }}</span>
 			@endif
 			{{-- DELETE THE EVENT BTN --}}
-			@if (($guardCADelete || $event->founder_user_id === $authUID) && !$event->recorded)
+			@if (($guardCADelete) && !$event->recorded)
 			<form action="{{ instance('Config')::get('app.root_rel') }}/__request/event-delete" method="post" class="delete-form">
 				{{-- EVENT ID --}}
 				<input type="hidden" name="eventid" value="{{ $event->id }}" />
@@ -101,7 +101,7 @@ $guardCAKick = instance('Guard')::has('server.calendar_events.kick');
 			</form>
 			@endif
 			{{-- EDIT THE EVENT BTN --}}
-			@if (($guardCAEdit || $event->founder_user_id === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
+			@if (($guardCAEdit) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) > time())
 			<a href="{{ instance('Config')::get('app.root_rel') }}/server/event-edit/server:{{ $thisserver->id }}/event:{{ $event->id }}" class="edit-btn">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 			</a>
@@ -118,7 +118,7 @@ $guardCAKick = instance('Guard')::has('server.calendar_events.kick');
 	@endif
 
 	{{-- RATING BOX --}}
-	@if (($guardCARating || $event->founder_user_id === $authUID) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) <= time())
+	@if (($guardCARating) && ($event->time_from + instance('Config')::get('event.join_time_after_start')) <= time())
 	@if ($event->recorded)
 	<div class="rating-box">
 		<span class="title">{{ lang('structures.event-preview.inp_01') }}:</span>
@@ -232,7 +232,7 @@ $guardCAKick = instance('Guard')::has('server.calendar_events.kick');
 								@endif
                             </td>
 							<td class="td-btn">
-								@if (($guardCAKick || $event->founder_user_id === $authUID) && $authUID !== $sUser->user_id)
+								@if ($guardCAKick && $authUID !== $sUser->user_id)
 									{{-- KICK BTN --}}
 									<form action="{{ instance('Config')::get('app.root_rel') }}/__request/event-kick" method="post">
 										{{-- EVENT ID --}}

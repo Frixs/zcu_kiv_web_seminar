@@ -79,7 +79,6 @@ class ServerEditRequest extends Request
         $updateArr = [
             'name' => Input::get('name'),
             'access_type' => Input::get('access-type') === 'public' ? 0 : (Input::get('access-type') === 'protected' ? 1 : 2),
-            'has_background_placeholder' => $hasBackgroundPlaceholder,
             'edited_at' => time()
         ];
 

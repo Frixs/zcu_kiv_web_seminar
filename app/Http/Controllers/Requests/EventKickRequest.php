@@ -65,7 +65,7 @@ class EventKickRequest extends Request
 
         // Check user permissions.
         if (!Guard::has('server.calendar_events.kick')
-            && $authUID !== CalendarEvent::getEvent(Input::get('eventid'))->founder_user_id
+            && !User::isServerOwner(Server::getServerID())
             ) {
             Router::redirectToError(500);
         }
