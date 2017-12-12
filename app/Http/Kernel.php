@@ -201,6 +201,10 @@ class Kernel
                         Group::SMember(),
                         Group::SRecruit(),
                     ],
+                    'kick' => [
+                        Group::SMaster(),
+                        // + OWNER
+                    ],
                 ],
             ],
         ];

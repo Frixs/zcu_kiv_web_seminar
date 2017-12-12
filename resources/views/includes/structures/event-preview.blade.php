@@ -15,6 +15,7 @@ $guardCADelete = instance('Guard')::has('server.calendar_events.delete');
 $guardCAJoin = instance('Guard')::has('server.calendar_events.join');
 $guardCALeave = instance('Guard')::has('server.calendar_events.leave');
 $guardCARating = instance('Guard')::has('server.calendar_events.rating');
+$guardCAKick = instance('Guard')::has('server.calendar_events.kick');
 
 @endphp
 <script>
@@ -207,6 +208,7 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
 							<th>{{ lang('structures.event-preview.nickname_ph') }}</th>
 							<th>{{ lang('structures.event-preview.participation_ph') }}</th>
 							<th>{{ lang('structures.event-preview.notice_ph') }}</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -229,6 +231,22 @@ $guardCARating = instance('Guard')::has('server.calendar_events.rating');
                                 <i class="fa fa-question-circle notice ttip --tt-darkest --tt-fat" data-toggle="tooltip" data-placement="left auto" title="{{ $sUser->notice }}" aria-hidden="true"></i>
 								@endif
                             </td>
+							<td class="td-btn">
+								@if (($guardCAKick || $event->founder_user_id === $authUID) && $authUID !== $sUser->user_id)
+									{{-- KICK BTN --}}
+									<form action="{{ instance('Config')::get('app.root_rel') }}/__request/event-kick" method="post">
+										{{-- EVENT ID --}}
+										<input type="hidden" name="eventid" value="{{ $event->id }}" />
+										{{-- SERVER ID --}}
+										<input type="hidden" name="serverid" value="{{ $thisserver->id }}" />
+										{{-- USER ID --}}
+										<input type="hidden" name="userid" value="{{ $sUser->user_id }}" />
+										{{-- TOKEN --}}
+										<input type="hidden" name="{{ instance('Token')::createTokenInput() }}" value="{{ instance('Token')::get() }}" />
+										<button type="submit"><i class="fa fa-times" aria-hidden="true"></i></button>
+									</form>
+								@endif
+							</td>
                         </tr>
 						@endforeach
 					</tbody>

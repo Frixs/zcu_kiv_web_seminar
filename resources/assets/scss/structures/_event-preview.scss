@@ -215,6 +215,28 @@
                 font-weight: bold;
             }
 
+            td.td-btn {
+                form {
+                    margin: 0;
+
+                    button {
+                        background-color: transparent;
+                        border: 0;
+                        font-size: $font-size-base;
+                        color: $color-red-normal;
+                        outline: 0;
+
+                        &:hover {
+                            color: lighten($color-red-normal, 5%);
+                        }
+                        
+                        &:active {
+                            color: darken($color-red-normal, 5%);
+                        }
+                    }
+                }
+            }
+
             .event-participation-yes,
             .event-participation-no {
                 cursor: pointer;
